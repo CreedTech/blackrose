@@ -26,7 +26,7 @@ import gallerySix from './gallery/06.jpg';
 import gallerySeven from './gallery/07.jpg';
 import galleryEight from './gallery/08.jpg';
 import galleryNine from './gallery/09.jpg';
-import galleryTen from './gallery/10.jpg';
+// import galleryTen from './gallery/10.jpg';
 import galleryEleven from './gallery/11.jpg';
 import galleryTwelve from './gallery/12.jpg';
 import galleryThirteen from './gallery/13.jpg';
@@ -92,7 +92,7 @@ export const assets = {
   gallerySeven,
   galleryEight,
   galleryNine,
-  galleryTen,
+//   galleryTen,
   galleryEleven,
   galleryTwelve,
   galleryThirteen,
