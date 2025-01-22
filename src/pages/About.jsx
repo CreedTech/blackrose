@@ -1,3 +1,5 @@
+import { assets } from '../assets/images/assets';
+
 const About = () => {
   return (
     <section className="about pt-130">
@@ -8,7 +10,7 @@ const About = () => {
             data-animate-effect="fadeInUp"
           >
             <div className="img">
-              <img src="../assets/images/about.jpg" alt="" />
+              <img src={assets.about} alt="" />
             </div>
           </div>
           <div
@@ -41,11 +43,8 @@ const About = () => {
                 <p>
                   <b>Phone :</b> +1 650-333-1138
                   <br />
-                  <b>E-mail :</b> photography@pozo.com
+                  <b>E-mail :</b> photography@blackrose.com
                   <br />
-                  <b>Skype :</b> @pozoartphoto
-                  <br />
-                  <b>500px :</b> /pozoartphoto
                 </p>
               </div>
             </div>
@@ -61,11 +60,7 @@ const About = () => {
                 <div className="team-holder">
                   <div className="team-image-holder">
                     <a href="team-details.html">
-                      <img
-                        src="../assets/images/team/01.jpg"
-                        className="img-fluid"
-                        alt=""
-                      />
+                      <img src={assets.teamOne} className="img-fluid" alt="" />
                       <div className="team-side-info">
                         <h4 className="team-name">Petter Snow</h4>
                         <h6 className="team-position">Wedding Photographer</h6>
@@ -100,11 +95,7 @@ const About = () => {
                 <div className="team-holder">
                   <div className="team-image-holder">
                     <a href="team-details.html">
-                      <img
-                        src="../assets/images/team/02.jpg"
-                        className="img-fluid"
-                        alt=""
-                      />
+                      <img src={assets.teamTwo} className="img-fluid" alt="" />
                       <div className="team-side-info">
                         <h4 className="team-name">Emma White</h4>
                         <h6 className="team-position">Model Photographer</h6>

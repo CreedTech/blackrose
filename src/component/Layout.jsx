@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 // import Swiper from 'swiper';
 import { Outlet, NavLink } from 'react-router-dom'; // Assuming you're using React Router
+import { assets } from '../assets/images/assets';
 
 const Layout = () => {
   const [loading, setLoading] = useState(false);
@@ -111,7 +112,7 @@ const Layout = () => {
       {loading && (
         <div id="Lfa-page-loading" className="pozo-pageloading">
           <div className="pozo-pageloading-inner">
-            <img src="../assets/images/logo.png" className="logo" alt="" />
+            <img src={assets.logo} className="logo" alt="" />
           </div>
         </div>
       )}
@@ -146,11 +147,7 @@ const Layout = () => {
           <div className="container">
             <div className="logo-wrapper">
               <NavLink className="logo" to="/">
-                <img
-                  src="../assets/images/logo.png"
-                  className="logo-img"
-                  alt=""
-                />
+                <img src={assets.logo} className="logo-img" alt="" />
               </NavLink>
             </div>
 

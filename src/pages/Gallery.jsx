@@ -1,3 +1,5 @@
+import { assets } from '../assets/images/assets';
+
 const Gallery = () => {
   return (
     <div className="pozo-section pt-130">
@@ -14,56 +16,40 @@ const Gallery = () => {
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/01.jpg"
+                href={assets.galleryOne}
                 data-caption="Quisque in felis"
               >
-                <img
-                  className="img-fluid"
-                  src="../assets/images/gallery/01.jpg"
-                  alt=""
-                />
+                <img className="img-fluid" src={assets.galleryOne} alt="" />
               </a>
             </figure>
             <figure>
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/02.jpg"
+                href={assets.galleryTwo}
                 data-caption="Pellentesque habitant"
               >
-                <img
-                  className="img-fluid"
-                  src="../assets/images/gallery/02.jpg"
-                  alt=""
-                />
+                <img className="img-fluid" src={assets.galleryTwo} alt="" />
               </a>
             </figure>
             <figure>
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/11.jpg"
+                href={assets.galleryEleven}
                 data-caption="Curabitur convallis"
               >
-                <img
-                  className="img-fluid"
-                  src="../assets/images/gallery/11.jpg"
-                  alt=""
-                />
+                <img className="img-fluid" src={assets.galleryEleven} alt="" />
               </a>
             </figure>
             <figure>
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/03.jpg"
+                href={assets.galleryThree}
                 data-caption="Quisque in dolor"
               >
-                <img
-                  className="img-fluid"
-                  src="../assets/images/gallery/03.jpg"
-                  alt=""
-                />
+                <img className="img-fluid" src={assets.galleryThree} alt="" />
               </a>
             </figure>
           </div>
@@ -72,12 +58,12 @@ const Gallery = () => {
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/18.jpg"
+                href={assets.galleryEighteen}
                 data-caption="Aliquam non luctus"
               >
                 <img
                   className="img-fluid"
-                  src="../assets/images/gallery/18.jpg"
+                  src={assets.galleryEighteen}
                   alt=""
                 />
               </a>
@@ -86,12 +72,12 @@ const Gallery = () => {
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/17.jpg"
+                href={assets.gallerySeventeen}
                 data-caption="Quality in felis"
               >
                 <img
                   className="img-fluid"
-                  src="../assets/images/gallery/17.jpg"
+                  src={assets.gallerySeventeen}
                   alt=""
                 />
               </a>
@@ -100,14 +86,10 @@ const Gallery = () => {
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/16.jpg"
+                href={assets.gallerySixteen}
                 data-caption="Vivamus a nisi"
               >
-                <img
-                  className="img-fluid"
-                  src="../assets/images/gallery/16.jpg"
-                  alt=""
-                />
+                <img className="img-fluid" src={assets.gallerySixteen} alt="" />
               </a>
             </figure>
           </div>
@@ -119,54 +101,42 @@ const Gallery = () => {
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/08.jpg"
+                href={assets.galleryEight}
                 data-caption="Mauris pretium"
               >
-                <img
-                  className="img-fluid"
-                  src="../assets/images/gallery/08.jpg"
-                  alt=""
-                />
+                <img className="img-fluid" src={assets.galleryEight} alt="" />
               </a>
             </figure>
             <figure>
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/09.jpg"
+                href={assets.galleryNine}
                 data-caption="Nunc blandit purus"
               >
-                <img
-                  className="img-fluid"
-                  src="../assets/images/gallery/09.jpg"
-                  alt=""
-                />
+                <img className="img-fluid" src={assets.galleryNine} alt="" />
               </a>
             </figure>
             <figure>
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/07.jpg"
+                href={assets.gallerySeven}
                 data-caption="Nunc ultrices tellus"
               >
-                <img
-                  className="img-fluid"
-                  src="../assets/images/gallery/07.jpg"
-                  alt=""
-                />
+                <img className="img-fluid" src={assets.gallerySeven} alt="" />
               </a>
             </figure>
             <figure>
               <a
                 className="d-block mb-4"
                 data-fancybox="images"
-                href="../assets/images/gallery/19.jpg"
+                href={assets.galleryNineteen}
                 data-caption="Orci varius natoque"
               >
                 <img
                   className="img-fluid"
-                  src="../assets/images/gallery/19.jpg"
+                  src={assets.galleryNineteen}
                   alt=""
                 />
               </a>
@@ -189,12 +159,12 @@ const Gallery = () => {
                     <a
                       className="d-block mb-4"
                       data-fancybox="images"
-                      href="../assets/images/gallery/12.jpg"
+                      href={assets.galleryTwelve}
                       data-caption="Vestibulum leo velit"
                     >
                       <img
                         className="img-fluid"
-                        src="../assets/images/gallery/12.jpg"
+                        src={assets.galleryTwelve}
                         alt=""
                       />
                     </a>
@@ -203,12 +173,12 @@ const Gallery = () => {
                     <a
                       className="d-block mb-4"
                       data-fancybox="images"
-                      href="../assets/images/gallery/05.jpg"
+                      href={assets.galleryFive}
                       data-caption="Etiam imperdiet hendrerit"
                     >
                       <img
                         className="img-fluid"
-                        src="../assets/images/gallery/05.jpg"
+                        src={assets.galleryFive}
                         alt=""
                       />
                     </a>
@@ -222,12 +192,12 @@ const Gallery = () => {
                     <a
                       className="d-block mb-4"
                       data-fancybox="images"
-                      href="../assets/images/gallery/13.jpg"
+                      href={assets.galleryThirteen}
                       data-caption="Nulla turpis elementum"
                     >
                       <img
                         className="img-fluid"
-                        src="../assets/images/gallery/13.jpg"
+                        src={assets.galleryThirteen}
                         alt=""
                       />
                     </a>
@@ -236,12 +206,12 @@ const Gallery = () => {
                     <a
                       className="d-block mb-4"
                       data-fancybox="images"
-                      href="../assets/images/gallery/06.jpg"
+                      href={assets.gallerySix}
                       data-caption="Pellentesque habitant"
                     >
                       <img
                         className="img-fluid"
-                        src="../assets/images/gallery/06.jpg"
+                        src={assets.gallerySix}
                         alt=""
                       />
                     </a>
@@ -255,12 +225,12 @@ const Gallery = () => {
                     <a
                       className="d-block mb-4"
                       data-fancybox="images"
-                      href="../assets/images/gallery/14.jpg"
+                      href={assets.galleryFourteen}
                       data-caption="Quisque in felis"
                     >
                       <img
                         className="img-fluid"
-                        src="../assets/images/gallery/14.jpg"
+                        src={assets.galleryFourteen}
                         alt=""
                       />
                     </a>

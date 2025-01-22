@@ -1,3 +1,5 @@
+import { assets } from "../assets/images/assets";
+
 const Photography = () => {
   return (
     <div>
@@ -14,7 +16,7 @@ const Photography = () => {
                       data-swiper-parallax-y="100%"
                     >
                       <a href="">
-                        <img src="../assets/images/slider/2.jpg" alt="" />
+                        <img src={assets.sliderTwo} alt="" />
                       </a>
                     </div>
                     <div
@@ -65,7 +67,7 @@ const Photography = () => {
                       data-swiper-parallax-y="70%"
                     >
                       <a href="project-page-2.html">
-                        <img src="../assets/images/slider/1.jpg" alt="" />
+                        <img src={assets.sliderOne} alt="" />
                       </a>
                     </div>
                     <div className="swiper-slide-block-text">
@@ -113,7 +115,7 @@ const Photography = () => {
                       data-swiper-parallax-y="70%"
                     >
                       <a href="project-page-2.html">
-                        <img src="../assets/images/gallery/21.jpg" alt="" />
+                        <img src={assets.galleryTwentyOne} alt="" />
                       </a>
                     </div>
                     <div className="swiper-slide-block-text">
