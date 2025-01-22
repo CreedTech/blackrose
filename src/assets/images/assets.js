@@ -20,7 +20,7 @@ import blogNine from './blog/9.jpg';
 import galleryOne from './gallery/01.jpg';
 import galleryTwo from './gallery/02.jpg';
 import galleryThree from './gallery/03.jpg';
-import galleryFour from './gallery/04.jpg';
+// import galleryFour from './gallery/04.jpg';
 import galleryFive from './gallery/05.jpg';
 import gallerySix from './gallery/06.jpg';
 import gallerySeven from './gallery/07.jpg';
@@ -86,7 +86,7 @@ export const assets = {
   galleryOne,
   galleryTwo,
   galleryThree,
-  galleryFour,
+//   galleryFour,
   galleryFive,
   gallerySix,
   gallerySeven,
