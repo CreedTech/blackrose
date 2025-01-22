@@ -59,7 +59,7 @@ const About = () => {
               <div className="col-md-6">
                 <div className="team-holder">
                   <div className="team-image-holder">
-                    <a href="team-details.html">
+                    <a href="#">
                       <img src={assets.teamOne} className="img-fluid" alt="" />
                       <div className="team-side-info">
                         <h4 className="team-name">Petter Snow</h4>
@@ -94,7 +94,7 @@ const About = () => {
               <div className="col-md-6">
                 <div className="team-holder">
                   <div className="team-image-holder">
-                    <a href="team-details.html">
+                    <a href="#">
                       <img src={assets.teamTwo} className="img-fluid" alt="" />
                       <div className="team-side-info">
                         <h4 className="team-name">Emma White</h4>

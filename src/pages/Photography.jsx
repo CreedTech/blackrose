@@ -47,7 +47,7 @@ const Photography = () => {
                         data-swiper-parallax-x="-30%"
                         style={{ zIndex: 5 }}
                         className="next-link"
-                        href="project-page.html"
+                        href=""
                       >
                         View Details
                       </a>
@@ -66,7 +66,7 @@ const Photography = () => {
                       className="swiper-slide-block-img"
                       data-swiper-parallax-y="70%"
                     >
-                      <a href="project-page-2.html">
+                      <a href="">
                         <img src={assets.sliderOne} alt="" />
                       </a>
                     </div>
@@ -94,7 +94,7 @@ const Photography = () => {
                       <a
                         data-swiper-parallax-x="-30%"
                         className="next-link"
-                        href="project-page-2.html"
+                        href=""
                       >
                         View Details
                       </a>
@@ -114,7 +114,7 @@ const Photography = () => {
                       className="swiper-slide-block-img"
                       data-swiper-parallax-y="70%"
                     >
-                      <a href="project-page-2.html">
+                      <a href="">
                         <img src={assets.galleryTwentyOne} alt="" />
                       </a>
                     </div>
@@ -142,7 +142,7 @@ const Photography = () => {
                       <a
                         data-swiper-parallax-x="-30%"
                         className="next-link"
-                        href="https://1.envato.market/e6o9j"
+                        href=""
                         target="_blank"
                         rel="noopener noreferrer"
                       >

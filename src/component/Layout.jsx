@@ -264,22 +264,22 @@ const Layout = () => {
               <div className="col-md-8">
                 <ul className="blackrose-social-icons">
                   <li className="blackrose-social-icons-item">
-                    <a className="blackrose-social-link" href="index-2.html#">
+                    <a className="blackrose-social-link" href="#">
                       <span className="blackrose-social-icon fa fa-facebook-f"></span>
                     </a>
                   </li>
                   <li className="blackrose-social-icons-item">
-                    <a className="blackrose-social-link" href="index-2.html#">
+                    <a className="blackrose-social-link" href="#">
                       <span className="blackrose-social-icon fa fa-twitter"></span>
                     </a>
                   </li>
                   <li className="blackrose-social-icons-item">
-                    <a className="blackrose-social-link" href="index-2.html#">
+                    <a className="blackrose-social-link" href="#">
                       <span className="blackrose-social-icon fa fa-instagram"></span>
                     </a>
                   </li>
                   <li className="blackrose-social-icons-item">
-                    <a className="blackrose-social-link" href="index-2.html#">
+                    <a className="blackrose-social-link" href="#">
                       <span className="blackrose-social-icon fa fa-behance"></span>
                     </a>
                   </li>
