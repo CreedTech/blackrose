@@ -54,12 +54,12 @@ import galleryThirtyFour from './gallery/34.jpg';
 import priceOne from './price/1.jpg';
 import priceTwo from './price/2.jpg';
 import priceThree from './price/3.jpg';
-import priceFour from './price/4.jpg';
-import sliderOne from './slider/2.jpg';
+// import priceFour from './price/4.jpg';
+import sliderOne from './slider/1.jpg';
 import sliderTwo from './slider/2.jpg';
 import teamOne from './team/01.jpg';
-import teamTwo from './team/01.jpg';
-import teamThree from './team/01.jpg';
+import teamTwo from './team/02.jpg';
+import teamThree from './team/03.jpg';
 import teamB from './team/b.png';
 import teamC from './team/c.png';
 
@@ -120,7 +120,7 @@ export const assets = {
   priceOne,
   priceTwo,
   priceThree,
-  priceFour,
+//   priceFour,
   sliderOne,
   sliderTwo,
   teamOne,
