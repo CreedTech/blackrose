@@ -1,8 +1,7 @@
-
 const Photography = () => {
   return (
     <div>
-        <div className="container">
+      <div className="container">
         <section className="pozo-section-slider pt-130">
           <div className="next-container-center">
             <div className="swiper-container">
@@ -15,7 +14,7 @@ const Photography = () => {
                       data-swiper-parallax-y="100%"
                     >
                       <a href="">
-                        <img src="/src/assets/images/slider/2.jpg" alt="" />
+                        <img src="../assets/images/slider/2.jpg" alt="" />
                       </a>
                     </div>
                     <div
@@ -66,7 +65,7 @@ const Photography = () => {
                       data-swiper-parallax-y="70%"
                     >
                       <a href="project-page-2.html">
-                        <img src="/src/assets/images/slider/1.jpg" alt="" />
+                        <img src="../assets/images/slider/1.jpg" alt="" />
                       </a>
                     </div>
                     <div className="swiper-slide-block-text">
@@ -114,7 +113,7 @@ const Photography = () => {
                       data-swiper-parallax-y="70%"
                     >
                       <a href="project-page-2.html">
-                        <img src="/src/assets/images/gallery/21.jpg" alt="" />
+                        <img src="../assets/images/gallery/21.jpg" alt="" />
                       </a>
                     </div>
                     <div className="swiper-slide-block-text">
@@ -177,7 +176,7 @@ const Photography = () => {
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Photography
+export default Photography;

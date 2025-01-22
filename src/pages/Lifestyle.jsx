@@ -2,7 +2,7 @@ const Lifestyle = () => {
   const blogPosts = [
     {
       id: 1,
-      image: '/src/assets/images/blog/1.jpg',
+      image: '../assets/images/blog/1.jpg',
       title: 'Wedding pellentesque moss',
       category: 'Wedding',
       date: 'Dec 28, 2023',
@@ -10,7 +10,7 @@ const Lifestyle = () => {
     },
     {
       id: 2,
-      image: '/src/assets/images/blog/2.jpg',
+      image: '../assets/images/blog/2.jpg',
       title: 'Quisque tincidunt wedding',
       category: 'Wedding',
       date: 'Dec 26, 2023',
@@ -18,7 +18,7 @@ const Lifestyle = () => {
     },
     {
       id: 3,
-      image: '/src/assets/images/blog/3.jpg',
+      image: '../assets/images/blog/3.jpg',
       title: 'Family fusce fermentum',
       category: 'Family',
       date: 'Dec 25, 2023',
@@ -26,7 +26,7 @@ const Lifestyle = () => {
     },
     {
       id: 4,
-      image: '/src/assets/images/blog/4.jpg',
+      image: '../assets/images/blog/4.jpg',
       title: 'Movie vellentesque Lue',
       category: 'Movie',
       date: 'Dec 24, 2023',
@@ -34,7 +34,7 @@ const Lifestyle = () => {
     },
     {
       id: 5,
-      image: '/src/assets/images/blog/5.jpg',
+      image: '../assets/images/blog/5.jpg',
       title: 'Curabitur tincidunt family',
       category: 'Family',
       date: 'Dec 23, 2023',
@@ -42,7 +42,7 @@ const Lifestyle = () => {
     },
     {
       id: 6,
-      image: '/src/assets/images/blog/6.jpg',
+      image: '../assets/images/blog/6.jpg',
       title: 'Portrait model verotum',
       category: 'Model',
       date: 'Dec 22, 2023',
@@ -50,7 +50,7 @@ const Lifestyle = () => {
     },
     {
       id: 7,
-      image: '/src/assets/images/blog/7.jpg',
+      image: '../assets/images/blog/7.jpg',
       title: 'Wedding tristique leo',
       category: 'Wedding',
       date: 'Dec 20, 2023',
@@ -58,7 +58,7 @@ const Lifestyle = () => {
     },
     {
       id: 8,
-      image: '/src/assets/images/blog/9.jpg',
+      image: '../assets/images/blog/9.jpg',
       title: 'Travel rutrum finibus',
       category: 'Travel',
       date: 'Dec 19, 2023',
@@ -66,7 +66,7 @@ const Lifestyle = () => {
     },
     {
       id: 9,
-      image: '/src/assets/images/blog/8.jpg',
+      image: '../assets/images/blog/8.jpg',
       title: 'Wedding mauris sapien',
       category: 'Family',
       date: 'Dec 18, 2023',

@@ -111,7 +111,7 @@ const Layout = () => {
       {loading && (
         <div id="Lfa-page-loading" className="pozo-pageloading">
           <div className="pozo-pageloading-inner">
-            <img src="/src/assets/images/logo.png" className="logo" alt="" />
+            <img src="../assets/images/logo.png" className="logo" alt="" />
           </div>
         </div>
       )}
@@ -147,7 +147,7 @@ const Layout = () => {
             <div className="logo-wrapper">
               <NavLink className="logo" to="/">
                 <img
-                  src="/src/assets/images/logo.png"
+                  src="../assets/images/logo.png"
                   className="logo-img"
                   alt=""
                 />

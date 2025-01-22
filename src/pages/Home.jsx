@@ -2,7 +2,7 @@ const Home = () => {
   const projects = [
     {
       id: 1,
-      image: '/src/assets/images/services/02.jpg',
+      image: '../assets/images/services/02.jpg',
       title: 'Explore exclusive high-res photo galleries by top photographers',
       link: '',
       categoryLink: '',
@@ -10,7 +10,7 @@ const Home = () => {
     },
     {
       id: 2,
-      image: '/src/assets/images/services/06.jpg',
+      image: '../assets/images/services/06.jpg',
       title: 'Read stories, tips, and insights on living your best life',
       link: '',
       categoryLink: '',
@@ -18,7 +18,7 @@ const Home = () => {
     },
     {
       id: 3,
-      image: '/src/assets/images/services/05.jpg',
+      image: '../assets/images/services/05.jpg',
       title: 'Shop premium products curated just for you',
       link: '',
       categoryLink: '',
@@ -49,7 +49,7 @@ const Home = () => {
                       data-swiper-parallax-y="100%"
                     >
                       <a href="">
-                        <img src="/src/assets/images/slider/2.jpg" alt="" />
+                        <img src="../assets/images/slider/2.jpg" alt="" />
                       </a>
                     </div>
                     {/* <div
@@ -100,7 +100,7 @@ const Home = () => {
                       data-swiper-parallax-y="70%"
                     >
                       <a href="project-page-2.html">
-                        <img src="/src/assets/images/slider/1.jpg" alt="" />
+                        <img src="../assets/images/slider/1.jpg" alt="" />
                       </a>
                     </div>
                     <div className="swiper-slide-block-text">
@@ -148,7 +148,7 @@ const Home = () => {
                       data-swiper-parallax-y="70%"
                     >
                       <a href="project-page-2.html">
-                        <img src="/src/assets/images/gallery/21.jpg" alt="" />
+                        <img src="../assets/images/gallery/21.jpg" alt="" />
                       </a>
                     </div>
                     <div className="swiper-slide-block-text">
@@ -262,12 +262,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/01.jpg"
+                  href="../assets/images/gallery/01.jpg"
                   data-caption="Quisque in felis"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/01.jpg"
+                    src="../assets/images/gallery/01.jpg"
                     alt=""
                   />
                 </a>
@@ -276,12 +276,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/02.jpg"
+                  href="../assets/images/gallery/02.jpg"
                   data-caption="Pellentesque habitant"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/02.jpg"
+                    src="../assets/images/gallery/02.jpg"
                     alt=""
                   />
                 </a>
@@ -290,12 +290,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/11.jpg"
+                  href="../assets/images/gallery/11.jpg"
                   data-caption="Curabitur convallis"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/11.jpg"
+                    src="../assets/images/gallery/11.jpg"
                     alt=""
                   />
                 </a>
@@ -304,12 +304,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/03.jpg"
+                  href="../assets/images/gallery/03.jpg"
                   data-caption="Quisque in dolor"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/03.jpg"
+                    src="../assets/images/gallery/03.jpg"
                     alt=""
                   />
                 </a>
@@ -323,12 +323,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/18.jpg"
+                  href="../assets/images/gallery/18.jpg"
                   data-caption="Aliquam non luctus"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/18.jpg"
+                    src="../assets/images/gallery/18.jpg"
                     alt=""
                   />
                 </a>
@@ -337,12 +337,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/17.jpg"
+                  href="../assets/images/gallery/17.jpg"
                   data-caption="Quality in felis"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/17.jpg"
+                    src="../assets/images/gallery/17.jpg"
                     alt=""
                   />
                 </a>
@@ -351,12 +351,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/16.jpg"
+                  href="../assets/images/gallery/16.jpg"
                   data-caption="Vivamus a nisi"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/16.jpg"
+                    src="../assets/images/gallery/16.jpg"
                     alt=""
                   />
                 </a>
@@ -370,12 +370,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/08.jpg"
+                  href="../assets/images/gallery/08.jpg"
                   data-caption="Mauris pretium"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/08.jpg"
+                    src="../assets/images/gallery/08.jpg"
                     alt=""
                   />
                 </a>
@@ -384,12 +384,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/09.jpg"
+                  href="../assets/images/gallery/09.jpg"
                   data-caption="Nunc blandit purus"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/09.jpg"
+                    src="../assets/images/gallery/09.jpg"
                     alt=""
                   />
                 </a>
@@ -398,12 +398,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/07.jpg"
+                  href="../assets/images/gallery/07.jpg"
                   data-caption="Nunc ultrices tellus"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/07.jpg"
+                    src="../assets/images/gallery/07.jpg"
                     alt=""
                   />
                 </a>
@@ -412,12 +412,12 @@ const Home = () => {
                 <a
                   className="d-block mb-4"
                   data-fancybox="images"
-                  href="/src/assets/images/gallery/19.jpg"
+                  href="../assets/images/gallery/19.jpg"
                   data-caption="Orci varius natoque"
                 >
                   <img
                     className="img-fluid"
-                    src="/src/assets/images/gallery/19.jpg"
+                    src="../assets/images/gallery/19.jpg"
                     alt=""
                   />
                 </a>
@@ -440,12 +440,12 @@ const Home = () => {
                       <a
                         className="d-block mb-4"
                         data-fancybox="images"
-                        href="/src/assets/images/gallery/12.jpg"
+                        href="../assets/images/gallery/12.jpg"
                         data-caption="Vestibulum leo velit"
                       >
                         <img
                           className="img-fluid"
-                          src="/src/assets/images/gallery/12.jpg"
+                          src="../assets/images/gallery/12.jpg"
                           alt=""
                         />
                       </a>
@@ -454,12 +454,12 @@ const Home = () => {
                       <a
                         className="d-block mb-4"
                         data-fancybox="images"
-                        href="/src/assets/images/gallery/05.jpg"
+                        href="../assets/images/gallery/05.jpg"
                         data-caption="Etiam imperdiet hendrerit"
                       >
                         <img
                           className="img-fluid"
-                          src="/src/assets/images/gallery/05.jpg"
+                          src="../assets/images/gallery/05.jpg"
                           alt=""
                         />
                       </a>
@@ -473,12 +473,12 @@ const Home = () => {
                       <a
                         className="d-block mb-4"
                         data-fancybox="images"
-                        href="/src/assets/images/gallery/13.jpg"
+                        href="../assets/images/gallery/13.jpg"
                         data-caption="Nulla turpis elementum"
                       >
                         <img
                           className="img-fluid"
-                          src="/src/assets/images/gallery/13.jpg"
+                          src="../assets/images/gallery/13.jpg"
                           alt=""
                         />
                       </a>
@@ -487,12 +487,12 @@ const Home = () => {
                       <a
                         className="d-block mb-4"
                         data-fancybox="images"
-                        href="/src/assets/images/gallery/06.jpg"
+                        href="../assets/images/gallery/06.jpg"
                         data-caption="Pellentesque habitant"
                       >
                         <img
                           className="img-fluid"
-                          src="/src/assets/images/gallery/06.jpg"
+                          src="../assets/images/gallery/06.jpg"
                           alt=""
                         />
                       </a>
@@ -506,12 +506,12 @@ const Home = () => {
                       <a
                         className="d-block mb-4"
                         data-fancybox="images"
-                        href="/src/assets/images/gallery/14.jpg"
+                        href="../assets/images/gallery/14.jpg"
                         data-caption="Quisque in felis"
                       >
                         <img
                           className="img-fluid"
-                          src="/src/assets/images/gallery/14.jpg"
+                          src="../assets/images/gallery/14.jpg"
                           alt=""
                         />
                       </a>

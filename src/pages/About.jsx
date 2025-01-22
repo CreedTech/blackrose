@@ -8,7 +8,7 @@ const About = () => {
             data-animate-effect="fadeInUp"
           >
             <div className="img">
-              <img src="/src/assets/images/about.jpg" alt="" />
+              <img src="../assets/images/about.jpg" alt="" />
             </div>
           </div>
           <div
@@ -37,7 +37,7 @@ const About = () => {
                   cursus finibus ac et metus. Nulla at euismod sem. Morbi vitae
                   eros orci. Quisque tincidunt ante et est malesuada.
                 </p>
-              
+
                 <p>
                   <b>Phone :</b> +1 650-333-1138
                   <br />
@@ -62,7 +62,7 @@ const About = () => {
                   <div className="team-image-holder">
                     <a href="team-details.html">
                       <img
-                        src="/src/assets/images/team/01.jpg"
+                        src="../assets/images/team/01.jpg"
                         className="img-fluid"
                         alt=""
                       />
@@ -101,7 +101,7 @@ const About = () => {
                   <div className="team-image-holder">
                     <a href="team-details.html">
                       <img
-                        src="/src/assets/images/team/02.jpg"
+                        src="../assets/images/team/02.jpg"
                         className="img-fluid"
                         alt=""
                       />
