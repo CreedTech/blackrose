@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <div>
       {/* 
-      <div id="pozo-page-wrapper">
+      <div id="blackrose-page-wrapper">
         <div className="content-lines-wrapper">
           <div className="content-lines-inner">
             <div className="content-lines"></div>
@@ -39,7 +39,7 @@ const Home = () => {
         </div> */}
 
       <div className="container">
-        <section className="pozo-section-slider pt-130">
+        <section className="blackrose-section-slider pt-130">
           <div className="next-container-center">
             <div className="swiper-container">
               <div className="swiper-wrapper">
@@ -247,7 +247,7 @@ const Home = () => {
         </div>
       </section>
       {/* Gallery */}
-      <div className="pozo-section">
+      <div className="blackrose-section">
         <div className="container">
           <div className="row mb-4">
             <div
@@ -401,10 +401,10 @@ const Home = () => {
           {/* Show more section */}
           <div className="row mb-4 align-items-stretch mt-60">
             <div className="col-12">
-              <div className="pozo-show-more-container">
+              <div className="blackrose-show-more-container">
                 <div
-                  className="row align-items-stretch pozo-photos"
-                  id="pozo-section-photos"
+                  className="row align-items-stretch blackrose-photos"
+                  id="blackrose-section-photos"
                 >
                   <div
                     className="col-md-4 animate-box"
@@ -494,10 +494,10 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="pozo-more-wrapper txt-center animate-box"
+                className="blackrose-more-wrapper txt-center animate-box"
                 data-animate-effect="fadeInUp"
               >
-                <a href="" className="pozo-more-trigger flex">
+                <a href="" className="blackrose-more-trigger flex">
                   <span className="plus flex-center">&nbsp;</span>
                 </a>
               </div>

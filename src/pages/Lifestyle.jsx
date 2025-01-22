@@ -120,7 +120,7 @@ const Lifestyle = () => {
             className="col-md-12 mt-40 mb-60 text-center animate-box"
             data-animate-effect="fadeInUp"
           >
-            <ul className="pozo-pagination-wrap align-center">
+            <ul className="blackrose-pagination-wrap align-center">
               <li>
                 <a href="">
                   <i className="fa fa-angle-left"></i>

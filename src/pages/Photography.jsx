@@ -1,10 +1,10 @@
-import { assets } from "../assets/images/assets";
+import { assets } from '../assets/images/assets';
 
 const Photography = () => {
   return (
     <div>
       <div className="container">
-        <section className="pozo-section-slider pt-130">
+        <section className="blackrose-section-slider pt-130">
           <div className="next-container-center">
             <div className="swiper-container">
               <div className="swiper-wrapper">

@@ -2,7 +2,7 @@ import { assets } from '../assets/images/assets';
 
 const Gallery = () => {
   return (
-    <div className="pozo-section pt-130">
+    <div className="blackrose-section pt-130">
       <div className="container">
         <div className="row mb-4">
           <div
@@ -146,10 +146,10 @@ const Gallery = () => {
         <div className="row mb-4 align-items-stretch mt-60">
           <div className="col-12">
             {/* show more */}
-            <div className="pozo-show-more-container">
+            <div className="blackrose-show-more-container">
               <div
-                className="row align-items-stretch pozo-photos"
-                id="pozo-section-photos"
+                className="row align-items-stretch blackrose-photos"
+                id="blackrose-section-photos"
               >
                 <div
                   className="col-md-4 animate-box"
@@ -240,10 +240,10 @@ const Gallery = () => {
             </div>
             {/* add more */}
             <div
-              className="pozo-more-wrapper txt-center animate-box"
+              className="blackrose-more-wrapper txt-center animate-box"
               data-animate-effect="fadeInUp"
             >
-              <a href="/" className="pozo-more-trigger flex">
+              <a href="/" className="blackrose-more-trigger flex">
                 <span className="plus flex-center">&nbsp;</span>
               </a>
             </div>

@@ -99,8 +99,8 @@ const Layout = () => {
 
   //   if (loading) {
   //     return (
-  //       <div id="Lfa-page-loading" className="pozo-pageloading">
-  //         <div className="pozo-pageloading-inner">
+  //       <div id="Lfa-page-loading" className="blackrose-pageloading">
+  //         <div className="blackrose-pageloading-inner">
   //           <img src="../assets/images/logo.png" className="logo" alt="Logo" />
   //         </div>
   //       </div>
@@ -110,8 +110,8 @@ const Layout = () => {
   return (
     <div>
       {loading && (
-        <div id="Lfa-page-loading" className="pozo-pageloading">
-          <div className="pozo-pageloading-inner">
+        <div id="Lfa-page-loading" className="blackrose-pageloading">
+          <div className="blackrose-pageloading-inner">
             <img src={assets.logo} className="logo" alt="" />
           </div>
         </div>
@@ -136,7 +136,7 @@ const Layout = () => {
           <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
       </div>
-      <div id="pozo-page-wrapper">
+      <div id="blackrose-page-wrapper">
         <div className="content-lines-wrapper">
           <div className="content-lines-inner">
             <div className="content-lines"></div>
@@ -259,34 +259,34 @@ const Layout = () => {
 
         {/* Footer */}
         <footer>
-          <div className="container pozo-footer-container">
+          <div className="container blackrose-footer-container">
             <div className="row">
               <div className="col-md-8">
-                <ul className="pozo-social-icons">
-                  <li className="pozo-social-icons-item">
-                    <a className="pozo-social-link" href="index-2.html#">
-                      <span className="pozo-social-icon fa fa-facebook-f"></span>
+                <ul className="blackrose-social-icons">
+                  <li className="blackrose-social-icons-item">
+                    <a className="blackrose-social-link" href="index-2.html#">
+                      <span className="blackrose-social-icon fa fa-facebook-f"></span>
                     </a>
                   </li>
-                  <li className="pozo-social-icons-item">
-                    <a className="pozo-social-link" href="index-2.html#">
-                      <span className="pozo-social-icon fa fa-twitter"></span>
+                  <li className="blackrose-social-icons-item">
+                    <a className="blackrose-social-link" href="index-2.html#">
+                      <span className="blackrose-social-icon fa fa-twitter"></span>
                     </a>
                   </li>
-                  <li className="pozo-social-icons-item">
-                    <a className="pozo-social-link" href="index-2.html#">
-                      <span className="pozo-social-icon fa fa-instagram"></span>
+                  <li className="blackrose-social-icons-item">
+                    <a className="blackrose-social-link" href="index-2.html#">
+                      <span className="blackrose-social-icon fa fa-instagram"></span>
                     </a>
                   </li>
-                  <li className="pozo-social-icons-item">
-                    <a className="pozo-social-link" href="index-2.html#">
-                      <span className="pozo-social-icon fa fa-behance"></span>
+                  <li className="blackrose-social-icons-item">
+                    <a className="blackrose-social-link" href="index-2.html#">
+                      <span className="blackrose-social-icon fa fa-behance"></span>
                     </a>
                   </li>
                 </ul>
               </div>
               <div className="col-md-4">
-                <p className="pozo-copyright">
+                <p className="blackrose-copyright">
                   © {new Date().getFullYear()} <span>BLACKROSE</span> All right
                   reserved.
                 </p>
