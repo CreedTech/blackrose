@@ -7,6 +7,7 @@ import AddToCollectionModal from '../component/AddToCollectionModal';
 import CreateCollectionModal from '../component/CreateNewCollection';
 import { toast } from 'react-toastify';
 import useCollections from '../hooks/customHooks';
+import { Helmet } from 'react-helmet';
 
 const PhotographyDetails = () => {
   const { id } = useParams();
@@ -28,8 +29,8 @@ const PhotographyDetails = () => {
 
   const handleLike = () => {
     setIsLiked(!isLiked);
-      setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
-      console.log(likeCount);
+    setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+    console.log(likeCount);
   };
 
   //   const toggleDropdown = () => {
@@ -183,8 +184,11 @@ const PhotographyDetails = () => {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
-
-      {/* Breadcrumb */}
+      <Helmet>
+        <title>{photoData.title} | BlackRose</title>
+        <meta name="description" content={photoData.description} />
+      </Helmet>
+      ;{/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center text-sm text-white/60">
           <Link to="/" className="hover:text-white">
@@ -198,7 +202,6 @@ const PhotographyDetails = () => {
           <span>Anna Lussen</span>
         </div>
       </div>
-
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="w-full bg-black text-white px-4 py-3 flex items-center justify-between border-b border-white/10">
@@ -369,11 +372,7 @@ const PhotographyDetails = () => {
                     : 'opacity-60'
                 }`}
               >
-                <img
-                  src={thumb}
-                  alt=""
-                  className="w-full h-60 object-cover"
-                />
+                <img src={thumb} alt="" className="w-full h-60 object-cover" />
               </button>
             ))}
           </div>
