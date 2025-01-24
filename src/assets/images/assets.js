@@ -62,6 +62,11 @@ import teamTwo from './team/02.jpg';
 import teamThree from './team/03.jpg';
 import teamB from './team/b.png';
 import teamC from './team/c.png';
+import cart_icon from './cart_icon.svg';
+import profile_icon from './profile_icon.svg';
+import search_icon from './search_icon.svg';
+import arrow_down from './arrow_down.svg';
+import bg_img from './bg_img.png';
 
 export const assets = {
   logo,
@@ -74,6 +79,11 @@ export const assets = {
   serviceSix,
   notFoundImage,
   a,
+  cart_icon,
+  profile_icon,
+  search_icon,
+  arrow_down,
+  bg_img,
   blogOne,
   blogTwo,
   blogThree,
@@ -86,13 +96,13 @@ export const assets = {
   galleryOne,
   galleryTwo,
   galleryThree,
-//   galleryFour,
+  //   galleryFour,
   galleryFive,
   gallerySix,
   gallerySeven,
   galleryEight,
   galleryNine,
-//   galleryTen,
+  //   galleryTen,
   galleryEleven,
   galleryTwelve,
   galleryThirteen,
@@ -120,7 +130,7 @@ export const assets = {
   priceOne,
   priceTwo,
   priceThree,
-//   priceFour,
+  //   priceFour,
   sliderOne,
   sliderTwo,
   teamOne,

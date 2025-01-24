@@ -1,6 +1,14 @@
+import { useState } from 'react';
 import { assets } from '../assets/images/assets';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const Home = () => {
+  const [email, setEmail] = useState('');
+
   const projects = [
     {
       id: 1,
@@ -28,6 +36,98 @@ const Home = () => {
     },
   ];
 
+  const featuredProducts = [
+    {
+      id: 1,
+      name: 'Court Heels',
+      price: 95.0,
+      rating: 5,
+      reviews: 91,
+      image: '/path-to-vest-image.jpg',
+    },
+    {
+      id: 2,
+      name: 'Leather Handbag',
+      price: 150.0,
+      rating: 4.5,
+      reviews: 67,
+      image: '/path-to-handbag-image.jpg',
+    },
+    {
+      id: 3,
+      name: 'Wool Scarf',
+      price: 35.0,
+      rating: 4,
+      reviews: 28,
+      image: '/path-to-scarf-image.jpg',
+    },
+    {
+      id: 4,
+      name: 'Classic Watch',
+      price: 250.0,
+      rating: 4.8,
+      reviews: 123,
+      image: '/path-to-watch-image.jpg',
+    },
+  ];
+
+  const blogPosts = [
+    {
+      id: 1,
+      title: '5 Tips for Better Morning Routines',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipiscing elit ipsum dolor sit amet.',
+      image: '/path-to-coffee-image.jpg',
+    },
+    {
+      id: 2,
+      title: 'How to Choose the Perfect Outfit',
+      description:
+        'Learn the secrets to putting together a stylish and versatile wardrobe.',
+      image: '/path-to-outfit-image.jpg',
+    },
+    {
+      id: 3,
+      title: 'Top 10 Photography Destinations in 2025',
+      description:
+        'Discover the most stunning places to capture your next masterpiece.',
+      image: '/path-to-destination-image.jpg',
+    },
+  ];
+
+  const testimonials = [
+    {
+      id: 1,
+      text: 'The Black Rose has completely transformed how I explore photography and shop!',
+      author: 'Joe Title',
+      rating: 5,
+    },
+    {
+      id: 2,
+      text: 'I found the perfect accessories for every outfit here. Highly recommend!',
+      author: 'Emily Johnson',
+      rating: 4.8,
+    },
+    {
+      id: 3,
+      text: 'Great selection of products and excellent customer service!',
+      author: 'Michael Brown',
+      rating: 4.7,
+    },
+    {
+      id: 4,
+      text: 'The blog posts are so inspiring! I love reading them every morning.',
+      author: 'Sarah Lee',
+      rating: 5,
+    },
+    {
+      id: 5,
+      text: 'A must-visit store for anyone who loves fashion and lifestyle.',
+      author: 'Chris Wang',
+      rating: 4.9,
+    },
+  ];
+
   return (
     <div>
       {/* 
@@ -37,181 +137,94 @@ const Home = () => {
             <div className="content-lines"></div>
           </div>
         </div> */}
+      <section className="container">
+        <section className="blackrose-section-slider pt-10">
+          <div className="relative h-[600px] w-full ">
+            {/* Background Image */}
+            <div className="absolute inset-0">
+              <img
+                src={assets.bg_img}
+                alt="Photographer capturing city"
+                className="w-full h-full object-cover"
+              />
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-black/40"></div>
+            </div>
 
-      <div className="container">
-        <section className="blackrose-section-slider pt-130">
-          <div className="next-container-center">
-            <div className="swiper-container">
-              <div className="swiper-wrapper">
-                <div className="swiper-slide">
-                  <div className="swiper-slide-block w-full">
-                    <div
-                      className=" w-full animate-box"
-                      data-animate-effect="fadeInLeft"
-                      data-swiper-parallax-y="100%"
-                    >
-                      <a href="">
-                        <img src={assets.sliderTwo} alt="" />
-                      </a>
-                    </div>
-                    {/* <div
-                      className="swiper-slide-block-text animate-box"
-                      data-animate-effect="fadeInRight"
-                    >
-                      <h2
-                        data-swiper-parallax-x="-60%"
-                        className="next-main-title"
-                      >
-                        Anna Lussen
-                      </h2>
-                      <h3
-                        data-swiper-parallax-x="-50%"
-                        className="next-main-subtitle"
-                      >
-                        Model, Moscow
-                      </h3>
-                      <p
-                        data-swiper-parallax-x="-40%"
-                        className="next-paragraph"
-                      >
-                        Quisque pellentesque odio ut libero iaculis, nec
-                        fringilla sapien tincidunt. Sed laoree nulvinar ex sed
-                        estas in duru rana.
-                      </p>
-                      <a
-                        data-swiper-parallax-x="-30%"
-                        style={{ zIndex: 5 }}
-                        className="next-link"
-                        href="project-page.html"
-                      >
-                        View Details
-                      </a>
-                      <span
-                        data-swiper-parallax-y="60%"
-                        className="next-number"
-                      >
-                        1
-                      </span>
-                    </div> */}
-                  </div>
-                </div>
-                {/* <div className="swiper-slide">
-                  <div className="swiper-slide-block">
-                    <div
-                      className="swiper-slide-block-img"
-                      data-swiper-parallax-y="70%"
-                    >
-                      <a href="project-page-2.html">
-                        <img src="../assets/images/slider/1.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div className="swiper-slide-block-text">
-                      <h2
-                        data-swiper-parallax-x="-60%"
-                        className="next-main-title"
-                      >
-                        Tomas & Isabel
-                      </h2>
-                      <h3
-                        data-swiper-parallax-x="-50%"
-                        className="next-main-subtitle"
-                      >
-                        Wedding, Norwalk
-                      </h3>
-                      <p
-                        data-swiper-parallax-x="-40%"
-                        className="next-paragraph"
-                      >
-                        Quisque pellentesque odio ut libero iaculis, nec
-                        fringilla sapien tincidunt. Sed laoree nulvinar ex sed
-                        estas in duru rana.
-                      </p>
-                      <a
-                        data-swiper-parallax-x="-30%"
-                        className="next-link"
-                        href="project-page-2.html"
-                      >
-                        View Details
-                      </a>
-                      <span
-                        data-swiper-parallax-y="60%"
-                        className="next-number animate-box"
-                        data-animate-effect="fadeInUp"
-                      >
-                        2
-                      </span>
-                    </div>
-                  </div>
-                </div> */}
-                {/* <div className="swiper-slide">
-                  <div className="swiper-slide-block">
-                    <div
-                      className="swiper-slide-block-img"
-                      data-swiper-parallax-y="70%"
-                    >
-                      <a href="project-page-2.html">
-                        <img src="../assets/images/gallery/21.jpg" alt="" />
-                      </a>
-                    </div>
-                    <div className="swiper-slide-block-text">
-                      <h2
-                        data-swiper-parallax-x="-60%"
-                        className="next-main-title"
-                      >
-                        Jenna & James
-                      </h2>
-                      <h3
-                        data-swiper-parallax-x="-50%"
-                        className="next-main-subtitle"
-                      >
-                        Wedding, London
-                      </h3>
-                      <p
-                        data-swiper-parallax-x="-40%"
-                        className="next-paragraph"
-                      >
-                        Quisque pellentesque odio ut libero iaculis, nec
-                        fringilla sapien tincidunt. Sed laoree nulvinar ex sed
-                        estas in duru rana.
-                      </p>
-                      <a
-                        data-swiper-parallax-x="-30%"
-                        className="next-link"
-                        href="https://1.envato.market/e6o9j"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Buy Now
-                      </a>
-                      <span
-                        data-swiper-parallax-y="60%"
-                        className="next-number"
-                      >
-                        3
-                      </span>
-                    </div>
-                  </div>
-                </div> */}
+            {/* Content */}
+            <div className="relative h-full flex flex-col items-center justify-center text-white px-4">
+              {/* Main Heading */}
+              <h1 className="text-2xl md:text-4xl font-bold text-center max-w-2xl mb-8 font-inter">
+                Capture Beauty, Explore Stories, and Shop the Extraordinary
+              </h1>
 
-                {/* More swiper slides go here */}
+              {/* Scroll Down Button */}
+              <button className="animate-bounce p-2 rounded-full border-2 border-white/50 hover:border-white transition-colors">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                  />
+                </svg>
+              </button>
+
+              {/* Welcome Box */}
+              <div className="absolute bottom-0 right-0 bg-black/80 p-6 max-w-md">
+                <h2 className="text-sm font-semibold mb-2">
+                  WELCOME TO BLACK ROSE
+                </h2>
+                <p className="text-lg">
+                  Immerse yourself in breathtaking visuals, curated blogs, and a
+                  premium shopping experience—all in one place.
+                </p>
+                <a
+                  href="/explore"
+                  className="inline-flex items-center mt-4 text-sm hover:underline"
+                >
+                  Explore
+                  <svg
+                    className="w-4 h-4 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </a>
               </div>
-              {/* Navigation buttons */}
-              {/* <div
-                className="swiper-button-next animate-box"
-                data-animate-effect="fadeInRight"
-              >
-                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-              </div>
-              <div
-                className="swiper-button-prev animate-box"
-                data-animate-effect="fadeInLeft"
-              >
-                <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
-              </div> */}
             </div>
           </div>
         </section>
-      </div>
+      </section>
+      {/* <div className="container">
+        <section className="blackrose-section-slider pt-130">
+          <div className="relative w-full h-[500px] bg-cover bg-center">
+            <a href="">
+              <img src={assets.bg_img} alt="" />
+            </a>
+            <div>
+              <p className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'> Capture Beauty, Explore Stories, and Shop the Extraordinary</p>
+              <img
+                src={assets.arrow_down}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 cursor-pointer"
+                alt="Search Icon"
+              />
+            </div>
+          </div>
+        </section>
+      </div> */}
       <section className="projects pt-130 mb-60">
         <div className="container">
           <div className="row">
@@ -493,13 +506,228 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div
-                className="blackrose-more-wrapper txt-center animate-box"
-                data-animate-effect="fadeInUp"
-              >
-                <a href="" className="blackrose-more-trigger flex">
-                  <span className="plus flex-center">&nbsp;</span>
-                </a>
+
+              <div className="">
+                {/* Featured Products Section */}
+                <section className="max-w-7xl mx-auto px-4 py-12">
+                  <div className="flex justify-between items-center mb-8">
+                    <h2 className="text-2xl font-bold">
+                      Shop Featured Products
+                    </h2>
+                    <a
+                      href="/products"
+                      className="flex items-center hover:underline"
+                    >
+                      Shop All Products
+                      <span className="ml-2">+</span>
+                    </a>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {featuredProducts.map((product) => (
+                      <div key={product.id} className="bg-gray-900 p-4 rounded">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-64 object-cover mb-4"
+                        />
+                        <div className="flex justify-between items-center mb-2">
+                          <h3>{product.name}</h3>
+                          <span>${product.price.toFixed(2)}</span>
+                        </div>
+                        <div className="flex items-center mb-4">
+                          <div className="flex">
+                            {[...Array(5)].map((_, i) => (
+                              <svg
+                                key={i}
+                                className={`w-4 h-4 ${
+                                  i < product.rating
+                                    ? 'text-yellow-400'
+                                    : 'text-gray-400'
+                                }`}
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            ))}
+                          </div>
+                          <span className="ml-2 text-sm">
+                            ({product.reviews})
+                          </span>
+                        </div>
+                        <button className="w-full bg-white text-black py-2 hover:bg-gray-200 transition-colors">
+                          Add to Cart
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Trending Stories Section */}
+                <section className="max-w-7xl mx-auto px-4 py-12">
+                  <div className="flex justify-between items-center mb-8">
+                    <h2 className="text-2xl font-bold">
+                      Trending Stories in Lifestyle
+                    </h2>
+                    <a
+                      href="/blogs"
+                      className="flex items-center hover:underline"
+                    >
+                      Read More Blogs
+                      <span className="ml-2">+</span>
+                    </a>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {blogPosts.map((post) => (
+                      <div key={post.id} className="group cursor-pointer">
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-64 object-cover mb-4"
+                        />
+                        <h3 className="text-xl font-bold mb-2 group-hover:underline">
+                          {post.title}
+                        </h3>
+                        <p className="text-gray-400">{post.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Newsletter Section */}
+                <section className="bg-white text-black py-16">
+                  <div className="max-w-2xl mx-auto text-center px-4">
+                    <h2 className="text-3xl font-bold mb-4">
+                      Stay Connected with The Black Rose
+                    </h2>
+                    <p className="mb-8">
+                      Be the first to know about new arrivals, featured
+                      galleries, and exclusive blogs
+                    </p>
+                    <div className="flex max-w-md mx-auto">
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email address"
+                        className="flex-1 px-4 py-2 border border-gray-300"
+                      />
+                      <button className="bg-black text-white px-6 py-2 hover:bg-gray-800">
+                        Subscribe
+                      </button>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Testimonials Section */}
+                <section className="py-16 bg-black">
+                  <h2 className="text-3xl font-bold text-center mb-12 text-white">
+                    Over 500,000 happy customers
+                  </h2>
+                  <div className="max-w-4xl mx-auto px-4 relative">
+                    <Swiper
+                      modules={[Navigation, Pagination, Autoplay]}
+                      spaceBetween={30}
+                      slidesPerView={1}
+                      navigation={{
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                      }}
+                      pagination={{ clickable: true }}
+                      autoplay={{
+                        delay: 5000,
+                        disableOnInteraction: false,
+                      }}
+                      loop={true}
+                      className="testimonials-swiper"
+                    >
+                      {testimonials.map((testimonial) => (
+                        <SwiperSlide key={testimonial.id}>
+                          <div className="bg-white text-black p-8 rounded-lg shadow-lg">
+                            <div className="flex mb-4">
+                              {[...Array(5)].map((_, i) => (
+                                <svg
+                                  key={i}
+                                  className={`w-5 h-5 ${
+                                    i < testimonial.rating
+                                      ? 'text-yellow-400'
+                                      : 'text-gray-300'
+                                  }`}
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              ))}
+                            </div>
+                            <p className="text-lg mb-6 font-medium">
+                              {testimonial.text}
+                            </p>
+                            <div className="flex items-center">
+                              <div className="w-12 h-12 bg-gray-200 rounded-full mr-4">
+                                {/* You can add user avatar here */}
+                              </div>
+                              <div>
+                                <p className="font-bold text-lg">
+                                  {testimonial.author}
+                                </p>
+                                <p className="text-gray-600">
+                                  {testimonial.jobTitle}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+
+                    {/* Custom Navigation Buttons */}
+                    <button className="swiper-button-prev absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-colors">
+                      <svg
+                        className="w-6 h-6 text-black"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 19l-7-7 7-7"
+                        />
+                      </svg>
+                    </button>
+                    <button className="swiper-button-next absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-colors">
+                      <svg
+                        className="w-6 h-6 text-black"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </section>
+
+                {/* Call to Action Section */}
+                <section className="bg-white text-black py-16">
+                  <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+                    <h2 className="text-3xl font-bold">
+                      Start Your Journey with The Black Rose Today!
+                    </h2>
+                    <button className="bg-black text-white px-6 py-3 hover:bg-gray-800 transition-colors">
+                      Shop now
+                    </button>
+                  </div>
+                </section>
               </div>
             </div>
           </div>

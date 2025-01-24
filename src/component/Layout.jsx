@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 // import Swiper from 'swiper';
-import { Outlet, NavLink } from 'react-router-dom'; // Assuming you're using React Router
+import { Outlet } from 'react-router-dom'; // Assuming you're using React Router
 import { assets } from '../assets/images/assets';
+import Navigation from './Navigation';
+// import Navigation from './Navigation';
 
 const Layout = () => {
   const [loading, setLoading] = useState(false);
-  const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State for navbar toggle
+  // const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State for navbar toggle
 
   useEffect(() => {
     // Simulate loading process
@@ -14,9 +16,9 @@ const Layout = () => {
     }, 3000); // Adjust the time as needed
   }, []);
 
-  const toggleNavbar = () => {
-    setIsNavbarOpen(!isNavbarOpen); // Toggle navbar state
-  };
+  // const toggleNavbar = () => {
+  //   setIsNavbarOpen(!isNavbarOpen); // Toggle navbar state
+  // };
 
   //   const [scrollPos, setScrollPos] = useState(0);
   //   const [loading, setLoading] = useState(true);
@@ -143,108 +145,11 @@ const Layout = () => {
           </div>
         </div>
         {/* Navbar */}
-        <nav className="navbar navbar-expand-lg">
-          <div className="container">
-            <div className="logo-wrapper">
-              <NavLink className="logo" to="/">
-                <img src={assets.logo} className="logo-img" alt="" />
-              </NavLink>
-            </div>
 
-            <button
-              className="navbar-toggler"
-              type="button"
-              onClick={toggleNavbar}
-              data-bs-toggle="collapse"
-              data-bs-target="#navbar"
-              aria-controls="navbar"
-              aria-expanded={isNavbarOpen ? 'true' : 'false'}
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon">
-                <i className="fa fa-bars"></i>
-              </span>
-            </button>
-
-            <div
-              className={`collapse navbar-collapse ${
-                isNavbarOpen ? 'show' : ''
-              }`}
-              id="navbar"
-            >
-              <ul className="navbar-nav ms-auto">
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    to="/"
-                    style={({ isActive }) => ({
-                      color: isActive ? '#FF5733' : '', // Active link color
-                    })}
-                  >
-                    Home
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    to="/photography"
-                    style={({ isActive }) => ({
-                      color: isActive ? '#FF5733' : '',
-                    })}
-                  >
-                    Photography
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    to="/lifestyle"
-                    style={({ isActive }) => ({
-                      color: isActive ? '#FF5733' : '',
-                    })}
-                  >
-                    LifeStyle
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    to="/about"
-                    style={({ isActive }) => ({
-                      color: isActive ? '#FF5733' : '',
-                    })}
-                  >
-                    About
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    to="/contact"
-                    style={({ isActive }) => ({
-                      color: isActive ? '#FF5733' : '',
-                    })}
-                  >
-                    Contact
-                  </NavLink>
-                </li>
-              </ul>
-
-              <div className="ms-auto">
-                <NavLink
-                  className="nav-link"
-                  to="/shop"
-                  style={({ isActive }) => ({
-                    color: isActive ? '#FF5733' : '',
-                  })}
-                >
-                  Shop
-                </NavLink>
-              </div>
-            </div>
-          </div>
-        </nav>
-
+        <div className="container">
+          <Navigation/>
+          {/* </nav> */}
+        </div>
         {/* Render child pages */}
         <div>
           <Outlet />
