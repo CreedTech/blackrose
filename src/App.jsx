@@ -10,7 +10,7 @@ import Photography from './pages/Photography';
 import PhotographyDetails from './pages/PhotographyDetails';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SingleBlog from './pages/SIngleBlog';
+import SingleBlog from './pages/SingleBlog';
 import Shop from './pages/Shop';
 import ProductPage from './pages/ProductPage';
 import Signup from './pages/SignUp';
