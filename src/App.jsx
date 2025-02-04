@@ -10,24 +10,30 @@ import Photography from './pages/Photography';
 import PhotographyDetails from './pages/PhotographyDetails';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import SingleBlog from './pages/SIngleBlog';
+import Shop from './pages/Shop';
+import ProductPage from './pages/ProductPage';
+import Signup from './pages/SignUp';
 
 function App() {
   return (
     <>
-    
-    <Routes>
-      <Route element={<Layout />}>
-        {' '}
-        {/* Wrap Contact route with Layout */}
-        <Route path="/" element={<Home />} />
-        <Route path="/photography" element={<Photography />} />
-        <Route path="/photography/:id" element={<PhotographyDetails />} />
-        <Route path="/lifestyle" element={<Lifestyle />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/contact" element={<Contact />} />
-      </Route>
+      <Routes>
+        <Route element={<Layout />}>
+          {' '}
+          {/* Wrap Contact route with Layout */}
+          <Route path="/" element={<Home />} />
+          <Route path="/photography" element={<Photography />} />
+          <Route path="/photography/:imageId" element={<PhotographyDetails />} />
+          <Route path="/lifestyle" element={<Lifestyle />} />
+          <Route path="/lifestyle/:id" element={<SingleBlog />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/:name" element={<ProductPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path='/login' element={<Signup />} />
+        </Route>
       </Routes>
       <ToastContainer
         position="bottom-right"

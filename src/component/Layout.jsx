@@ -1,20 +1,24 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 // import Swiper from 'swiper';
 import { Outlet } from 'react-router-dom'; // Assuming you're using React Router
 import { assets } from '../assets/images/assets';
 import Navigation from './Navigation';
+import { useGallery } from '../hooks/useGallery';
 // import Navigation from './Navigation';
 
 const Layout = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+
+  const { useImages } = useGallery();
+  const { isLoading } = useImages();
   // const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State for navbar toggle
 
-  useEffect(() => {
-    // Simulate loading process
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000); // Adjust the time as needed
-  }, []);
+  // useEffect(() => {
+  //   // Simulate loading process
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 3000); // Adjust the time as needed
+  // }, []);
 
   // const toggleNavbar = () => {
   //   setIsNavbarOpen(!isNavbarOpen); // Toggle navbar state
@@ -111,7 +115,7 @@ const Layout = () => {
 
   return (
     <div>
-      {loading && (
+      {isLoading && (
         <div id="Lfa-page-loading" className="blackrose-pageloading">
           <div className="blackrose-pageloading-inner">
             <img src={assets.logo} className="logo" alt="" />
@@ -147,7 +151,7 @@ const Layout = () => {
         {/* Navbar */}
 
         <div className="container">
-          <Navigation/>
+          <Navigation />
           {/* </nav> */}
         </div>
         {/* Render child pages */}

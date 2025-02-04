@@ -1,24 +1,39 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
+import { ShopContext } from '../context/ShopContext';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {
+    setShowSearch,
+    getCartCount,
+    navigate,
+    token,
+    setToken,
+    setCartItems,
+  } = useContext(ShopContext);
+
+  const logout = () => {
+    navigate('/login');
+    localStorage.removeItem('token');
+    setToken('');
+    setCartItems({});
+  };
 
   return (
     <>
-      {/* Announcement Bar */}
-      {/* <div className="bg-black text-white text-center py-2 text-sm">
-        Cyber Weekend is Here! Shop $9 Botox and $3.50 Dysport Now!
-      </div> */}
-
       {/* Main Navigation */}
       <nav className="max-w-7xl mx-auto px-4 mt-10">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <NavLink to="/" className="flex items-center relative">
-              <img src={assets.logo} alt="The Black Rose" className="h-8" />
+              <img
+                src={assets.logo}
+                alt="The Black Rose"
+                className="w-36 h-16"
+              />
             </NavLink>
           </div>
 
@@ -89,7 +104,13 @@ const Navigation = () => {
           {/* Right Side Icons */}
           <div className="flex items-center space-x-4">
             {/* Search */}
-            <button className="p-2">
+            <button
+              className="p-2"
+              onClick={() => {
+                setShowSearch(true);
+                navigate('/collection');
+              }}
+            >
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -126,7 +147,11 @@ const Navigation = () => {
             </NavLink>
 
             {/* Account */}
-            <NavLink to="/account" className="p-2 relative">
+            <NavLink
+              to={token ? null : '/login'}
+              // onClick={() => (token ? null : navigate('/login'))}
+              className="p-2 relative cursor-pointer"
+            >
               <svg
                 className="w-5 h-5"
                 fill="none"

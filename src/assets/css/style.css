@@ -878,7 +878,7 @@ a {
   width: 50px;
   height: 50px;
   background-image: none;
-  background-color: #191919;
+  background-color: #000000;
   z-index: 2;
   cursor: pointer;
 }
@@ -1057,7 +1057,7 @@ a {
 .blackrose-section-slider {
   width: 100%;
   height: auto;
-  background-color: #191919;
+  background-color: #000000;
 }
 .blackrose-section-slider .next-container-center {
   width: 100%;
@@ -2415,7 +2415,7 @@ ul.team-info-social li {
     bottom: 0px;
     left: 0;
     z-index: 2;
-    background: linear-gradient(to top, #191919, rgba(25, 25, 25, 0));
+    background: linear-gradient(to top, #000000, rgba(25, 25, 25, 0));
   }
   .blackrose-section-slider .next-container-center {
     max-width: 1245px;
@@ -2431,11 +2431,11 @@ ul.team-info-social li {
   }
   .swiper-button-next {
     right: 135px;
-    background-color: #191919;
+    background-color: #000000;
   }
   .swiper-button-prev {
-    bottom: 50px;
-    background-color: #191919;
+    /* bottom: 50px; */
+    background-color: #000000;
   }
   .swiper-slide-block .swiper-slide-block-img {
     width: 70%;
@@ -2495,5 +2495,33 @@ ul.team-info-social li {
 @media (min-width: 1200px) {
   .container {
     max-width: 1140px !important;
+  }
+}
+
+/* Required styles for masonry layout */
+.masonry-grid {
+  display: flex;
+  width: auto;
+  margin-left: -16px; /* Adjust based on your gap needs */
+}
+
+.masonry-grid_column {
+  padding-left: 16px; /* Adjust based on your gap needs */
+  background-clip: padding-box;
+}
+
+/* Optional: Add loading animation for images */
+.image-loading {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #333 0%, #444 50%, #333 100%);
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
   }
 }

@@ -67,6 +67,8 @@ import profile_icon from './profile_icon.svg';
 import search_icon from './search_icon.svg';
 import arrow_down from './arrow_down.svg';
 import bg_img from './bg_img.png';
+import x_icon from './x.svg';
+import facebook_icon from './facebook.svg';
 
 export const assets = {
   logo,
@@ -83,6 +85,8 @@ export const assets = {
   profile_icon,
   search_icon,
   arrow_down,
+  facebook_icon,
+  x_icon,
   bg_img,
   blogOne,
   blogTwo,

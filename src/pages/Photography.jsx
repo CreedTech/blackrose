@@ -1,109 +1,42 @@
-import { assets } from '../assets/images/assets';
+// import { assets } from '../assets/images/assets';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Parallax, EffectFade } from 'swiper/modules';
-// import 'swiper/css';
-// import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useGallery } from '../hooks/useGallery';
+import { IoHeartCircleOutline } from 'react-icons/io5';
 // import 'swiper/css';
 // import 'swiper/css/navigation';
 // import 'swiper/css/pagination';
 // import ImageLightbox from '../component/ImageLightBox';
 
 const Photography = () => {
-  const [photos, setPhotos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Sample data - replace with your actual photos
-  //  const dummyPhotos = [
-  //   {
-  //     id: 1,
-  //     imageUrl: '/path-to-wedding-photo.jpg',
-  //     category: 'wedding',
-  //   },
-  //   {
-  //     id: 2,
-  //     imageUrl: '/path-to-lifestyle-photo.jpg',
-  //     category: 'lifestyle',
-  //   },
-  //   // Add more photos...
-  // ];
-  const dummyPhotos = Array.from({ length: 32 }, (_, index) => ({
-    id: index + 1,
-    imageUrl:
-      assets[
-        `gallery${
-          [
-            'One',
-            'Two',
-            'Three',
-            'Five',
-            'Six',
-            'Seven',
-            'Eight',
-            'Nine',
-            'Eleven',
-            'Twelve',
-            'Thirteen',
-            'Fourteen',
-            'Fifteen',
-            'Sixteen',
-            'Seventeen',
-            'Eighteen',
-            'Nineteen',
-            'Twenty',
-            'TwentyOne',
-            'TwentyTwo',
-            'TwentyThree',
-            'TwentyFour',
-            'TwentyFive',
-            'TwentySix',
-          ][index]
-        }`
-      ], // Dynamically access the assets using the correct key names
-    category: index % 2 === 0 ? 'wedding' : 'lifestyle', // Alternate categories
-  }));
-
-  // console.log(dummyPhotos);
-
-  // console.log(dummyPhotos);
-
-  const loadMorePhotos = () => {
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      const nextPhotos = dummyPhotos.slice((page - 1) * 9, page * 9);
-      setPhotos((prev) => [...prev, ...nextPhotos]);
-      setHasMore(nextPhotos.length === 9);
-      setPage((prev) => prev + 1);
-      setLoading(false);
-    }, 800);
-  };
-
-  useEffect(() => {
-    console.log('loading');
-    loadMorePhotos();
-  }, []);
+  const [category, setCategory] = useState(null);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const { useImages, useLikeImage } = useGallery();
+  const { data } = useImages(page, category, search);
+  // const { data: singleImage } = useGetSingleImage();
+  const likeMutation = useLikeImage();
 
   const handleImageClick = (index) => {
-    setSelectedImage(photos[index]);
+    setSelectedImage(data?.images[index]);
     setCurrentIndex(index);
   };
 
   const handlePrevious = () => {
-    const newIndex = (currentIndex - 1 + photos.length) % photos.length;
-    setSelectedImage(photos[newIndex]);
+    const newIndex =
+      (currentIndex - 1 + data?.images.length) % data?.images.length;
+    setSelectedImage(data?.images[newIndex]);
     setCurrentIndex(newIndex);
   };
 
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % photos.length;
-    setSelectedImage(photos[newIndex]);
+    const newIndex = (currentIndex + 1) % data?.images.length;
+    setSelectedImage(data?.images[newIndex]);
     setCurrentIndex(newIndex);
   };
 
@@ -134,36 +67,13 @@ const Photography = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedImage, currentIndex]);
-  const sliderData = [
-    {
-      id: 1,
-      image: assets.sliderTwo,
-      title: 'Anna Lussen',
-      subtitle: 'Model, Moscow',
-      description:
-        'Quisque pellentesque odio ut libero iaculis, nec fringilla sapien tincidunt. Sed laoree nulvinar ex sed estas in duru rana.',
-    },
-    {
-      id: 2,
-      image: assets.sliderOne,
-      title: 'Tomas & Isabel',
-      subtitle: 'Wedding, Norwalk',
-      description:
-        'Quisque pellentesque odio ut libero iaculis, nec fringilla sapien tincidunt. Sed laoree nulvinar ex sed estas in duru rana.',
-    },
-    {
-      id: 3,
-      image: assets.galleryTwentyOne,
-      title: 'Jenna & James',
-      subtitle: 'Wedding, London',
-      description:
-        'Quisque pellentesque odio ut libero iaculis, nec fringilla sapien tincidunt. Sed laoree nulvinar ex sed estas in duru rana.',
-    },
-  ];
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="container">
-      <section className="blackrose-section-slider pb-0">
+      <section className="blackrose-section-slider mt-10 pb-0">
         <div className="next-container-center">
           <Swiper
             effect={'cards'}
@@ -180,16 +90,16 @@ const Photography = () => {
             }}
             className="swiper-container h-full"
           >
-            {sliderData.map((slide, index) => (
-              <SwiperSlide key={slide.id}>
+            {data?.images.map((slide, index) => (
+              <SwiperSlide key={slide._id}>
                 <div className="swiper-slide-block">
                   <div
                     className="swiper-slide-block-img animate-box"
                     data-animate-effect="fadeInLeft"
                     data-swiper-parallax-y="100%"
                   >
-                    <Link to={`/photography/${slide.id}`}>
-                      <img src={slide.image} alt={slide.title} />
+                    <Link to={`/photography/${slide._id}`}>
+                      <img src={slide.watermarkedUrl} alt={slide.title} />
                     </Link>
                   </div>
                   <div
@@ -206,7 +116,7 @@ const Photography = () => {
                       data-swiper-parallax-x="-50%"
                       className="next-main-subtitle"
                     >
-                      {slide.subtitle}
+                      {slide.category.title}
                     </h3>
                     <p data-swiper-parallax-x="-40%" className="next-paragraph">
                       {slide.description}
@@ -288,14 +198,14 @@ const Photography = () => {
 
         {/* Photo Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {photos.map((photo, index) => (
+          {data?.images.map((photo, index) => (
             <div
-              key={photo.id}
+              key={photo._id}
               className="group relative aspect-square overflow-hidden bg-gray-900"
               onClick={() => handleImageClick(index)}
             >
               <img
-                src={photo.imageUrl}
+                src={photo.watermarkedUrl}
                 alt=""
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
@@ -310,9 +220,69 @@ const Photography = () => {
             </div>
           ))}
         </div>
+        {data?.totalPages > 1 && (
+          <div className="row">
+            <div
+              className="col-md-12 mt-40 mb-60 text-center animate-box"
+              data-animate-effect="fadeInUp"
+            >
+              <ul className="blackrose-pagination-wrap align-center relative">
+                <li>
+                  <a
+                    // href=""
+                    className="cursor-pointer"
+                    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={page === 1}
+                  >
+                    <i className="fa fa-angle-left"></i>
+                  </a>
+                </li>
 
+                <li>
+                  <span href="" className="">
+                    Page {page} of {data.totalPages}
+                  </span>
+                </li>
+
+                <li>
+                  <a
+                    // href=""
+                    className="cursor-pointer"
+                    onClick={() => setPage((prev) => prev + 1)}
+                    disabled={page === data.totalPages}
+                  >
+                    <i className="fa fa-angle-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        )}
+        {/* Pagination */}
+        {/* {data?.totalPages == 1 && (
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+              className="px-4 py-2 border rounded mr-2"
+            >
+              Previous
+            </button>
+            <span className="px-4 py-2">
+              Page {page} of {data.totalPages}
+            </span>
+            <button
+              onClick={() => setPage((prev) => prev + 1)}
+              disabled={page === data.totalPages}
+              className="px-4 py-2 border rounded ml-2"
+            >
+              Next
+            </button>
+          </div>
+        )} */}
         {/* Load More Button */}
-        {hasMore && (
+
+        {/* {hasMore && (
           <div className="flex justify-center mt-8">
             <button
               onClick={loadMorePhotos}
@@ -338,10 +308,10 @@ const Photography = () => {
               )}
             </button>
           </div>
-        )}
+        )} */}
 
         {/* No More Photos Message */}
-        {!hasMore && photos.length > 0 && (
+        {data?.images.length == 9 && (
           <div className="text-center mt-8 text-white/60">
             No more photos to load
           </div>
@@ -412,52 +382,71 @@ const Photography = () => {
             {/* Main image */}
             <div className="relative max-w-7xl mx-auto">
               <img
-                src={selectedImage.imageUrl}
-                alt={selectedImage.category}
+                src={selectedImage.watermarkedUrl}
+                alt={selectedImage.category.name}
                 className="max-h-[90vh] object-contain"
               />
 
               {/* Image info */}
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black/60 to-transparent">
-                <h2 className="text-xl font-bold">{selectedImage.category}</h2>
-                {/* <p className="text-sm opacity-75">{image.description}</p> */}
+                <h2 className="text-xl font-bold">{selectedImage.title}</h2>
+                <p className="text-sm text-white">
+                  {selectedImage.category.title}
+                </p>
+                {/* Additional info */}
+                <div className="flex items-center mt-2 space-x-4">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      likeMutation.mutate(selectedImage._id);
+                    }}
+                    className="flex items-center space-x-1 text-sm"
+                  >
+                    <IoHeartCircleOutline
+                      className={`w-5 h-5 ${
+                        selectedImage.isLiked ? 'text-red-500' : 'text-white'
+                      }`}
+                    />
+                    <span>{selectedImage.likeCount}</span>
+                  </button>
+
+                  {selectedImage.photographer && (
+                    <div className="flex items-center space-x-2">
+                      {/* <img
+                        src={selectedImage.photographer.avatar}
+                        alt={selectedImage.photographer.name}
+                        className="w-6 h-6 rounded-full"
+                      /> */}
+                      <span>{selectedImage.photographer.name}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-
-            {/* Thumbnails */}
-            {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-             <div className="flex gap-2 overflow-x-auto p-2">
-               {image.map((thumb, index) => (
-                 <button
-                   key={index}
-                   onClick={() => image.onThumbClick(index)}
-                   className={`w-16 h-16 flex-shrink-0 ${
-                     thumb.active ? 'ring-2 ring-white' : 'opacity-50'
-                   }`}
-                 >
-                   <img
-                     src={thumb.url}
-                     alt=""
-                     className="w-full h-full object-cover"
-                   />
-                 </button>
-               ))}
-             </div>
-           </div> */}
+            {/* Optional: Thumbnails */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+              <div className="flex gap-2 overflow-x-auto p-2">
+                {data?.images.map((image, index) => (
+                  <button
+                    key={image._id}
+                    onClick={() => handleImageClick(index)}
+                    className={`w-16 h-16 flex-shrink-0 ${
+                      currentIndex === index
+                        ? 'ring-2 ring-white'
+                        : 'opacity-50'
+                    }`}
+                  >
+                    <img
+                      src={image.watermarkedUrl}
+                      alt={image.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          
           </div>
-          // <ImageLightbox
-          //   image={{
-          //     ...selectedImage,
-          //     onPrevious: handlePrevious,
-          //     onNext: handleNext,
-          //     thumbnails: photos.map((img, idx) => ({
-          //       url: img.imageUrl,
-          //       active: idx === currentIndex,
-          //     })),
-          //     onThumbClick: handleImageClick,
-          //   }}
-          //   onClose={handleClose}
-          // />
         )}
       </div>
     </div>

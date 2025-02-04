@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
 
 const Lifestyle = () => {
@@ -87,31 +88,30 @@ const Lifestyle = () => {
           </div>
 
           {blogPosts.map((post) => (
-            <div
+            <Link
+              to={`/lifestyle/${post.id}`}
               key={post.id}
-              className="col-md-4 mb-40 animate-box"
+              className="col-md-4 mb-40 animate-box cursor-pointer relative"
               data-animate-effect="fadeInUp"
             >
               <div className="item">
                 <div className="post-img">
                   <div className="img">
-                    <a href={post.link}>
-                      <img src={post.image} alt={post.title} />
-                    </a>
+                    {/* <a href={post.link}> */}
+                    <img src={post.image} alt={post.title} />
+                    {/* </a> */}
                   </div>
                 </div>
                 <div className="cont">
-                  <h6>
-                    <a href={post.link}>{post.title}</a>
-                  </h6>
+                  <h6>{post.title}</h6>
                   <div className="info">
-                    <a href={post.link}>
-                      {post.category} / {post.date}
-                    </a>
+                    {/* <a href={post.link}> */}
+                    {post.category} / {post.date}
+                    {/* </a> */}
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

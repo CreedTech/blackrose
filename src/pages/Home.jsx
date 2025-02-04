@@ -1,35 +1,44 @@
 // import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
+import { useGallery } from '../hooks/useGallery';
+import Masonry from 'react-masonry-css';
 
 const Home = () => {
+  const { useCategories, useImages } = useGallery();
+  const { data: categories } = useCategories();
+  const { data: images } = useImages();
+  console.log(images);
+
+ 
   // const [email, setEmail] = useState('');
 
-  const projects = [
-    {
-      id: 1,
-      image: assets.serviceTwo,
-      title: 'Explore exclusive high-res photo galleries by top photographers',
-      link: '',
-      categoryLink: '',
-      categoryText: '01',
-    },
-    {
-      id: 2,
-      image: assets.serviceSix,
-      title: 'Read stories, tips, and insights on living your best life',
-      link: '',
-      categoryLink: '',
-      categoryText: '02',
-    },
-    {
-      id: 3,
-      image: assets.serviceFive,
-      title: 'Shop premium products curated just for you',
-      link: '',
-      categoryLink: '',
-      categoryText: '03',
-    },
-  ];
+  // const projects = [
+  //   {
+  //     id: 1,
+  //     image: assets.serviceTwo,
+  //     title: 'Explore exclusive high-res photo galleries by top photographers',
+  //     link: '',
+  //     categoryLink: '',
+  //     categoryText: '01',
+  //   },
+  //   {
+  //     id: 2,
+  //     image: assets.serviceSix,
+  //     title: 'Read stories, tips, and insights on living your best life',
+  //     link: '',
+  //     categoryLink: '',
+  //     categoryText: '02',
+  //   },
+  //   {
+  //     id: 3,
+  //     image: assets.serviceFive,
+  //     title: 'Shop premium products curated just for you',
+  //     link: '',
+  //     categoryLink: '',
+  //     categoryText: '03',
+  //   },
+  // ];
 
   const featuredProducts = [
     {
@@ -86,10 +95,25 @@ const Home = () => {
       title: 'Top 10 Photography Destinations in 2025',
       description:
         'Discover the most stunning places to capture your next masterpiece.',
-      image:assets.galleryTwentyEight,
+      image: assets.galleryTwentyEight,
     },
   ];
 
+  const sizeClasses = [
+    'row-span-1',
+    'row-span-2',
+    'col-span-2 ',
+    'row-span-1 col-span-2',
+  ];
+
+  // Assign sizes based on image index or any other criteria
+  const getImageSize = (index) => {
+    // You can create any pattern you want
+    if (index % 3 === 0) return sizeClasses[2]; // big square
+    // if (index % 1 === 0) return sizeClasses[1]; // tall
+    // if (index % 4 === 0) return sizeClasses[3]; // wide
+    return sizeClasses[0]; // normal
+  };
   return (
     <div>
       {/* 
@@ -121,21 +145,23 @@ const Home = () => {
               </h1>
 
               {/* Scroll Down Button */}
-              <button className="animate-bounce p-2 rounded-full border-2 border-white/50 hover:border-white transition-colors">
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                  />
-                </svg>
-              </button>
+              <Link to="/photography">
+                <button className="animate-bounce p-2 rounded-full border-2 border-white/50 hover:border-white transition-colors">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                    />
+                  </svg>
+                </button>
+              </Link>
 
               {/* Welcome Box */}
               <div className="absolute bottom-0 right-0 bg-black/80 p-6 max-w-md">
@@ -147,7 +173,7 @@ const Home = () => {
                   premium shopping experience—all in one place.
                 </p>
                 <a
-                  href="/explore"
+                  href="/lifestyle"
                   className="inline-flex items-center mt-4 text-sm hover:underline"
                 >
                   Explore
@@ -170,24 +196,8 @@ const Home = () => {
           </div>
         </section>
       </section>
-      {/* <div className="container">
-        <section className="blackrose-section-slider pt-130">
-          <div className="relative w-full h-[500px] bg-cover bg-center">
-            <a href="">
-              <img src={assets.bg_img} alt="" />
-            </a>
-            <div>
-              <p className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'> Capture Beauty, Explore Stories, and Shop the Extraordinary</p>
-              <img
-                src={assets.arrow_down}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 cursor-pointer"
-                alt="Search Icon"
-              />
-            </div>
-          </div>
-        </section>
-      </div> */}
-      <section className="projects pt-130 mb-60">
+
+      <section className="projects pt-130 mb-30">
         <div className="container">
           <div className="row">
             <div
@@ -197,21 +207,20 @@ const Home = () => {
               <h4>Discover the Best of The Black Rose</h4>
             </div>
 
-            {projects.map((project) => (
+            {categories?.map((category) => (
               <div
-                key={project.id}
+                key={category._id}
                 className="col-md-4 animate-box"
                 data-animate-effect="fadeInUp"
               >
                 <div className="item">
-                  <div className="position-re o-hidden">
-                    <img src={project.image} alt={project.title} />
+                  <div className="position-re o-hidden aspect-square">
+                    <img src={category.image} alt={category.title} className='w-full h-full object-cover ' />
                   </div>
                   <div className="con">
-                    <h5>
-                      <a href={project.link}>{project.title}</a>
-                    </h5>
-                    <a href={project.link}>
+                    <p className="text-lg">{category.title}</p>
+                    <p>{category.description}</p>
+                    <a href={category.link}>
                       <i className="fa fa-long-arrow-right"></i>
                     </a>
                   </div>
@@ -231,7 +240,35 @@ const Home = () => {
             >
               <h4>Spotlight on photography</h4>
             </div>
-            <div
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {images?.images.map((image) => (
+                <div
+                  key={image.id}
+                  className={`relative mb-4 cursor-pointer overflow-hidden group aspect-square`}
+                 
+                >
+                  <img
+                    src={image.url}
+                    alt={image.title}
+                    className="w-full h-full object-cover  transition-transform duration-300 group-hover:scale-105 aspect-square"
+                    loading="lazy"
+                  />
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="text-lg font-semibold">{image.title}</h3>
+                      {image.photographer && (
+                        <p className="text-sm opacity-75">
+                          {image.photographer.name}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* <div
               className="col-md-4 animate-box"
               data-animate-effect="fadeInUp"
             >
@@ -371,7 +408,7 @@ const Home = () => {
                   <img className="img-fluid" src={assets.galnin} alt="" />
                 </a>
               </figure>
-            </div>
+            </div> */}
           </div>
           <div className="">
             {/* Featured Products Section */}
@@ -418,7 +455,7 @@ const Home = () => {
                       </div>
                       <span className="ml-2 text-sm">({product.reviews})</span>
                     </div>
-                    <button className="w-full bg-white text-black py-2 hover:bg-gray-200 transition-colors">
+                    <button className="w-1/2 bg-white text-black py-2 hover:bg-gray-200 transition-colors">
                       Add to Cart
                     </button>
                   </div>
