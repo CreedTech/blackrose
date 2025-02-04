@@ -61,33 +61,69 @@ const galleryApi = {
     }
   },
 
-  fetchCollections: async () => {
-    const { data } = await axios.get(`${API_URL}/gallery/collections`);
-    return data;
+  getUserCollections: async () => {
+    const token = localStorage.getItem('token');
+
+    try {
+      const { data } = await axios.get(`${API_URL}/collections`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   },
 
   createCollection: async (collectionData) => {
-    const { data } = await axios.post(
-      `${API_URL}/gallery/collections`,
-      collectionData
-    );
-    return data;
+    const token = localStorage.getItem('token');
+    try {
+      const { data } = await axios.post(
+        `${API_URL}/collections`,
+        collectionData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   },
 
   addToCollection: async ({ collectionId, imageId }) => {
-    const { data } = await axios.post(
-      `${API_URL}/gallery/collections/${collectionId}/images/${imageId}`
-    );
-    return data;
+    const token = localStorage.getItem('token');
+    try {
+      const { data } = await axios.post(
+        `${API_URL}/collections/${collectionId}/images`,
+        { imageId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   },
 
   downloadImage: async (imageId) => {
-    const { data } = await axios.get(`${API_URL}/gallery/${imageId}/download`, {
+    const response = await axios.get(`${API_URL}/gallery/${imageId}/download`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      responseType: 'blob', // Important for downloading files
     });
-    return data.downloadUrl;
+    return response.data;
   },
 };
 
@@ -164,34 +200,44 @@ export const useGallery = () => {
   };
   const useDownloadImage = () => {
     return useMutation({
-      mutationFn: galleryApi.downloadImage,
-      onSuccess: (data, imageId) => {
-        // Optionally update image stats after download
+      mutationFn: async (imageId) => {
+        const blob = await galleryApi.downloadImage(imageId);
+        return blob;
+      },
+      onSuccess: (_, imageId) => {
         queryClient.invalidateQueries(['image', imageId]);
       },
     });
   };
   // Collections queries and mutations
+
+  // Get user's collections
   const useCollections = () => {
     return useQuery({
       queryKey: ['collections'],
-      queryFn: galleryApi.fetchCollections,
+      queryFn: galleryApi.getUserCollections,
+      // Only fetch if user is authenticated
+      enabled: !!localStorage.getItem('token'),
     });
   };
 
+  // Create new collection
   const useCreateCollection = () => {
     return useMutation({
       mutationFn: galleryApi.createCollection,
       onSuccess: () => {
+        // Invalidate collections query to refetch
         queryClient.invalidateQueries(['collections']);
       },
     });
   };
 
+  // Add image to collection
   const useAddToCollection = () => {
     return useMutation({
       mutationFn: galleryApi.addToCollection,
       onSuccess: () => {
+        // Invalidate collections query to refetch
         queryClient.invalidateQueries(['collections']);
       },
     });

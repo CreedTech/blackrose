@@ -30,6 +30,7 @@ const PhotographyDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { navigate, token } = useContext(ShopContext);
+  
   //   const [isLoading, setIsLoading] = useState(false);
 
   const { useGetSingleImage, useImages, useLikeImage, useDownloadImage } =
@@ -65,14 +66,23 @@ const PhotographyDetails = () => {
     }
 
     try {
-      const downloadUrl = await downloadMutation.mutateAsync(imageId);
-      // Create temporary link and trigger download
+      const blob = await downloadMutation.mutateAsync(imageId);
+
+      // Create blob URL
+      const url = window.URL.createObjectURL(blob);
+
+      // Create temporary link
       const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = `${image.title || 'image'}.jpg`;
+      link.href = url;
+      link.download = `${image.title || 'image'}.jpg`; // Set filename
+
+      // Append to document, click, and cleanup
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      // Revoke blob URL
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       toast.error('Failed to download image');
       console.error('Download error:', error);
@@ -209,7 +219,7 @@ const PhotographyDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white container">
       {/* Navigation */}
       <Helmet>
         <title>{image.title} | BlackRose</title>
@@ -391,7 +401,8 @@ const PhotographyDetails = () => {
               <CreateCollectionModal
                 isOpen={showCreateCollection}
                 onClose={() => setShowCreateCollection(false)}
-                onCreate={handleCreateCollection}
+                // onCreate={handleCreateCollection}
+                imageId={image._id}
               />
               <DownloadModal
                 isOpen={isModalOpen}
@@ -622,7 +633,6 @@ const PhotographyDetails = () => {
 };
 
 export default PhotographyDetails;
-
 
 // Optional: Add a download progress component
 // const DownloadProgress = ({ isLoading, progress }) => {
