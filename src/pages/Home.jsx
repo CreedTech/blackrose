@@ -2,43 +2,11 @@
 import { Link } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
 import { useGallery } from '../hooks/useGallery';
-import Masonry from 'react-masonry-css';
 
 const Home = () => {
   const { useCategories, useImages } = useGallery();
   const { data: categories } = useCategories();
   const { data: images } = useImages();
-  console.log(images);
-
- 
-  // const [email, setEmail] = useState('');
-
-  // const projects = [
-  //   {
-  //     id: 1,
-  //     image: assets.serviceTwo,
-  //     title: 'Explore exclusive high-res photo galleries by top photographers',
-  //     link: '',
-  //     categoryLink: '',
-  //     categoryText: '01',
-  //   },
-  //   {
-  //     id: 2,
-  //     image: assets.serviceSix,
-  //     title: 'Read stories, tips, and insights on living your best life',
-  //     link: '',
-  //     categoryLink: '',
-  //     categoryText: '02',
-  //   },
-  //   {
-  //     id: 3,
-  //     image: assets.serviceFive,
-  //     title: 'Shop premium products curated just for you',
-  //     link: '',
-  //     categoryLink: '',
-  //     categoryText: '03',
-  //   },
-  // ];
 
   const featuredProducts = [
     {
@@ -99,30 +67,8 @@ const Home = () => {
     },
   ];
 
-  const sizeClasses = [
-    'row-span-1',
-    'row-span-2',
-    'col-span-2 ',
-    'row-span-1 col-span-2',
-  ];
-
-  // Assign sizes based on image index or any other criteria
-  const getImageSize = (index) => {
-    // You can create any pattern you want
-    if (index % 3 === 0) return sizeClasses[2]; // big square
-    // if (index % 1 === 0) return sizeClasses[1]; // tall
-    // if (index % 4 === 0) return sizeClasses[3]; // wide
-    return sizeClasses[0]; // normal
-  };
   return (
     <div>
-      {/* 
-      <div id="blackrose-page-wrapper">
-        <div className="content-lines-wrapper">
-          <div className="content-lines-inner">
-            <div className="content-lines"></div>
-          </div>
-        </div> */}
       <section className="container">
         <section className="blackrose-section-slider mt-10 pb-0">
           <div className="relative h-[600px] w-full ">
@@ -215,7 +161,11 @@ const Home = () => {
               >
                 <div className="item">
                   <div className="position-re o-hidden aspect-square">
-                    <img src={category.image} alt={category.title} className='w-full h-full object-cover ' />
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-full object-cover "
+                    />
                   </div>
                   <div className="con">
                     <p className="text-lg">{category.title}</p>
@@ -242,13 +192,13 @@ const Home = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {images?.images.map((image) => (
-                <div
-                  key={image.id}
+                <Link
+                  to={`/photography/${image._id}`}
+                  key={image._id}
                   className={`relative mb-4 cursor-pointer overflow-hidden group aspect-square`}
-                 
                 >
                   <img
-                    src={image.url}
+                    src={image.watermarkedUrl}
                     alt={image.title}
                     className="w-full h-full object-cover  transition-transform duration-300 group-hover:scale-105 aspect-square"
                     loading="lazy"
@@ -265,7 +215,7 @@ const Home = () => {
                       )}
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
             {/* <div

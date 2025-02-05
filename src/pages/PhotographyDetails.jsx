@@ -15,9 +15,9 @@ import { ShopContext } from '../context/ShopContext';
 const PhotographyDetails = () => {
   // const { id } = useParams();
   const { imageId } = useParams();
-  const [downloading, setDownloading] = useState(false);
+  // const [downloading, setDownloading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
   // const [likeCount, setLikeCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAddToCollection, setShowAddToCollection] = useState(false);
@@ -46,6 +46,10 @@ const PhotographyDetails = () => {
   //   setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
   //   console.log(likeCount);
   // };
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const handleLike = async () => {
     if (!token) {
       // Show login modal or redirect to login
@@ -116,37 +120,6 @@ const PhotographyDetails = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleCreateCollection = async (name) => {
-    const newCollection = {
-      id: Date.now(),
-      name,
-      images: [],
-    };
-
-    const success = await saveCollections([...collections, newCollection]);
-    if (success) {
-      toast.success('Collection created successfully!');
-      setShowCreateCollection(false);
-    }
-  };
-
-  // const handleAddToCollection = async (collectionId, imageData) => {
-  //   const updatedCollections = collections.map((collection) => {
-  //     if (collection.id === collectionId) {
-  //       return {
-  //         ...collection,
-  //         images: [...collection.images, imageData],
-  //       };
-  //     }
-  //     return collection;
-  //   });
-
-  //   const success = await saveCollections(updatedCollections);
-  //   if (success) {
-  //     toast.success('Added to collection!');
-  //     setShowAddToCollection(false);
-  //   }
-  // };
 
   const handleImageClick = (index) => {
     setSelectedImage(images?.images[index]);
