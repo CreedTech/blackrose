@@ -73,30 +73,46 @@ const AddToCollectionModal = ({
               </button>
 
               <div className="space-y-2">
-                {collections.map((collection) => (
-                  <button
-                    key={collection.id}
-                    onClick={() => onAddToCollection(collection.id, imageData)}
-                    className="w-full py-3 px-4 bg-white/10 rounded text-white text-left hover:bg-white/20 transition-colors flex items-center justify-between"
-                  >
-                    <span>{collection.name}</span>
-                    <span className="text-white/60">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                ))}
+                {isLoading ? (
+                  <div className="text-center py-4">
+                    <div className="animate-spin rounded-full h-8 w-8 border-2 border-white/20 border-t-white mx-auto"></div>
+                  </div>
+                ) : collections?.length > 0 ? (
+                  collections.map((collection) => (
+                    <button
+                      key={collection._id}
+                      onClick={() =>
+                        onAddToCollection(collection._id, imageData)
+                      }
+                      style={{
+                        '--image-url': `url(${collection.images[collection.images.length -1].watermarkedUrl})`,
+                      }}
+                      className="w-full h-20 py-3 px-4 relative bg-white/10 rounded text-white text-left hover:bg-white/20 transition-colors flex items-center justify-between bg-[image:var(--image-url)] bg-fill"
+                    >
+                      <div className="absolute inset-0 bg-black/40"></div>
+                      <span className="relative">{collection.name}</span>
+                      <span className="text-white/60 relative">
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 4v16m8-8H4"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  ))
+                ) : (
+                  <p className="text-center text-white/60">
+                    No collections yet
+                  </p>
+                )}
               </div>
             </>
           )}

@@ -23,20 +23,27 @@ const PhotographyDetails = () => {
   const [showAddToCollection, setShowAddToCollection] = useState(false);
   const [showCreateCollection, setShowCreateCollection] = useState(false);
 
-  const { collections, saveCollections } = useCollections();
   //   const [loading, setLoading] = useState(false);
   //   const [page, setPage] = useState(1);
   //   const [hasMore, setHasMore] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { navigate, token } = useContext(ShopContext);
-  
+
   //   const [isLoading, setIsLoading] = useState(false);
 
-  const { useGetSingleImage, useImages, useLikeImage, useDownloadImage } =
-    useGallery();
+  const {
+    useGetSingleImage,
+    useImages,
+    useLikeImage,
+    useDownloadImage,
+    useCollections,
+    useAddToCollection,
+  } = useGallery();
   const { data: images } = useImages();
   const { data: image, isLoading, error } = useGetSingleImage(imageId);
+  const { data: collections, isLoading: collectionsLoading } = useCollections();
+  const addToCollectionMutation = useAddToCollection();
   const likeMutation = useLikeImage();
   const downloadMutation = useDownloadImage();
   // const [selectedThumbnail, setSelectedThumbnail] = useState();
@@ -48,8 +55,8 @@ const PhotographyDetails = () => {
   // };
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   const handleLike = async () => {
     if (!token) {
       // Show login modal or redirect to login
@@ -93,12 +100,29 @@ const PhotographyDetails = () => {
     }
   };
 
-  const handleAddToCollection = () => {
+  const handleAddToCollection = async (collectionId) => {
     if (!token) {
       navigate('/login', {
         state: { from: `/gallery/${imageId}` },
       });
       return;
+    }
+    try {
+      await addToCollectionMutation.mutateAsync({
+        collectionId,
+        imageId,
+      });
+      toast.success('Added to collection');
+
+      // onClose();
+      setShowAddToCollection(false);
+    } catch (error) {
+      console.log(error);
+      if (error.status == 400) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Failed to add to collection');
+      }
     }
     // Handle collection logic
   };
@@ -119,7 +143,6 @@ const PhotographyDetails = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
 
   const handleImageClick = (index) => {
     setSelectedImage(images?.images[index]);
@@ -199,13 +222,13 @@ const PhotographyDetails = () => {
         <meta name="description" content={image.description} />
       </Helmet>
       {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex items-center text-sm text-white/60">
-          <Link to="/" className="hover:text-white">
+      <div className="max-w-7xl mx-auto px-4 md:py-4">
+        <div className="flex items-center text-sm text-white/60 relative">
+          <Link to="/" className="hover:text-white cursor-pointer">
             Home
           </Link>
           <span className="mx-2">/</span>
-          <Link to="/photography" className="hover:text-white">
+          <Link to="/photography" className="hover:text-white cursor-pointer">
             Photography
           </Link>
           <span className="mx-2">/</span>
@@ -213,8 +236,8 @@ const PhotographyDetails = () => {
         </div>
       </div>
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8 relative z-[999999999]">
-        <div className="w-full bg-black text-white px-4 py-3 flex items-center justify-between border-b border-white/10">
+      <div className="max-w-7xl mx-auto md:px-4 px-2 md:py-8 relative z-[999999999] overflow-hidden">
+        <div className="w-full bg-black text-white md:px-4 py-3 flex md:items-center flex-col space-y-4 md:space-y-0 md:flex-row justify-between border-b border-white/10">
           {/* Left side - Profile Info */}
           <div className="flex items-center space-x-4">
             {/* Profile Image */}
@@ -228,35 +251,20 @@ const PhotographyDetails = () => {
 
             {/* Name and Category */}
             <div>
-              <h2 className="font-medium text-lg">{image.photographer.name}</h2>
-              <div className="flex items-center text-sm text-gray-400">
+              <h2 className="font-medium md:text-lg text-base">
+                {image.photographer.name}
+              </h2>
+              <div className="flex items-center md:text-sm text-xs text-gray-400">
                 <span>Category:</span>
-                <span className="ml-1 text-white">{image.category.title}</span>
+                <span className="md:ml-1  text-white">
+                  {image.category.title}
+                </span>
               </div>
             </div>
           </div>
 
           {/* Right side - Actions */}
-          <div className="flex items-center space-x-3">
-            {/* Like Button */}
-            {/* <div>
-              <button
-                onClick={handleLike}
-                disabled={likeMutation.isLoading}
-                className={`p-2 border rounded-lg transition-colors ${
-                  image?.isLiked
-                    ? 'bg-red-500 border-red-500 text-white'
-                    : 'border-white text-white hover:bg-white/10'
-                }`}
-              >
-                <HeartIcon
-                  className={`w-6 h-6 ${
-                    likeMutation.isLoading ? 'animate-pulse' : ''
-                  }`}
-                />
-                <span className="ml-2">{image?.likeCount || 0}</span>
-              </button>
-            </div> */}
+          <div className="flex items-center space-x-2">
             <button
               //  onLike={() => likeMutation.mutate(image._id)}
               onClick={handleLike}
@@ -311,7 +319,7 @@ const PhotographyDetails = () => {
                 // onClick={toggleDropdown}
                 className="h-10 px-6 bg-white text-black rounded flex items-center justify-center hover:bg-white/90 transition-colors"
               >
-                <span className="mr-2">
+                <span className="mr-4">
                   {' '}
                   {downloadMutation.isLoading ? (
                     <span className="flex items-center">
@@ -338,7 +346,7 @@ const PhotographyDetails = () => {
                       Downloading...
                     </span>
                   ) : (
-                    'Download Original'
+                    'Download'
                   )}
                 </span>
                 <svg
@@ -363,7 +371,7 @@ const PhotographyDetails = () => {
                 onClose={() => setShowAddToCollection(false)}
                 collections={collections}
                 imageData={image}
-                isLoading={isLoading}
+                isLoading={collectionsLoading}
                 onAddToCollection={handleAddToCollection}
                 onCreateNew={() => {
                   setShowAddToCollection(false);
@@ -373,7 +381,10 @@ const PhotographyDetails = () => {
 
               <CreateCollectionModal
                 isOpen={showCreateCollection}
-                onClose={() => setShowCreateCollection(false)}
+                onClose={() => {
+                  setShowCreateCollection(false);
+                  setShowAddToCollection(true);
+                }}
                 // onCreate={handleCreateCollection}
                 imageId={image._id}
               />
@@ -399,11 +410,11 @@ const PhotographyDetails = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-1 gap-12 z-[999999999]">
+        <div className="grid grid-cols-1 lg:grid-cols-1 md:gap-12 gap-4 z-[999999999]">
           {/* Left Column - Images */}
-          <div className="space-y-6">
+          <div className="md:space-y-6">
             {/* Main Image */}
-            <div className="w-full bg-gray-900 ">
+            <div className="w-full h-[400px] md:h-full bg-gray-900 ">
               <img
                 src={image.url}
                 alt={image.title}
@@ -420,26 +431,6 @@ const PhotographyDetails = () => {
             {/* Description */}
             <p className="text-white/80 leading-relaxed">{image.description}</p>
           </div>
-          {/* Thumbnails */}
-          {/* <div className="grid grid-cols-2 gap-4">
-            {images?.images.map((image, index) => (
-              <button
-                key={index}
-                onClick={() => handleImageClick(index)}
-                className={`aspect-auto overflow-hidden ${
-                  currentIndex === image._id
-                    ? 'ring-2 ring-white'
-                    : 'opacity-60'
-                }`}
-              >
-                <img
-                  src={image.url}
-                  alt=""
-                  className="w-full h-60 object-cover"
-                />
-              </button>
-            ))}
-          </div> */}
 
           {/* Right Column - Info */}
         </div>
@@ -451,11 +442,11 @@ const PhotographyDetails = () => {
             {images?.images.map((photo, index) => (
               <div
                 key={photo._id}
-                className="group relative aspect-square overflow-hidden bg-gray-900"
+                className="group relative aspect-square  overflow-hidden bg-gray-900"
                 onClick={() => handleImageClick(index)}
               >
                 <img
-                  src={photo.url}
+                  src={photo.watermarkedUrl}
                   alt=""
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"
@@ -534,9 +525,9 @@ const PhotographyDetails = () => {
             </button>
 
             {/* Main image */}
-            <div className="relative max-w-7xl mx-auto">
+            <div className="relative md:max-w-7xl max-w-[20rem] mx-auto">
               <img
-                src={selectedImage.url}
+                src={selectedImage.watermarkedUrl}
                 alt={selectedImage.category.name}
                 className="max-h-[90vh] object-contain"
               />
@@ -590,7 +581,7 @@ const PhotographyDetails = () => {
                     }`}
                   >
                     <img
-                      src={image.url}
+                      src={image.watermarkedUrl}
                       alt={image.title}
                       className="w-full h-full object-cover"
                     />

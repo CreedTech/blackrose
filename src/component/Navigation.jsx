@@ -7,7 +7,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
     setShowSearch,
-    getCartCount,
+    // getCartCount,
     navigate,
     token,
     setToken,
@@ -25,10 +25,109 @@ const Navigation = () => {
     <>
       {/* Main Navigation */}
       <nav className="max-w-7xl mx-auto px-4 mt-10">
+        <div className="flex justify-between items-center">
+          <div>
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden p-2"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+            {/* Search */}
+            <button
+              className="p-2 md:hidden"
+              onClick={() => {
+                setShowSearch(true);
+                navigate('/collection');
+              }}
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </button>
+          </div>
+          <NavLink to="/" className="  md:hidden items-center relative">
+            <img src={assets.logo} alt="The Black Rose" className="w-16 h-8" />
+          </NavLink>
+          <div>
+            {/* Cart */}
+            <NavLink to="/cart" className="p-2 relative  md:hidden">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
+              </svg>
+              <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                0
+              </span>
+            </NavLink>
+
+            {/* Account */}
+            <NavLink
+              to={token ? null : '/login'}
+              // onClick={() => (token ? null : navigate('/login'))}
+              className="p-2 relative cursor-pointer  md:hidden"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </NavLink>
+          </div>
+        </div>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <NavLink to="/" className="flex items-center relative">
+            <NavLink to="/" className=" hidden md:flex items-center relative">
               <img
                 src={assets.logo}
                 alt="The Black Rose"
@@ -102,7 +201,7 @@ const Navigation = () => {
           </div>
 
           {/* Right Side Icons */}
-          <div className="flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
             {/* Search */}
             <button
               className="p-2"
@@ -125,9 +224,8 @@ const Navigation = () => {
                 />
               </svg>
             </button>
-
             {/* Cart */}
-            <NavLink to="/cart" className="p-2 relative">
+            <NavLink to="/cart" className="p-2 relative ">
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -147,26 +245,47 @@ const Navigation = () => {
             </NavLink>
 
             {/* Account */}
-            <NavLink
-              to={token ? null : '/login'}
-              // onClick={() => (token ? null : navigate('/login'))}
-              className="p-2 relative cursor-pointer"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="group relative">
+              <NavLink
+                to={token ? null : '/login'}
+                // onClick={() => (token ? null : navigate('/login'))}
+                className="p-2 relative cursor-pointer  "
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
-            </NavLink>
-
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </NavLink>
+              {/* Dropdown Menu */}
+              {token && (
+                <div className="group-hover:block hidden absolute dropdown-menu right-0 ">
+                  <div className="flex flex-col gap-2 w-36 py-3 px-5  bg-slate-100 text-gray-500 rounded">
+                    {/* <p className='cursor-pointer hover:text-black'>My Profile</p> */}
+                    {/* <p
+                      onClick={() => navigate('/orders')}
+                      className="cursor-pointer hover:text-black"
+                    >
+                      Orders
+                    </p> */}
+                    <p
+                      onClick={logout}
+                      className="cursor-pointer hover:text-black"
+                    >
+                      Logout
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
             {/* Shop Now Button */}
             <NavLink
               to="/shop"
@@ -175,38 +294,30 @@ const Navigation = () => {
               Shop now
             </NavLink>
           </div>
+        </div>
+      </nav>
 
-          {/* Mobile menu button */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2">
+      {/* Mobile Navigation */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black z-50  p-6">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute top-4 right-4 p-2"
+          >
             <svg
               className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              {isOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
-        </div>
-      </nav>
-
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <div className="md:hidden">
           <div className="px-2 pt-2  space-y-1">
             <NavLink
               to="/"

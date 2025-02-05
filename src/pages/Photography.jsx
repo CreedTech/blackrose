@@ -381,11 +381,13 @@ const Photography = () => {
 
             {/* Main image */}
             <div className="relative max-w-7xl mx-auto">
-              <img
-                src={selectedImage.watermarkedUrl}
-                alt={selectedImage.category.name}
-                className="max-h-[90vh] object-contain"
-              />
+              <Link to={`/photography/${selectedImage._id}`}>
+                <img
+                  src={selectedImage.watermarkedUrl}
+                  alt={selectedImage.category.name}
+                  className="max-h-[90vh] object-contain"
+                />
+              </Link>
 
               {/* Image info */}
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black/60 to-transparent">
@@ -445,7 +447,6 @@ const Photography = () => {
                 ))}
               </div>
             </div>
-          
           </div>
         )}
       </div>

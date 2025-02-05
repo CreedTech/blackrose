@@ -21,25 +21,13 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
 
   if (!isOpen) return null;
 
-  // const handleCreate = async () => {
-  //   try {
-  //     setIsCreating(true);
-  //     await onCreate(collectionName);
-  //     setCollectionName('');
-  //     onClose();
-  //   } catch (error) {
-  //     toast.error(`Failed to create collection: ${error}`);
-  //   } finally {
-  //     setIsCreating(false);
-  //   }
-  // };
-
   const handleCreateCollection = async () => {
     try {
       const newCollection = await createCollectionMutation.mutateAsync({
         name: newCollectionName,
       });
       console.log(newCollection);
+      toast.success(`Created ${newCollectionName} collection`);
 
       // Automatically add image to new collection
       await addToCollectionMutation.mutateAsync({
@@ -48,6 +36,7 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
       });
 
       setNewCollectionName('');
+      toast.success(`Added to ${newCollectionName} collection`);
       onClose();
     } catch (error) {
       console.log(error);
@@ -120,7 +109,7 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
         </button>
       </div>
       {/* Existing Collections */}
-      <div className="space-y-2 max-h-60 overflow-y-auto">
+      {/* <div className="space-y-2 max-h-60 overflow-y-auto">
         {collectionsLoading ? (
           <div className="text-center py-4">
             <div className="animate-spin rounded-full h-8 w-8 border-2 border-white/20 border-t-white mx-auto"></div>
@@ -144,7 +133,7 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
         ) : (
           <p className="text-center text-white/60">No collections yet</p>
         )}
-      </div>
+      </div> */}
       {/* </div> */}
     </div>
   );
@@ -152,7 +141,7 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
 CreateCollectionModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onCreate: PropTypes.func.isRequired,
+  // onCreate: PropTypes.func.isRequired,
   imageId: PropTypes.string.isRequired,
 };
 
