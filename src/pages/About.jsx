@@ -2,7 +2,7 @@ import { assets } from '../assets/images/assets';
 
 const About = () => {
   return (
-    <section className="about pt-130">
+    <section className="about md:mt-10 mt-0">
       <div className="container">
         <div className="row">
           <div

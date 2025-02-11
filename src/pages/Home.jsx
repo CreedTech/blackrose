@@ -70,7 +70,7 @@ const Home = () => {
   return (
     <div>
       <section className="container">
-        <section className="blackrose-section-slider mt-10 pb-0">
+        <section className="blackrose-section-slider md:mt-10 mt-0 pb-0">
           <div className="relative h-[600px] w-full ">
             {/* Background Image */}
             <div className="absolute inset-0">

@@ -53,7 +53,7 @@ const ProductPage = () => {
     },
   ];
   return (
-    <div className="bg-black text-white min-h-screen p-4 mt-10">
+    <div className="bg-black text-white min-h-screen p-4 md:mt-10 mt-0">
       <div className="max-w-5xl mx-auto">
         <nav className=" mb-4">
           <a href="#" className="hover:text-white text-white font-bold">

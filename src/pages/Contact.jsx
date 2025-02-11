@@ -1,7 +1,7 @@
 
 const Contact = () => {
   return (
-    <div className="contact next-section-contact pt-130">
+    <div className="contact next-section-contact md:mt-10 mt-0">
       <div className="container">
         <div className="row">
           <div

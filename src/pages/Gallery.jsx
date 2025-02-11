@@ -2,7 +2,7 @@ import { assets } from '../assets/images/assets';
 
 const Gallery = () => {
   return (
-    <div className="blackrose-section pt-130">
+    <div className="blackrose-section md:mt-10 mt-0">
       <div className="container">
         <div className="row mb-4">
           <div

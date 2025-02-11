@@ -44,19 +44,19 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
     }
   };
 
-  const handleAddToCollection = async (collectionId) => {
-    try {
-      await addToCollectionMutation.mutateAsync({
-        collectionId,
-        imageId,
-      });
-      toast.success('Added to collection');
-      onClose();
-    } catch (error) {
-      console.log(error);
-      toast.error('Failed to add to collection');
-    }
-  };
+  // const handleAddToCollection = async (collectionId) => {
+  //   try {
+  //     await addToCollectionMutation.mutateAsync({
+  //       collectionId,
+  //       imageId,
+  //     });
+  //     toast.success('Added to collection');
+  //     onClose();
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error('Failed to add to collection');
+  //   }
+  // };
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">

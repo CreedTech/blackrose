@@ -77,7 +77,7 @@ const Lifestyle = () => {
     },
   ];
   return (
-    <section className="blog pt-130">
+    <section className="blog md:mt-10 mt-0">
       <div className="container">
         <div className="row">
           <div

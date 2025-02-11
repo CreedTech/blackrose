@@ -107,7 +107,7 @@ const Shop = () => {
   ];
   return (
     <div className="container">
-      <section className="blackrose-section-slider pb-0 mt-10">
+      <section className="blackrose-section-slider pb-0 md:mt-10 mt-0">
         <div className="next-container-center">
           <Swiper
             effect={'cards'}

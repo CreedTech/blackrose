@@ -78,14 +78,14 @@ const AddToCollectionModal = ({
                     <div className="animate-spin rounded-full h-8 w-8 border-2 border-white/20 border-t-white mx-auto"></div>
                   </div>
                 ) : collections?.length > 0 ? (
-                  collections.map((collection) => (
+                  collections?.map((collection) => (
                     <button
                       key={collection._id}
                       onClick={() =>
                         onAddToCollection(collection._id, imageData)
                       }
                       style={{
-                        '--image-url': `url(${collection.images[collection.images.length -1].watermarkedUrl})`,
+                        '--image-url': `url(${collection.images[collection?.images?.length -1]?.watermarkedUrl})`,
                       }}
                       className="w-full h-20 py-3 px-4 relative bg-white/10 rounded text-white text-left hover:bg-white/20 transition-colors flex items-center justify-between bg-[image:var(--image-url)] bg-fill"
                     >

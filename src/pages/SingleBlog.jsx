@@ -3,16 +3,16 @@ import { useParams } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
 
 const SingleBlog = () => {
-//   const { id } = useParams();
-//   const [post, setPost] = useState(null);
+  //   const { id } = useParams();
+  //   const [post, setPost] = useState(null);
 
-//   useEffect(() => {
-//     // Replace with your API endpoint
-//     fetch(`https://api.example.com/posts/${id}`)
-//       .then((response) => response.json())
-//       .then((data) => setPost(data))
-//       .catch((error) => console.error('Error fetching data:', error));
-//   }, [id]);
+  //   useEffect(() => {
+  //     // Replace with your API endpoint
+  //     fetch(`https://api.example.com/posts/${id}`)
+  //       .then((response) => response.json())
+  //       .then((data) => setPost(data))
+  //       .catch((error) => console.error('Error fetching data:', error));
+  //   }, [id]);
 
   //   if (!post) {
   //     return <div>Loading...</div>;
@@ -84,7 +84,7 @@ const SingleBlog = () => {
   ];
   return (
     <div className="container">
-      <div className="bg-black text-white min-h-screen p-4 mt-10">
+      <div className="bg-black text-white min-h-screen p-4 md:mt-10 mt-0">
         <div className="max-w-full mx-auto">
           <a href="/" className="text-white mb-4 block">
             &larr; Back to Blog

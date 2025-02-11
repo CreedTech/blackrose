@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGallery } from '../hooks/useGallery';
 import { IoHeartCircleOutline } from 'react-icons/io5';
+
 // import 'swiper/css';
 // import 'swiper/css/navigation';
 // import 'swiper/css/pagination';
@@ -14,11 +15,11 @@ import { IoHeartCircleOutline } from 'react-icons/io5';
 const Photography = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [category, setCategory] = useState(null);
-  const [search, setSearch] = useState('');
+  // const [category, setCategory] = useState(null);
+  // const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const { useImages, useLikeImage } = useGallery();
-  const { data } = useImages(page, category, search);
+  const { data } = useImages(page);
   // const { data: singleImage } = useGetSingleImage();
   const likeMutation = useLikeImage();
 
@@ -73,7 +74,7 @@ const Photography = () => {
 
   return (
     <div className="container">
-      <section className="blackrose-section-slider mt-10 pb-0">
+      <section className="blackrose-section-slider md:mt-10 mt-0 pb-0">
         <div className="next-container-center">
           <Swiper
             effect={'cards'}
@@ -99,7 +100,11 @@ const Photography = () => {
                     data-swiper-parallax-y="100%"
                   >
                     <Link to={`/photography/${slide._id}`}>
-                      <img src={slide.watermarkedUrl} alt={slide.title} />
+                      <img
+                        src={slide.watermarkedUrl}
+                        alt={slide.title}
+                        className="w-full object-cover md:h-full h-[300px]" /* Limited height on mobile */
+                      />
                     </Link>
                   </div>
                   <div
@@ -118,9 +123,9 @@ const Photography = () => {
                     >
                       {slide.category.title}
                     </h3>
-                    <p data-swiper-parallax-x="-40%" className="next-paragraph">
+                    {/* <p data-swiper-parallax-x="-40%" className="next-paragraph">
                       {slide.description}
-                    </p>
+                    </p> */}
                     <a
                       data-swiper-parallax-x="-30%"
                       className="next-link"
@@ -259,27 +264,46 @@ const Photography = () => {
           </div>
         )}
         {/* Pagination */}
-        {/* {data?.totalPages == 1 && (
-          <div className="mt-8 flex justify-center">
-            <button
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-              className="px-4 py-2 border rounded mr-2"
-            >
-              Previous
-            </button>
-            <span className="px-4 py-2">
-              Page {page} of {data.totalPages}
-            </span>
-            <button
-              onClick={() => setPage((prev) => prev + 1)}
-              disabled={page === data.totalPages}
-              className="px-4 py-2 border rounded ml-2"
-            >
-              Next
-            </button>
+        {data?.totalPages == 1 && (
+          <div className="row">
+            <div>
+              <div className="col-md-12 mt-40 mb-60 text-center animate-box">
+                {/* <button
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={page === 1}
+                  className="px-4 py-2 border rounded mr-2"
+                >
+                  Previous
+                </button> */}
+                <ul className="blackrose-pagination-wrap align-center">
+                  <li>
+                    <a
+                      href=""
+                      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                      disabled={page === 1}
+                    >
+                      <i className="fa fa-angle-left"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <span className="px-4 py-2">
+                      Page {page} of {data.totalPages}
+                    </span>
+                  </li>
+                  <li>
+                    <a
+                      href=""
+                      onClick={() => setPage((prev) => prev + 1)}
+                      disabled={page === data.totalPages}
+                    >
+                      <i className="fa fa-angle-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        )} */}
+        )}
         {/* Load More Button */}
 
         {/* {hasMore && (

@@ -215,7 +215,7 @@ const PhotographyDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white container">
+    <div className="min-h-screen bg-black text-white container ">
       {/* Navigation */}
       <Helmet>
         <title>{image.title} | BlackRose</title>
@@ -527,6 +527,11 @@ const PhotographyDetails = () => {
             {/* Main image */}
             <div className="relative md:max-w-7xl max-w-[20rem] mx-auto">
               <img
+                onClick={() => {
+                  setSelectedImage(null);
+                  window.scrollTo(0, 0);
+                  navigate(`/photography/${selectedImage._id}`);
+                }}
                 src={selectedImage.watermarkedUrl}
                 alt={selectedImage.category.name}
                 className="max-h-[90vh] object-contain"

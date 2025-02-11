@@ -190,7 +190,7 @@ const Signup = () => {
   //   };
 
   return (
-    <div className="min-h-screen bg-black flex z-[999999] mt-10">
+    <div className="min-h-screen bg-black flex z-[999999] ">
       {isLoading && (
         <div
           id="Lfa-page-loading"
