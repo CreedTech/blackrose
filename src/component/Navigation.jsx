@@ -3,17 +3,22 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
 import { ShopContext } from '../context/ShopContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { XMarkIcon } from '@heroicons/react/16/solid';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const location = useLocation();
   const {
     setShowSearch,
-    // getCartCount,
+    getCartCount,
+    getCartAmount,
     navigate,
     token,
     setToken,
     setCartItems,
+    cartItems,
+    updateQuantity,
   } = useContext(ShopContext);
 
   const logout = () => {
@@ -100,7 +105,10 @@ const Navigation = () => {
             </NavLink>
             <div>
               {/* Cart */}
-              <NavLink to="/cart" className="p-2 relative  md:hidden">
+              <NavLink
+                onClick={() => setIsCartOpen(!isCartOpen)}
+                className="p-2 relative  md:hidden"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -115,7 +123,7 @@ const Navigation = () => {
                   />
                 </svg>
                 <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                  0
+                  {getCartCount()}
                 </span>
               </NavLink>
 
@@ -243,7 +251,10 @@ const Navigation = () => {
               </svg>
             </button>
             {/* Cart */}
-            <NavLink to="/cart" className="p-2 relative ">
+            <NavLink
+              onClick={() => setIsCartOpen(!isCartOpen)}
+              className="p-2 relative "
+            >
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -258,7 +269,7 @@ const Navigation = () => {
                 />
               </svg>
               <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                0
+                {getCartCount()}
               </span>
             </NavLink>
 
@@ -408,6 +419,96 @@ const Navigation = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* Cart Overlay */}
+
+      {isCartOpen && (
+        <AnimatePresence>
+          <div
+            className="fixed inset-0 z-40"
+            style={{ backgroundColor: 'rgba(32, 32, 32, 0.75)' }}
+            onClick={() => setIsCartOpen(false)}
+          ></div>
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="fixed right-4 top-24 w-[350px] sm:w-[400px] bg-black border border-gray-800 rounded-lg shadow-lg p-6 z-[999999999999999999999] max-h-[80vh] overflow-y-auto"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-lg font-bold text-white">
+                My Cart ({Object.keys(cartItems).length})
+              </h2>
+              <button onClick={() => setIsCartOpen(false)}>
+                <XMarkIcon className="h-5 w-5 text-white" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {Object.entries(cartItems).map(([productId, item]) => (
+                <div key={productId} className="flex gap-4 border-b pb-4">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-20 h-20 object-cover rounded"
+                  />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold text-sm">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-400 text-xs mt-1">
+                      ₦{Number(item.finalPrice).toLocaleString()}
+                    </p>
+                    <div className="flex justify-between items-center mt-2">
+                      <div className="flex items-center space-x-2">
+                        <button
+                          className="text-white px-2 border"
+                          onClick={() =>
+                            updateQuantity(productId, item.quantity - 1)
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="text-white">{item.quantity}</span>
+                        <button
+                          className="text-white px-2 border"
+                          onClick={() =>
+                            updateQuantity(productId, item.quantity + 1)
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                      <span className="text-white font-semibold text-sm">
+                        ₦
+                        {Number(
+                          item.finalPrice * item.quantity
+                        ).toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-6 border-t border-gray-700 mt-6">
+              <div className="flex justify-between text-white text-md font-semibold mb-4">
+                <span>Subtotal:</span>
+                <span>₦{Number(getCartAmount()).toLocaleString()}</span>
+              </div>
+              <button
+                className="w-full bg-white text-black py-3 rounded font-bold"
+                onClick={() => {
+                  setIsCartOpen(false);
+                  navigate('/checkout');
+                }}
+              >
+                Checkout
+              </button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      )}
     </>
   );
 };

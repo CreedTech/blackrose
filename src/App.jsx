@@ -24,15 +24,18 @@ function App() {
           {/* Wrap Contact route with Layout */}
           <Route path="/" element={<Home />} />
           <Route path="/photography" element={<Photography />} />
-          <Route path="/photography/:imageId" element={<PhotographyDetails />} />
+          <Route
+            path="/photography/:imageId"
+            element={<PhotographyDetails />}
+          />
           <Route path="/lifestyle" element={<Lifestyle />} />
           <Route path="/lifestyle/:id" element={<SingleBlog />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/:name" element={<ProductPage />} />
+          <Route path="/shop/:productId" element={<ProductPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path='/login' element={<Signup />} />
+          <Route path="/login" element={<Signup />} />
         </Route>
       </Routes>
       <ToastContainer
