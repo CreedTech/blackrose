@@ -112,15 +112,15 @@ const Shop = () => {
         </div>
       </section>
       <section className="max-w-7xl mx-auto  py-10 relative">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Shop Featured Products</h2>
-          <a
+        <div className="flex justify-center items-center mb-8">
+          <h2 className="text-2xl font-bold">All Products</h2>
+          {/* <a
             href="/products"
             className="flex items-center hover:underline relative"
           >
             Shop All Products
             <span className="ml-2">+</span>
-          </a>
+          </a> */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-1">
