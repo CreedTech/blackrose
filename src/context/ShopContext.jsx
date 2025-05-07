@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
-  const currency = '£';
+  const currency = '₦';
   const delivery_fee = 0;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [search, setSearch] = useState('');
@@ -18,72 +18,9 @@ const ShopContextProvider = (props) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // const addToCart = async (itemId, totalPrice, spiceLevel, size, protein) => {
-  //   if (!size) {
-  //     toast.error('Select Product Size');
-  //     return;
-  //   }
-  //   setLoading(true);
-  //   try {
-  //     // console.log(cartItems);
-  //     let cartData = structuredClone(cartItems);
-  //     // Create a string of protein names separated by commas
-  //     const proteinNames = protein.map((p) => p.name).join(', ');
-
-  //     // Generate a unique key for the combination of size, protein, and spiceLevel
-  //     const selectionKey = `${size.size}-${proteinNames}-${spiceLevel}`;
-
-  //     // Check if the item already exists in the cart
-  //     if (cartData[itemId]) {
-  //       // Check if the item with the same size, protein, and spiceLevel exists
-  //       const existingSelection = cartData[itemId][selectionKey];
-
-  //       if (existingSelection) {
-  //         // If the same item exists, increase the quantity
-  //         existingSelection.quantity += 1;
-  //       } else {
-  //         // If the item with selected options does not exist, add it
-  //         cartData[itemId][selectionKey] = {
-  //           quantity: 1,
-  //           size,
-  //           protein,
-  //           spiceLevel,
-  //           totalPrice,
-  //         };
-  //       }
-  //     } else {
-  //       // If the item is not in the cart, add it
-  //       cartData[itemId] = {
-  //         [selectionKey]: {
-  //           quantity: 1,
-  //           size,
-  //           protein,
-  //           spiceLevel,
-  //           totalPrice,
-  //         },
-  //       };
-  //     }
-
-  //     // Update the cart state with new data
-  //     setCartItems(cartData);
-
-  //     toast.success('Item added to cart!');
-
-  //     // If a token exists, sync with backend
-  //     if (token) {
-  //       await axios.post(
-  //         backendUrl + '/api/cart/add',
-  //         { itemId, totalPrice, spiceLevel, size, protein },
-  //         { headers: { token } }
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error(error.message);
-  //   } finally {
-  //     setLoading(false); // Hide the overlay
-  //   }
-  // };
+  // New checkout-related state
+  const [orderProcessing, setOrderProcessing] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState(null);
 
   const addToCart = async (productId, quantity = 1) => {
     if (!token) {
@@ -130,78 +67,6 @@ const ShopContextProvider = (props) => {
 
     return totalCount;
   };
-
-  // const getCartCount = () => {
-  //   let totalCount = 0;
-
-  //   // Loop through cart items to calculate total count
-  //   Object.keys(cartItems).forEach((itemId) => {
-  //     Object.keys(cartItems[itemId]).forEach((selectionKey) => {
-  //       const item = cartItems[itemId][selectionKey];
-  //       totalCount += item.quantity; // sum of quantities
-  //     });
-  //   });
-
-  //   return totalCount;
-  // };
-
-  // const updateQuantity = async (
-  //   itemId,
-  //   size,
-  //   proteinName,
-  //   spiceLevel,
-  //   quantity,
-  //   price
-  // ) => {
-  //   let cartData = structuredClone(cartItems);
-  //   const selectionKey = `${size}-${proteinName}-${spiceLevel}`;
-
-  //   if (quantity === 0) {
-  //     // Remove the item if quantity is 0
-  //     if (cartData[itemId] && cartData[itemId][selectionKey]) {
-  //       delete cartData[itemId][selectionKey];
-  //     }
-
-  //     // If no items are left for this itemId, delete the entire item
-  //     if (Object.keys(cartData[itemId]).length === 0) {
-  //       delete cartData[itemId];
-  //     }
-  //   } else {
-  //     // If the item exists, update the quantity
-  //     if (cartData[itemId] && cartData[itemId][selectionKey]) {
-  //       cartData[itemId][selectionKey].quantity = quantity;
-  //     } else {
-  //       // If the item doesn't exist in the cart, add it
-  //       cartData[itemId] = {
-  //         [selectionKey]: {
-  //           quantity,
-  //           size,
-  //           proteinName,
-  //           spiceLevel,
-  //           totalPrice: price * quantity, // Update totalPrice based on quantity
-  //         },
-  //       };
-  //     }
-  //   }
-
-  //   // Update the cart state
-  //   setCartItems(cartData);
-  //   toast.success('Item Updated Successfully!');
-
-  //   // If a token exists, sync with backend
-  //   if (token) {
-  //     try {
-  //       await axios.post(
-  //         backendUrl + '/api/cart/update',
-  //         { itemId, selectionKey, quantity, price },
-  //         { headers: { token } }
-  //       );
-  //     } catch (error) {
-  //       console.log(error);
-  //       toast.error(error.message);
-  //     }
-  //   }
-  // };
 
   const updateQuantity = async (productId, quantity) => {
     // Create a shallow copy of cartItems
@@ -254,55 +119,6 @@ const ShopContextProvider = (props) => {
     );
   };
 
-  // const getCartAmount = () => {
-  //   let totalAmount = 0;
-
-  //   // Loop through cart items to calculate total
-  //   Object.keys(cartItems).forEach((itemId) => {
-  //     Object.keys(cartItems[itemId]).forEach((selectionKey) => {
-  //       const item = cartItems[itemId][selectionKey];
-  //       totalAmount += item.totalPrice * item.quantity; // price * quantity
-  //     });
-  //   });
-
-  //   return totalAmount;
-  // };
-
-  // const getProductsData = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await axios.get(backendUrl + '/api/product/list');
-  //     if (response.data.success) {
-  //       setProducts(response.data.products.reverse());
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error(error.message);
-  //   } finally {
-  //     setLoading(false); // Stop loading
-  //   }
-  // };
-
-  // const getUserCart = async (token) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await axios.post(
-  //       backendUrl + '/api/cart/get',
-  //       {},
-  //       { headers: { token } }
-  //     );
-  //     if (response.data.success) {
-  //       setCartItems(response.data.cartData);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error(error.message);
-  //   } finally {
-  //     setLoading(false); // Stop loading
-  //   }
-  // };
   const getUserCart = async () => {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     if (!token) return;
@@ -370,6 +186,195 @@ const ShopContextProvider = (props) => {
     }
   };
 
+  // New checkout and payment functions
+  /**
+   * Creates an order from the current cart
+   * @param {Object} addressData - The delivery information
+   * @returns {Promise<Object>} - The created order
+   */
+  const createOrder = async (addressData) => {
+    if (Object.keys(cartItems).length === 0) {
+      toast.error('Your cart is empty');
+      return null;
+    }
+
+    if (!token) {
+      toast.error('Please log in to place an order');
+      return null;
+    }
+
+    setOrderProcessing(true);
+    try {
+      // Format cart items for order creation
+      const orderItems = Object.entries(cartItems).map(([productId, item]) => ({
+        productId,
+        title: item.title,
+        price: item.finalPrice,
+        quantity: item.quantity,
+        image: item.image,
+      }));
+
+      // Calculate total amount
+      const amount = getCartAmount();
+
+      // Create order request
+      const orderData = {
+        items: orderItems,
+        amount,
+        address: addressData,
+        paymentMethod: 'paystack',
+        date: Date.now(),
+      };
+
+      // Send order creation request
+      const response = await axios.post(`${backendUrl}/order/create`, orderData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.success) {
+        setCurrentOrder(response.data.order);
+        toast.success('Order created successfully');
+        return response.data.order;
+      } else {
+        toast.error(response.data.message || 'Failed to create order');
+        return null;
+      }
+    } catch (error) {
+      console.error('Order creation error:', error);
+      toast.error(error.response?.data?.message || 'Failed to create order');
+      return null;
+    } finally {
+      setOrderProcessing(false);
+    }
+  };
+
+  /**
+   * Initializes a Paystack payment for the given order
+   * @param {string} orderId - The ID of the order to pay for
+   * @returns {Promise<boolean>} - Whether payment initialization was successful
+   */
+  const initializePayment = async (orderId) => {
+    if (!token) {
+      toast.error('Please log in to make payment');
+      return false;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${backendUrl}/payment/initialize`,
+        {
+          orderId,
+          callbackUrl: `${window.location.origin}/payment/callback`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        // Redirect to Paystack payment page
+        window.location.href = response.data.data.authorization_url;
+        return true;
+      } else {
+        toast.error(response.data.message || 'Failed to initialize payment');
+        return false;
+      }
+    } catch (error) {
+      console.error('Payment initialization error:', error);
+      toast.error(
+        error.response?.data?.message || 'Failed to initialize payment'
+      );
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * Verifies a payment using the reference from Paystack callback
+   * @param {string} reference - The payment reference
+   * @returns {Promise<Object>} - The verification result
+   */
+  const verifyPayment = async (reference) => {
+    if (!token) {
+      toast.error('Please log in to verify payment');
+      return null;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${backendUrl}/payment/verify/${reference}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        // If payment was successful, clear the cart
+        if (response.data.data.status === 'success') {
+          await clearCart();
+          toast.success('Payment successful');
+        }
+        return response.data.data;
+      } else {
+        toast.error(response.data.message || 'Payment verification failed');
+        return null;
+      }
+    } catch (error) {
+      console.error('Payment verification error:', error);
+      toast.error(
+        error.response?.data?.message || 'Payment verification failed'
+      );
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * Initiates the checkout process
+   * @param {Object} addressData - The delivery information
+   */
+  const checkout = async (addressData) => {
+    const order = await createOrder(addressData);
+    if (order) {
+      return await initializePayment(order._id);
+    }
+    return false;
+  };
+
+  /**
+   * Gets the payment status for a reference
+   * @param {string} reference - The payment reference
+   */
+  const getPaymentStatus = async (reference) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${backendUrl}/payment/status/${reference}`,
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
+      );
+
+      return response.data.data;
+    } catch (error) {
+      console.error('Error checking payment status:', error);
+      toast.error('Failed to check payment status');
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     // getProductsData();
   }, []);
@@ -406,6 +411,15 @@ const ShopContextProvider = (props) => {
     token,
     loading,
     setLoading,
+
+    // New checkout values
+    createOrder,
+    initializePayment,
+    verifyPayment,
+    checkout,
+    orderProcessing,
+    currentOrder,
+    getPaymentStatus,
   };
 
   return (
