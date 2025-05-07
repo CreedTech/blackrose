@@ -192,7 +192,7 @@ const Home = () => {
           </div>
           <div className="">
             {/* Featured Products Section */}
-            <section className="max-w-7xl mx-auto  py-10 relative">
+            <section className="max-w-7xl mx-auto px-4 py-10 relative">
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-2xl font-bold">Shop Featured Products</h2>
                 <a
@@ -204,7 +204,7 @@ const Home = () => {
                 </a>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-1">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {products?.products?.slice(0, 4).map((product) => (
                   <div
                     key={product._id}
