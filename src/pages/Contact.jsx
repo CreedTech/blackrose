@@ -1,4 +1,3 @@
-
 const Contact = () => {
   return (
     <div className="contact next-section-contact md:mt-10 mt-0">
@@ -16,11 +15,11 @@ const Contact = () => {
           >
             <div className="google-map">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1573147.7480448114!2d-74.84628175962355!3d41.04009641088412"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.2929618316434!2d4.093728976517282!3d7.542995392470506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1039c272d5bf578f%3A0x2b26947f4f672add!2sIbadan%20-%20Iwo%20Rd%2C%20Nigeria!5e0!3m2!1sen!2suk!4v1746577164385!5m2!1sen!2suk"
                 width="100%"
                 height="500"
                 style={{ border: 0 }}
-                allowFullScreen=""
+                allowfullscreen=""
                 loading="lazy"
                 title="Map"
               ></iframe>
@@ -34,9 +33,8 @@ const Contact = () => {
             <h4>BlackRose Photography</h4>
             <p>
               Our firm nisl sodales sit amet sapien idea placeran sodales oite.
-             lorem erkjjw et kjebfds fleblfd leb lgrdfel.
+              lorem erkjjw et kjebfds fleblfd leb lgrdfel.
             </p>
-          
           </div>
 
           <div
