@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from 'react';
 import { assets } from '../assets/images/assets';
 import axios from 'axios';
@@ -13,7 +14,7 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -227,11 +228,15 @@ const ShopContextProvider = (props) => {
       };
 
       // Send order creation request
-      const response = await axios.post(`${backendUrl}/order/create`, orderData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        `${backendUrl}/order/create`,
+        orderData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.data.success) {
         setCurrentOrder(response.data.order);
@@ -390,7 +395,7 @@ const ShopContextProvider = (props) => {
   }, [token]);
 
   const value = {
-    products,
+    // products,
     currency,
     delivery_fee,
     search,

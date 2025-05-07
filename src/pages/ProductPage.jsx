@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { assets } from '../assets/images/assets';
 import { Link, useParams } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import { Helmet } from 'react-helmet';
