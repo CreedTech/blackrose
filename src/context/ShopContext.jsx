@@ -23,6 +23,11 @@ const ShopContextProvider = (props) => {
   const [orderProcessing, setOrderProcessing] = useState(false);
   const [currentOrder, setCurrentOrder] = useState(null);
 
+  // New orders-related state
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
   const addToCart = async (productId, quantity = 1) => {
     if (!token) {
       toast.error('Please log in to add items to cart');
@@ -360,13 +365,42 @@ const ShopContextProvider = (props) => {
    * Gets the payment status for a reference
    * @param {string} reference - The payment reference
    */
+  // const getPaymentStatus = async (reference) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.get(
+  //       `${backendUrl}/payment/status/${reference}`,
+  //       {
+  //         headers: token ? { Authorization: `Bearer ${token}` } : {},
+  //       }
+  //     );
+
+  //     return response.data.data;
+  //   } catch (error) {
+  //     console.error('Error checking payment status:', error);
+  //     toast.error('Failed to check payment status');
+  //     return null;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const getPaymentStatus = async (reference) => {
     setLoading(true);
     try {
+      // Get fresh token from localStorage as a fallback
+      const currentToken = token || localStorage.getItem('token');
+
+      if (!currentToken) {
+        toast.error('Authentication token not found');
+        return null;
+      }
+
       const response = await axios.get(
         `${backendUrl}/payment/status/${reference}`,
         {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
+          headers: {
+            Authorization: `Bearer ${currentToken}`,
+          },
         }
       );
 
@@ -378,6 +412,137 @@ const ShopContextProvider = (props) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // New orders-related functions
+  /**
+   * Fetches all orders for the current user
+   * @returns {Promise<Array>} - Array of orders
+   */
+  // const fetchOrders = async () => {
+  //   if (!token) {
+  //     toast.error('Please log in to view orders');
+  //     return [];
+  //   }
+
+  //   setOrdersLoading(true);
+  //   try {
+  //     const response = await axios.get(`${backendUrl}/order/my-orders`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     if (response.data.success) {
+  //       setOrders(response.data.orders);
+  //       return response.data.orders;
+  //     } else {
+  //       toast.error(response.data.message || 'Failed to load orders');
+  //       return [];
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching orders:', error);
+  //     toast.error(error.response?.data?.message || 'Failed to load orders');
+  //     return [];
+  //   } finally {
+  //     setOrdersLoading(false);
+  //   }
+  // };
+
+  /**
+   * Fetches all orders for the current user
+   * @returns {Promise<Array>} - Array of orders
+   */
+  const fetchOrders = async () => {
+    if (!token) {
+      toast.error('Please log in to view orders');
+      return [];
+    }
+
+    setOrdersLoading(true);
+    try {
+      const response = await axios.get(`${backendUrl}/order/my-orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.success) {
+        setOrders(response.data.orders);
+        // If orders exist, set the first one as selected
+        if (response.data.orders.length > 0) {
+          setSelectedOrder(response.data.orders[0]);
+        }
+        return response.data.orders;
+      } else {
+        toast.error(response.data.message || 'Failed to load orders');
+        return [];
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      toast.error(error.response?.data?.message || 'Failed to load orders');
+      return [];
+    } finally {
+      // Ensure loading is set to false even if there's an error
+      setOrdersLoading(false);
+    }
+  };
+  /**
+   * Formats a date timestamp to a readable format
+   * @param {number} timestamp - The date timestamp
+   * @returns {string} - Formatted date string
+   */
+  const formatOrderDate = (timestamp) => {
+    const date = new Date(Number(timestamp));
+    return date.toLocaleString('en-NG', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+  };
+
+  /**
+   * Gets the appropriate color class for an order status
+   * @param {string} status - The order status
+   * @returns {string} - CSS class for the status
+   */
+  const getOrderStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'processing':
+        return 'bg-yellow-500';
+      case 'delivered':
+        return 'bg-blue-500';
+      case 'order placed':
+        return 'bg-purple-500';
+      case 'cancelled':
+        return 'bg-red-500';
+      default:
+        return 'bg-gray-500';
+    }
+  };
+
+  /**
+   * Gets the appropriate color class for a payment status
+   * @param {string} status - The payment status
+   * @returns {string} - CSS class for the status
+   */
+  const getPaymentStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'success':
+        return 'bg-green-500';
+      case 'pending':
+        return 'bg-yellow-500';
+      case 'failed':
+        return 'bg-red-500';
+      default:
+        return 'bg-gray-500';
+    }
+  };
+  const resetOrdersLoading = () => {
+    setOrdersLoading(false);
   };
 
   useEffect(() => {
@@ -425,6 +590,19 @@ const ShopContextProvider = (props) => {
     orderProcessing,
     currentOrder,
     getPaymentStatus,
+
+    // New orders values
+    orders,
+    setOrders,
+    fetchOrders,
+    // fetchOrderById,
+    ordersLoading,
+    selectedOrder,
+    setSelectedOrder,
+    formatOrderDate,
+    getOrderStatusColor,
+    getPaymentStatusColor,
+    resetOrdersLoading,
   };
 
   return (

@@ -229,7 +229,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 
 const PaymentStatus = () => {
-  const { getPaymentStatus, token, loading } = useContext(ShopContext);
+  const { getPaymentStatus, token, loading, setToken } =
+    useContext(ShopContext);
   const [status, setStatus] = useState('loading');
   const [paymentData, setPaymentData] = useState(null);
   const location = useLocation();
@@ -239,32 +240,38 @@ const PaymentStatus = () => {
   const searchParams = new URLSearchParams(location.search);
   const reference = searchParams.get('reference');
   const errorParam = searchParams.get('error');
+  // Add this at the top of your PaymentStatus component
+  useEffect(() => {
+    // Refresh token when component mounts
+    if (!token && localStorage.getItem('token')) {
+      // This ensures context has the token after redirect from Paystack
+      setToken(localStorage.getItem('token'));
+    }
+  }, []);
 
   useEffect(() => {
-    // Handle error case
-    if (errorParam) {
+    // Skip if error or no reference
+    if (errorParam || !reference) {
       setStatus('error');
       return;
     }
 
-    // Make sure we have a reference
-    if (!reference) {
-      setStatus('error');
-      return;
-    }
-
-    // Check payment status
     const checkPayment = async () => {
       try {
+        // Force a small delay to ensure token is set
+        if (!token && localStorage.getItem('token')) {
+          setTimeout(checkPayment, 500);
+          return;
+        }
+
         const data = await getPaymentStatus(reference);
 
         if (data) {
           setPaymentData(data);
           setStatus(data.transactionStatus);
 
-          // If pending, check again after 3 seconds
           if (data.transactionStatus === 'pending') {
-            setTimeout(checkPayment, 30000);
+            setTimeout(checkPayment, 3000);
           }
         } else {
           throw new Error('Failed to get payment status');
@@ -275,20 +282,58 @@ const PaymentStatus = () => {
       }
     };
 
-    if (token) {
-      checkPayment();
-    } else {
-      // If no token yet but it's stored in localStorage, wait a bit for context to load
-      const checkToken = () => {
-        if (localStorage.getItem('token')) {
-          setTimeout(checkPayment, 500);
-        } else {
-          setStatus('error');
-        }
-      };
-      checkToken();
-    }
+    checkPayment();
   }, [reference, errorParam, token]);
+
+  // useEffect(() => {
+  //   // Handle error case
+  //   if (errorParam) {
+  //     setStatus('error');
+  //     return;
+  //   }
+
+  //   // Make sure we have a reference
+  //   if (!reference) {
+  //     setStatus('error');
+  //     return;
+  //   }
+
+  //   // Check payment status
+  //   const checkPayment = async () => {
+  //     try {
+  //       const data = await getPaymentStatus(reference);
+
+  //       if (data) {
+  //         setPaymentData(data);
+  //         setStatus(data.transactionStatus);
+
+  //         // If pending, check again after 3 seconds
+  //         if (data.transactionStatus === 'pending') {
+  //           setTimeout(checkPayment, 3000);
+  //         }
+  //       } else {
+  //         throw new Error('Failed to get payment status');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error checking payment status:', error);
+  //       setStatus('error');
+  //     }
+  //   };
+
+  //   if (token) {
+  //     checkPayment();
+  //   } else {
+  //     // If no token yet but it's stored in localStorage, wait a bit for context to load
+  //     const checkToken = () => {
+  //       if (localStorage.getItem('token')) {
+  //         setTimeout(checkPayment, 500);
+  //       } else {
+  //         setStatus('error');
+  //       }
+  //     };
+  //     checkToken();
+  //   }
+  // }, [reference, errorParam, token]);
 
   return (
     <div className="container">
@@ -439,10 +484,10 @@ const PaymentStatus = () => {
                   Try Again
                 </button>
                 <Link
-                  to="/cart"
+                  to="/shop"
                   className="bg-transparent border border-white text-white px-6 py-3 rounded"
                 >
-                  Return to Cart
+                  Return to Shop
                 </Link>
               </div>
             </div>
@@ -481,10 +526,10 @@ const PaymentStatus = () => {
                   Contact Support
                 </Link>
                 <Link
-                  to="/shop"
-                  className="bg-transparent border border-white text-white px-6 py-3 rounded"
+                  to="/orders"
+                  className="bg-white text-black px-6 py-3 rounded"
                 >
-                  Continue Shopping
+                  View Order
                 </Link>
               </div>
             </div>
