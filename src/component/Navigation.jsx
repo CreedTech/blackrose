@@ -359,8 +359,8 @@ const Navigation = () => {
                 to="/"
                 className={({ isActive }) =>
                   isActive
-                    ? 'block px-3 py-2 text-base font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-base font-medium text-gray-600  cursor-pointer relative'
+                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
+                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
                 }
               >
                 Home
@@ -369,8 +369,8 @@ const Navigation = () => {
                 to="/photography"
                 className={({ isActive }) =>
                   isActive
-                    ? 'block px-3 py-2 text-base font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-base font-medium text-gray-600  cursor-pointer relative'
+                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
+                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
                 }
               >
                 Photography
@@ -379,8 +379,8 @@ const Navigation = () => {
                 to="/lifestyle"
                 className={({ isActive }) =>
                   isActive
-                    ? 'block px-3 py-2 text-base font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-base font-medium text-gray-600  cursor-pointer relative'
+                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
+                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
                 }
               >
                 Lifestyle
@@ -389,8 +389,8 @@ const Navigation = () => {
                 to="/shop"
                 className={({ isActive }) =>
                   isActive
-                    ? 'block px-3 py-2 text-base font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-base font-medium text-gray-600  cursor-pointer relative'
+                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
+                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
                 }
               >
                 Shop
@@ -399,8 +399,8 @@ const Navigation = () => {
                 to="/about"
                 className={({ isActive }) =>
                   isActive
-                    ? 'block px-3 py-2 text-base font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-base font-medium text-gray-600  cursor-pointer relative'
+                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
+                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
                 }
               >
                 About
@@ -409,8 +409,8 @@ const Navigation = () => {
                 to="/contact"
                 className={({ isActive }) =>
                   isActive
-                    ? 'block px-3 py-2 text-base font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-base font-medium text-gray-600  cursor-pointer relative'
+                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
+                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
                 }
               >
                 Contacts
