@@ -278,7 +278,7 @@ const LifeStyle = () => {
               </div>
             </div>
 
-            <div className="relative">
+            {/* <div className="relative">
               <select
                 className="appearance-none bg-transparent border border-gray-700 text-white px-4 py-2 pr-8 rounded focus:outline-none focus:ring-1 focus:ring-primary"
                 onChange={(e) => navigate(`/lifestyle?sort=${e.target.value}`)}
@@ -295,7 +295,7 @@ const LifeStyle = () => {
                   ></path>
                 </svg>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
