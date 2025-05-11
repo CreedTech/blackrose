@@ -207,6 +207,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import { HeartIcon, ShareIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
+import { assets } from '../assets/images/assets';
 
 const SingleBlog = () => {
   const { slug } = useParams();
@@ -378,7 +379,7 @@ const SingleBlog = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <button
+              {/* <button
                 onClick={handleLikePost}
                 className="flex items-center space-x-1 text-gray-400 hover:text-primary transition-colors"
               >
@@ -388,7 +389,7 @@ const SingleBlog = () => {
                   <HeartIcon className="w-5 h-5" />
                 )}
                 <span>{post.likes + (liked ? 1 : 0)}</span>
-              </button>
+              </button> */}
 
               <button
                 onClick={handleShare}
@@ -425,9 +426,9 @@ const SingleBlog = () => {
               <div className="w-12 h-12 rounded-full bg-gray-700 overflow-hidden">
                 {/* If author has profile image */}
                 <img
-                  src="/author-placeholder.jpg"
+                  src={assets.logo}
                   alt={post.author.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div>
