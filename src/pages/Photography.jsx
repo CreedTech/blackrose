@@ -121,7 +121,7 @@ const Photography = () => {
                       data-swiper-parallax-x="-50%"
                       className="next-main-subtitle"
                     >
-                      {slide.category.title}
+                      {slide.category?.title}
                     </h3>
                     {/* <p data-swiper-parallax-x="-40%" className="next-paragraph">
                       {slide.description}
@@ -417,7 +417,7 @@ const Photography = () => {
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black/60 to-transparent">
                 <h2 className="text-xl font-bold">{selectedImage.title}</h2>
                 <p className="text-sm text-white">
-                  {selectedImage.category.title}
+                  {selectedImage.category?.title}
                 </p>
                 {/* Additional info */}
                 <div className="flex items-center mt-2 space-x-4">
