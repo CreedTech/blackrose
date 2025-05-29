@@ -65,7 +65,7 @@ const galleryApi = {
     const token = localStorage.getItem('token');
 
     try {
-      const { data } = await axios.get(`${API_URL}/collections`, {
+      const { data } = await axios.get(`${API_URL}/collections/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

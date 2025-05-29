@@ -408,7 +408,7 @@ const Photography = () => {
               <Link to={`/photography/${selectedImage._id}`}>
                 <img
                   src={selectedImage.watermarkedUrl}
-                  alt={selectedImage.category.name}
+                  alt={selectedImage.category?.name}
                   className="max-h-[90vh] object-contain"
                 />
               </Link>

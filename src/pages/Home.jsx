@@ -216,7 +216,7 @@ const Home = () => {
                     >
                       <div className="relative w-full h-64 mb-4">
                         <img
-                          src={product.image[0]}
+                          src={product?.images[0]}
                           alt={product.title}
                           className="w-full h-full object-cover mb-4 "
                         />

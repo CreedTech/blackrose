@@ -17,6 +17,8 @@ import Signup from './pages/SignUp';
 import Checkout from './pages/Checkout';
 import PaymentStatus from './pages/PaymentStatus';
 import Orders from './pages/Orders';
+import Profile from './pages/Profile';
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -41,7 +43,9 @@ function App() {
           <Route path="/payment/callback" element={<PaymentStatus />} />
           <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Signup />} />
         </Route>
       </Routes>

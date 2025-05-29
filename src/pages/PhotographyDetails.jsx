@@ -349,7 +349,7 @@ const PhotographyDetails = () => {
                     'Download'
                   )}
                 </span>
-                <svg
+                {/* <svg
                   className={`w-4 h-4 transform transition-transform ${
                     isDropdownOpen ? 'rotate-180' : ''
                   }`}
@@ -363,7 +363,7 @@ const PhotographyDetails = () => {
                     strokeWidth={2}
                     d="M19 9l-7 7-7-7"
                   />
-                </svg>
+                </svg> */}
               </button>
 
               <AddToCollectionModal
@@ -533,7 +533,7 @@ const PhotographyDetails = () => {
                   navigate(`/photography/${selectedImage._id}`);
                 }}
                 src={selectedImage.watermarkedUrl}
-                alt={selectedImage.category.name}
+                alt={selectedImage.category?.name}
                 className="max-h-[90vh] object-contain"
               />
 

@@ -229,7 +229,7 @@ const Navigation = () => {
           {/* Right Side Icons */}
           <div className="hidden md:flex items-center space-x-4">
             {/* Search */}
-            <button
+            {/* <button
               className="p-2"
               onClick={() => {
                 setShowSearch(true);
@@ -249,7 +249,7 @@ const Navigation = () => {
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
               </svg>
-            </button>
+            </button> */}
             {/* Cart */}
             <NavLink
               onClick={() => setIsCartOpen(!isCartOpen)}
@@ -298,13 +298,24 @@ const Navigation = () => {
               {token && (
                 <div className="group-hover:block hidden absolute dropdown-menu right-0 ">
                   <div className="flex flex-col gap-2 w-36 py-3 px-5  bg-slate-100 text-gray-500 rounded">
-                    {/* <p className='cursor-pointer hover:text-black'>My Profile</p> */}
-                    {/* <p
+                    <p
+                      onClick={() => navigate('/profile')}
+                      className="cursor-pointer hover:text-black"
+                    >
+                      My Profile
+                    </p>
+                    <p
                       onClick={() => navigate('/orders')}
                       className="cursor-pointer hover:text-black"
                     >
                       Orders
-                    </p> */}
+                    </p>
+                    <p
+                      onClick={() => navigate('/cart')}
+                      className="cursor-pointer hover:text-black"
+                    >
+                      Cart
+                    </p>
                     <p
                       onClick={logout}
                       className="cursor-pointer hover:text-black"
@@ -418,13 +429,18 @@ const Navigation = () => {
               {token && (
                 <div className="">
                   <div className="flex flex-col gap-2 w-full py-3 px-5 text-center  bg-slate-100 text-gray-500 rounded">
-                    {/* <p className='cursor-pointer hover:text-black'>My Profile</p> */}
-                    {/* <p
+                    <p
+                      onClick={() => navigate('/profile')}
+                      className="cursor-pointer hover:text-black"
+                    >
+                      My Profile
+                    </p>
+                    <p
                       onClick={() => navigate('/orders')}
                       className="cursor-pointer hover:text-black"
                     >
-                      Orders
-                    </p> */}
+                      My Orders
+                    </p>
                     <p
                       onClick={logout}
                       className="cursor-pointer hover:text-black"
