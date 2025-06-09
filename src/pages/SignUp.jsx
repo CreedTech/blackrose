@@ -123,7 +123,7 @@ const Signup = () => {
   }, [token]);
 
   return (
-    <div className="min-h-screen bg-black flex z-[999999] ">
+    <div className="min-h-screen bg-black flex z-[99999] ">
       {/* {isLoading && (
         <div
           id="Lfa-page-loading"

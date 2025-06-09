@@ -84,7 +84,7 @@ const Navigation = () => {
   return (
     <>
       {/* Main Navigation */}
-      <nav className="w-full bg-black sticky top-0 z-50 border-b border-gray-800">
+      <nav className="w-full bg-black sticky top-0 z-40 border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Mobile Header */}
           <div className="flex justify-between items-center h-16 md:hidden">
@@ -97,7 +97,7 @@ const Navigation = () => {
               >
                 <Bars3Icon className="w-6 h-6" />
               </button>
-              <button
+              {/* <button
                 className="p-2 text-gray-300 hover:text-white transition-colors"
                 onClick={() => {
                   setShowSearch(true);
@@ -106,7 +106,7 @@ const Navigation = () => {
                 aria-label="Search"
               >
                 <MagnifyingGlassIcon className="w-5 h-5" />
-              </button>
+              </button> */}
             </div>
 
             {/* Center: Logo */}
@@ -300,7 +300,7 @@ const Navigation = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+              className="fixed inset-0 bg-black bg-opacity-50 z-[9999999] md:hidden"
               onClick={() => setIsOpen(false)}
             />
 
@@ -310,7 +310,7 @@ const Navigation = () => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="fixed left-0 top-0 h-full w-80 bg-black border-r border-gray-800 z-50 md:hidden"
+              className="fixed left-0 top-0 h-full w-80 bg-black border-r border-gray-800 z-[999999999] md:hidden"
             >
               <div className="flex flex-col h-full">
                 {/* Header */}

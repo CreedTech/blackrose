@@ -137,7 +137,7 @@ const ResetPassword = () => {
   // Invalid token state
   if (!tokenValid) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center px-4 relative z-[999999999]">
+      <div className="min-h-screen bg-black flex items-center justify-center px-4 relative z-[99999999]">
         <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg text-center">
           <div className="mx-auto h-16 w-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <svg
@@ -180,7 +180,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black flex relative z-[999999999]">
+    <div className="min-h-screen bg-black flex relative z-[99999999]">
       {/* Loading Overlay */}
       {/* {isLoading && (
         <div className="blackrose-pageloading z-[999999999]">
