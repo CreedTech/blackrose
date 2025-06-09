@@ -3,11 +3,18 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
 import { ShopContext } from '../context/ShopContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { XMarkIcon } from '@heroicons/react/16/solid';
+import {
+  XMarkIcon,
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  ShoppingBagIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const location = useLocation();
   const {
     setShowSearch,
@@ -30,533 +37,495 @@ const Navigation = () => {
 
   useEffect(() => {
     setIsOpen(false);
+    setShowDropdown(false);
   }, [location.pathname]);
+
+  // Close mobile menu on screen resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const navigationLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/photography', label: 'Photography' },
+    { to: '/lifestyle', label: 'Lifestyle' },
+    { to: '/shop', label: 'Shop' },
+    { to: '/about', label: 'About' },
+    { to: '/contact', label: 'Contacts' },
+  ];
+
+  const NavLinkComponent = ({ to, label, mobile = false, onClick }) => (
+    <NavLink
+      to={to}
+      onClick={onClick}
+      className={({ isActive }) =>
+        mobile
+          ? `block px-4 py-3 text-lg font-medium transition-all duration-200 rounded-lg ${
+              isActive
+                ? 'text-white bg-gray-800 border-l-4 border-white'
+                : 'text-gray-300 hover:text-white hover:bg-gray-800'
+            }`
+          : `relative transition-colors duration-200 hover:text-white ${
+              isActive ? 'text-white' : 'text-gray-400'
+            }`
+      }
+    >
+      {label}
+    </NavLink>
+  );
 
   return (
     <>
       {/* Main Navigation */}
-      <nav className="max-w-7xl mx-auto px-4 mt-10">
-        <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="flex justify-between items-center"
-          >
-            <div>
-              {/* Mobile menu button */}
+      <nav className="w-full bg-black sticky top-0 z-50 border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Mobile Header */}
+          <div className="flex justify-between items-center h-16 md:hidden">
+            {/* Left: Menu + Search */}
+            <div className="flex items-center space-x-2">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden p-2 "
+                className="p-2 text-gray-300 hover:text-white transition-colors"
+                aria-label="Toggle menu"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  {isOpen ? (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  ) : (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  )}
-                </svg>
+                <Bars3Icon className="w-6 h-6" />
               </button>
-              {/* Search */}
               <button
-                className="p-2 md:hidden"
+                className="p-2 text-gray-300 hover:text-white transition-colors"
                 onClick={() => {
                   setShowSearch(true);
                   navigate('/collection');
                 }}
+                aria-label="Search"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
+                <MagnifyingGlassIcon className="w-5 h-5" />
               </button>
             </div>
-            <NavLink to="/" className="  md:hidden items-center relative">
+
+            {/* Center: Logo */}
+            <NavLink to="/" className="flex-shrink-0">
               <img
                 src={assets.logo}
                 alt="The Black Rose"
-                className="w-16 h-8"
+                className="w-24 h-8 object-contain"
               />
             </NavLink>
-            <div>
-              {/* Cart */}
-              <NavLink
+
+            {/* Right: Cart + Account */}
+            <div className="flex items-center space-x-2">
+              <button
                 onClick={() => setIsCartOpen(!isCartOpen)}
-                className="p-2 relative  md:hidden"
+                className="p-2 text-gray-300 hover:text-white transition-colors relative"
+                aria-label="Cart"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                <ShoppingBagIcon className="w-5 h-5" />
+                {getCartCount() > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-white text-black text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold">
+                    {getCartCount()}
+                  </span>
+                )}
+              </button>
+
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    if (token) {
+                      setShowDropdown(!showDropdown);
+                    } else {
+                      navigate('/login');
+                    }
+                  }}
+                  className="p-2 text-gray-300 hover:text-white transition-colors"
+                  aria-label="Account"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
-                <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                  {getCartCount()}
-                </span>
-              </NavLink>
+                  <UserIcon className="w-5 h-5" />
+                </button>
 
-              {/* Account */}
-              <NavLink
-                to={token ? null : '/login'}
-                // onClick={() => (token ? null : navigate('/login'))}
-                className="p-2 relative cursor-pointer  md:hidden"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              </NavLink>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <NavLink to="/" className=" hidden md:flex items-center relative">
-              <img
-                src={assets.logo}
-                alt="The Black Rose"
-                className="w-36 h-16"
-              />
-            </NavLink>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? 'text-white hover:text-white transition-colors duration-200 cursor-pointer relative'
-                  : 'text-gray-600 hover:text-white transition-colors duration-200 cursor-pointer relative'
-              }
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/photography"
-              className={({ isActive }) =>
-                isActive
-                  ? 'text-white hover:text-white transition-colors duration-200 cursor-pointer relative'
-                  : 'text-gray-600 hover:text-white transition-colors duration-200 cursor-pointer relative'
-              }
-            >
-              Photography
-            </NavLink>
-            <NavLink
-              to="/lifestyle"
-              className={({ isActive }) =>
-                isActive
-                  ? 'text-white hover:text-white transition-colors duration-200 cursor-pointer relative'
-                  : 'text-gray-600 hover:text-white transition-colors duration-200 cursor-pointer relative'
-              }
-            >
-              Lifestyle
-            </NavLink>
-            <NavLink
-              to="/shop"
-              className={({ isActive }) =>
-                isActive
-                  ? 'text-white hover:text-white transition-colors duration-200 cursor-pointer relative'
-                  : 'text-gray-600 hover:text-white transition-colors duration-200 cursor-pointer relative'
-              }
-            >
-              Shop
-            </NavLink>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                isActive
-                  ? 'text-white hover:text-white transition-colors duration-200 cursor-pointer relative'
-                  : 'text-gray-600 hover:text-white transition-colors duration-200 cursor-pointer relative'
-              }
-            >
-              About
-            </NavLink>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                isActive
-                  ? 'text-white hover:text-white transition-colors duration-200 cursor-pointer relative'
-                  : 'text-gray-600 hover:text-white transition-colors duration-200 cursor-pointer relative'
-              }
-            >
-              Contacts
-            </NavLink>
-          </div>
-
-          {/* Right Side Icons */}
-          <div className="hidden md:flex items-center space-x-4">
-            {/* Search */}
-            {/* <button
-              className="p-2"
-              onClick={() => {
-                setShowSearch(true);
-                navigate('/collection');
-              }}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </button> */}
-            {/* Cart */}
-            <NavLink
-              onClick={() => setIsCartOpen(!isCartOpen)}
-              className="p-2 relative "
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                />
-              </svg>
-              <span className="absolute -top-1 -right-1 bg-black text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
-                {getCartCount()}
-              </span>
-            </NavLink>
-
-            {/* Account */}
-            <div className="group relative">
-              <NavLink
-                to={token ? null : '/login'}
-                // onClick={() => (token ? null : navigate('/login'))}
-                className="p-2 relative cursor-pointer  "
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              </NavLink>
-              {/* Dropdown Menu */}
-              {token && (
-                <div className="group-hover:block hidden absolute dropdown-menu right-0 ">
-                  <div className="flex flex-col gap-2 w-36 py-3 px-5  bg-slate-100 text-gray-500 rounded">
-                    <p
-                      onClick={() => navigate('/profile')}
-                      className="cursor-pointer hover:text-black"
+                {/* Mobile Account Dropdown */}
+                {token && showDropdown && (
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-2 z-50">
+                    <button
+                      onClick={() => {
+                        navigate('/profile');
+                        setShowDropdown(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
                     >
                       My Profile
-                    </p>
-                    <p
-                      onClick={() => navigate('/orders')}
-                      className="cursor-pointer hover:text-black"
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate('/orders');
+                        setShowDropdown(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
                     >
                       Orders
-                    </p>
-                    <p
-                      onClick={() => navigate('/cart')}
-                      className="cursor-pointer hover:text-black"
-                    >
-                      Cart
-                    </p>
-                    <p
-                      onClick={logout}
-                      className="cursor-pointer hover:text-black"
+                    </button>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setShowDropdown(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
                     >
                       Logout
-                    </p>
+                    </button>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-            {/* Shop Now Button */}
-            <NavLink
-              to="/shop"
-              className="hidden md:block bg-white text-black px-6 py-2  hover:bg-gray-200 transition-colors relative"
-            >
-              Shop now
-            </NavLink>
+          </div>
+
+          {/* Desktop Header */}
+          <div className="hidden md:flex justify-between items-center h-20">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <NavLink to="/" className="flex items-center">
+                <img
+                  src={assets.logo}
+                  alt="The Black Rose"
+                  className="w-36 h-16 object-contain"
+                />
+              </NavLink>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-8">
+              {navigationLinks.map((link) => (
+                <NavLinkComponent
+                  key={link.to}
+                  to={link.to}
+                  label={link.label}
+                />
+              ))}
+            </div>
+
+            {/* Desktop Right Side Icons */}
+            <div className="flex items-center space-x-4">
+              {/* Cart */}
+              <button
+                onClick={() => setIsCartOpen(!isCartOpen)}
+                className="p-2 text-gray-400 hover:text-white transition-colors relative"
+                aria-label="Cart"
+              >
+                <ShoppingBagIcon className="w-5 h-5" />
+                {getCartCount() > 0 && (
+                  <span className="absolute top-1 right-1 bg-white text-black text-xs w-4 h-4 rounded-full flex items-center justify-center font-semibold">
+                    {getCartCount()}
+                  </span>
+                )}
+              </button>
+
+              {/* Account */}
+              <div className="group relative">
+                <button
+                  onClick={() => !token && navigate('/login')}
+                  className="p-2 text-gray-400 hover:text-white transition-colors"
+                  aria-label="Account"
+                >
+                  <UserIcon className="w-5 h-5" />
+                </button>
+
+                {/* Desktop Dropdown Menu */}
+                {token && (
+                  <div className="group-hover:block hidden absolute right-0 top-full mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-2">
+                    <button
+                      onClick={() => navigate('/profile')}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+                    >
+                      My Profile
+                    </button>
+                    <button
+                      onClick={() => navigate('/orders')}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+                    >
+                      Orders
+                    </button>
+                    <button
+                      onClick={() => navigate('/cart')}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+                    >
+                      Cart
+                    </button>
+                    <button
+                      onClick={logout}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Shop Now Button */}
+              <NavLink
+                to="/shop"
+                className="hidden xl:block bg-white text-black px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+              >
+                Shop now
+              </NavLink>
+            </div>
+          </div>
+
+          {/* Tablet Navigation (md to lg) */}
+          <div className="hidden md:flex lg:hidden justify-center py-4 border-t border-gray-800">
+            <div className="flex items-center space-x-6">
+              {navigationLinks.slice(0, 6).map((link) => (
+                <NavLinkComponent
+                  key={link.to}
+                  to={link.to}
+                  label={link.label}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation Overlay */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="fixed inset-0 bg-black  p-6 z-[9999999999999999]"
-          >
-            <button
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
               onClick={() => setIsOpen(false)}
-              className="absolute top-4 right-4 p-2 mb-5"
+            />
+
+            {/* Mobile Menu */}
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="fixed left-0 top-0 h-full w-80 bg-black border-r border-gray-800 z-50 md:hidden"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            <div className="px-2 pt-2  space-y-1 relative mt-10">
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive
-                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
-                }
-              >
-                Home
-              </NavLink>
-              <NavLink
-                to="/photography"
-                className={({ isActive }) =>
-                  isActive
-                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
-                }
-              >
-                Photography
-              </NavLink>
-              <NavLink
-                to="/lifestyle"
-                className={({ isActive }) =>
-                  isActive
-                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
-                }
-              >
-                Lifestyle
-              </NavLink>
-              <NavLink
-                to="/shop"
-                className={({ isActive }) =>
-                  isActive
-                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
-                }
-              >
-                Shop
-              </NavLink>
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  isActive
-                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
-                }
-              >
-                About
-              </NavLink>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  isActive
-                    ? 'block px-3 py-2 text-lg font-medium text-gray-600  bg-gray-50 cursor-pointer relative'
-                    : 'block px-3 py-2 text-lg font-medium text-gray-600  cursor-pointer relative'
-                }
-              >
-                Contacts
-              </NavLink>
-              {token && (
-                <div className="">
-                  <div className="flex flex-col gap-2 w-full py-3 px-5 text-center  bg-slate-100 text-gray-500 rounded">
-                    <p
-                      onClick={() => navigate('/profile')}
-                      className="cursor-pointer hover:text-black"
-                    >
-                      My Profile
-                    </p>
-                    <p
-                      onClick={() => navigate('/orders')}
-                      className="cursor-pointer hover:text-black"
-                    >
-                      My Orders
-                    </p>
-                    <p
-                      onClick={logout}
-                      className="cursor-pointer hover:text-black"
-                    >
-                      Logout
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      {/* Cart Overlay */}
-
-      {isCartOpen && (
-        <AnimatePresence>
-          <div
-            className="fixed inset-0 z-40"
-            style={{ backgroundColor: 'rgba(32, 32, 32, 0.75)' }}
-            onClick={() => setIsCartOpen(false)}
-          ></div>
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="fixed right-4 top-24 w-[350px] sm:w-[400px] bg-black border border-gray-800 rounded-lg shadow-lg p-6 z-[999999999999999999999] max-h-[80vh] overflow-y-auto"
-          >
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold text-white">
-                My Cart ({Object.keys(cartItems).length})
-              </h2>
-              <button onClick={() => setIsCartOpen(false)}>
-                <XMarkIcon className="h-5 w-5 text-white" />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {Object.entries(cartItems).map(([productId, item]) => (
-                <div key={productId} className="flex gap-4 border-b pb-4">
+              <div className="flex flex-col h-full">
+                {/* Header */}
+                <div className="flex justify-between items-center p-6 border-b border-gray-800">
                   <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-20 h-20 object-cover rounded"
+                    src={assets.logo}
+                    alt="The Black Rose"
+                    className="w-24 h-8 object-contain"
                   />
-                  <div className="flex-1">
-                    <h3 className="text-white font-semibold text-sm">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-400 text-xs mt-1">
-                      ₦{Number(item.finalPrice).toLocaleString()}
-                    </p>
-                    <div className="flex justify-between items-center mt-2">
-                      <div className="flex items-center space-x-2">
-                        <button
-                          className="text-white px-2 border"
-                          onClick={() =>
-                            updateQuantity(productId, item.quantity - 1)
-                          }
-                        >
-                          -
-                        </button>
-                        <span className="text-white">{item.quantity}</span>
-                        <button
-                          className="text-white px-2 border"
-                          onClick={() =>
-                            updateQuantity(productId, item.quantity + 1)
-                          }
-                        >
-                          +
-                        </button>
-                      </div>
-                      <span className="text-white font-semibold text-sm">
-                        ₦
-                        {Number(
-                          item.finalPrice * item.quantity
-                        ).toLocaleString()}
-                      </span>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-2 text-gray-300 hover:text-white transition-colors"
+                    aria-label="Close menu"
+                  >
+                    <XMarkIcon className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {/* Navigation Links */}
+                <div className="flex-1 px-6 py-6 space-y-2">
+                  {navigationLinks.map((link) => (
+                    <NavLinkComponent
+                      key={link.to}
+                      to={link.to}
+                      label={link.label}
+                      mobile={true}
+                      onClick={() => setIsOpen(false)}
+                    />
+                  ))}
+                </div>
+
+                {/* User Account Section */}
+                {token && (
+                  <div className="border-t border-gray-800 p-6">
+                    <div className="space-y-2">
+                      <button
+                        onClick={() => {
+                          navigate('/profile');
+                          setIsOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                      >
+                        My Profile
+                      </button>
+                      <button
+                        onClick={() => {
+                          navigate('/orders');
+                          setIsOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                      >
+                        My Orders
+                      </button>
+                      <button
+                        onClick={() => {
+                          logout();
+                          setIsOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-3 text-red-400 hover:text-red-300 hover:bg-gray-800 rounded-lg transition-colors"
+                      >
+                        Logout
+                      </button>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                )}
 
-            <div className="pt-6 border-t border-gray-700 mt-6">
-              <div className="flex justify-between text-white text-md font-semibold mb-4">
-                <span>Subtotal:</span>
-                <span>₦{Number(getCartAmount()).toLocaleString()}</span>
+                {/* Shop Now Button */}
+                <div className="p-6 border-t border-gray-800">
+                  <NavLink
+                    to="/shop"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full bg-white text-black text-center py-3 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                  >
+                    Shop Now
+                  </NavLink>
+                </div>
               </div>
-              <button
-                className="w-full bg-white text-black py-3 rounded font-bold"
-                onClick={() => {
-                  setIsCartOpen(false);
-                  navigate('/checkout');
-                }}
-              >
-                Checkout
-              </button>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Cart Sidebar */}
+      <AnimatePresence>
+        {isCartOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              onClick={() => setIsCartOpen(false)}
+            />
+
+            {/* Cart Panel */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="fixed right-0 top-0 h-full w-full max-w-md bg-black border-l border-gray-800 z-50 flex flex-col"
+            >
+              {/* Header */}
+              <div className="flex justify-between items-center p-6 border-b border-gray-800">
+                <h2 className="text-lg font-bold text-white">
+                  My Cart ({Object.keys(cartItems).length})
+                </h2>
+                <button
+                  onClick={() => setIsCartOpen(false)}
+                  className="p-2 text-gray-300 hover:text-white transition-colors"
+                  aria-label="Close cart"
+                >
+                  <XMarkIcon className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Cart Items */}
+              <div className="flex-1 overflow-y-auto p-6">
+                {Object.keys(cartItems).length === 0 ? (
+                  <div className="text-center py-12">
+                    <ShoppingBagIcon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                    <p className="text-gray-400 text-lg mb-4">
+                      Your cart is empty
+                    </p>
+                    <button
+                      onClick={() => {
+                        setIsCartOpen(false);
+                        navigate('/shop');
+                      }}
+                      className="bg-white text-black px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                    >
+                      Start Shopping
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {Object.entries(cartItems).map(([productId, item]) => (
+                      <div
+                        key={productId}
+                        className="flex gap-4 p-4 border border-gray-800 rounded-lg"
+                      >
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-16 h-16 object-cover rounded flex-shrink-0"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-white font-medium text-sm truncate">
+                            {item.title}
+                          </h3>
+                          <p className="text-gray-400 text-xs mt-1">
+                            ₦{Number(item.finalPrice).toLocaleString()}
+                          </p>
+                          <div className="flex justify-between items-center mt-3">
+                            <div className="flex items-center space-x-2">
+                              <button
+                                className="w-8 h-8 flex items-center justify-center border border-gray-600 rounded text-white hover:bg-gray-800 transition-colors"
+                                onClick={() =>
+                                  updateQuantity(productId, item.quantity - 1)
+                                }
+                              >
+                                -
+                              </button>
+                              <span className="text-white w-8 text-center">
+                                {item.quantity}
+                              </span>
+                              <button
+                                className="w-8 h-8 flex items-center justify-center border border-gray-600 rounded text-white hover:bg-gray-800 transition-colors"
+                                onClick={() =>
+                                  updateQuantity(productId, item.quantity + 1)
+                                }
+                              >
+                                +
+                              </button>
+                            </div>
+                            <span className="text-white font-semibold text-sm">
+                              ₦
+                              {Number(
+                                item.finalPrice * item.quantity
+                              ).toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Footer */}
+              {Object.keys(cartItems).length > 0 && (
+                <div className="border-t border-gray-800 p-6">
+                  <div className="flex justify-between text-white text-lg font-semibold mb-4">
+                    <span>Subtotal:</span>
+                    <span>₦{Number(getCartAmount()).toLocaleString()}</span>
+                  </div>
+                  <button
+                    className="w-full bg-white text-black py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+                    onClick={() => {
+                      setIsCartOpen(false);
+                      navigate('/checkout');
+                    }}
+                  >
+                    Checkout
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };
-
-// Add these styles to your CSS or Tailwind config
-// const styles = `
-//   .nav-NavLink {
-//     @apply text-gray-600 hover:text-black transition-colors duration-200;
-//   }
-
-//   .mobile-nav-NavLink {
-//     @apply block px-3 py-2 text-base font-medium text-gray-600 hover:text-black hover:bg-gray-50;
-//   }
-// `;
 
 export default Navigation;

@@ -16,6 +16,10 @@ const galleryApi = {
     const { data } = await axios.get(`${API_URL}/category`);
     return data;
   },
+  fetchblogs: async () => {
+    const { data } = await axios.get(`${API_URL}/blog/posts`);
+    return data;
+  },
   fetchFeaturedCategories: async () => {
     const { data } = await axios.get('/category/featured');
     return data;
@@ -177,6 +181,12 @@ export const useGallery = () => {
       queryFn: galleryApi.fetchcategories,
     });
   };
+  const useBlogs = () => {
+    return useQuery({
+      queryKey: ['blogs'],
+      queryFn: galleryApi.fetchblogs,
+    });
+  };
   const useFeaturedCategories = () => {
     return useQuery({
       queryKey: ['categories', 'featured'],
@@ -254,5 +264,6 @@ export const useGallery = () => {
     useCategoryBySlug,
     useGetSingleImage,
     useDownloadImage,
+    useBlogs,
   };
 };

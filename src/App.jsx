@@ -19,6 +19,8 @@ import PaymentStatus from './pages/PaymentStatus';
 import Orders from './pages/Orders';
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
+import ForgotPassword from './component/ForgotPassword';
+import ResetPassword from './component/ResetPassword';
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Signup />} />
         </Route>

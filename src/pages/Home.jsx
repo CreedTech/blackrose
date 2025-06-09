@@ -7,36 +7,14 @@ import { useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 
 const Home = () => {
-  const { useCategories, useImages } = useGallery();
+  const { useCategories, useImages,useBlogs } = useGallery();
   const { data: categories } = useCategories();
+  const { data: blogs } = useBlogs();
   const { data: images } = useImages();
   const { useLists } = useProducts();
   const { data: products } = useLists();
   const { addToCart } = useContext(ShopContext);
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: '5 Tips for Better Morning Routines',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipiscing elit ipsum dolor sit amet.',
-      image: assets.galleryTwentyThree,
-    },
-    {
-      id: 2,
-      title: 'How to Choose the Perfect Outfit',
-      description:
-        'Learn the secrets to putting together a stylish and versatile wardrobe.',
-      image: assets.galleryThirtyFour,
-    },
-    {
-      id: 3,
-      title: 'Top 10 Photography Destinations in 2025',
-      description:
-        'Discover the most stunning places to capture your next masterpiece.',
-      image: assets.galleryTwentyEight,
-    },
-  ];
 
   return (
     <div>
@@ -87,7 +65,7 @@ const Home = () => {
                 </h2>
                 <p className="text-lg">
                   Immerse yourself in breathtaking visuals, curated blogs, and a
-                  premium shopping experience—all in one place.
+                  premium shopping experience - all in one place.
                 </p>
                 <a
                   href="/lifestyle"
@@ -279,58 +257,24 @@ const Home = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {blogPosts.map((post) => (
-                  <div key={post.id} className="group cursor-pointer">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-64 object-cover mb-4"
-                    />
-                    <h3 className="text-xl font-bold mb-2 group-hover:underline">
-                      {post.title}
-                    </h3>
-                    <p className="text-gray-400">{post.description}</p>
+                {blogs?.data?.posts?.map((post) => (
+                  <Link to={`/lifestyle/${post.slug}`} key={post.id}>
+                    <div className="group cursor-pointer">
+                      <img
+                        src={post.featuredImage}
+                        alt={post.title}
+                        className="w-full h-64 object-cover mb-4"
+                      />
+                      <h3 className="text-xl font-bold mb-2 group-hover:underline">
+                        {post.title}
+                      </h3>
+                    {/* <p className="text-gray-400">{post.content}</p> */}
                   </div>
+                  </Link>
                 ))}
               </div>
             </section>
 
-            {/* Newsletter Section */}
-            {/* <section className="bg-white text-black py-16">
-                  <div className="max-w-2xl mx-auto text-center px-4">
-                    <h2 className="text-3xl font-bold mb-4">
-                      Stay Connected with The Black Rose
-                    </h2>
-                    <p className="mb-8">
-                      Be the first to know about new arrivals, featured
-                      galleries, and exclusive blogs
-                    </p>
-                    <div className="flex max-w-md mx-auto">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email address"
-                        className="flex-1 px-4 py-2 border border-gray-300"
-                      />
-                      <button className="bg-black text-white px-6 py-2 hover:bg-gray-800">
-                        Subscribe
-                      </button>
-                    </div>
-                  </div>
-                </section> */}
-
-            {/* Call to Action Section */}
-            {/* <section className="bg-white text-black py-16 z-30">
-                  <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-                    <h2 className="text-3xl font-bold text-black">
-                      Start Your Journey with The Black Rose Today!
-                    </h2>
-                    <button className="bg-black text-white px-6 py-3 hover:bg-gray-800 transition-colors">
-                      Shop now
-                    </button>
-                  </div>
-                </section> */}
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/images/assets';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const [currentState, setCurrentState] = useState('Login');
@@ -17,15 +18,10 @@ const Signup = () => {
     password: '',
     confirmPassword: '',
   });
-  //   const [name, setName] = useState('');
-  //   const [password, setPasword] = useState('');
-  //   const [confirmPassword, setConfirmPasword] = useState('');
-  //     const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  //   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -125,69 +121,6 @@ const Signup = () => {
       navigate(from);
     }
   }, [token]);
-
-  //   const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     if (currentState === 'Sign Up') {
-  //       if (!formData.name.trim()) {
-  //         toast.error('Full name is required');
-  //       }
-  //       if (!formData.email.trim()) {
-  //         toast.error('Email is required');
-  //       } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-  //         toast.error('Email is invalid');
-  //       }
-  //       if (!formData.password) {
-  //         toast.error('Password is required');
-  //       } else if (formData.password.length < 6) {
-  //         toast.error('Password must be at least 6 characters');
-  //       }
-
-  //       if (formData.password !== formData.confirmPassword) {
-  //         toast.error('Passwords do not match');
-  //       }
-  //     } else if (currentState === 'Login') {
-  //       if (!formData.email.trim()) {
-  //         toast.error('Email is required');
-  //       } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-  //         toast.error('Email is invalid');
-  //       }
-  //       if (!formData.password) {
-  //         toast.error('Password is required');
-  //       }
-  //     } else {
-  //       return;
-  //     }
-
-  //     try {
-  //       if (currentState === 'Sign Up') {
-  //         const response = await axios.post(
-  //           backendUrl + '/api/user/register',
-  //           JSON.stringify(formData)
-  //         );
-  //         if (response.data.success) {
-  //           setToken(response.data.token);
-  //           localStorage.setItem('token', response.data.token);
-  //         } else {
-  //           toast.error(response.data.message);
-  //         }
-  //       } else {
-  //         const response = await axios.post(
-  //           backendUrl + '/api/user/login',
-  //           JSON.stringify(formData)
-  //         );
-  //         if (response.data.success) {
-  //           setToken(response.data.token);
-  //           localStorage.setItem('token', response.data.token);
-  //         } else {
-  //           toast.error(response.data.message);
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //       toast.error(error.message);
-  //     }
-  //   };
 
   return (
     <div className="min-h-screen bg-black flex z-[999999] ">
@@ -313,6 +246,16 @@ const Signup = () => {
                     <AiOutlineEye size={20} />
                   )}
                 </button>
+              </div>
+            )}
+            {currentState === 'Login' && (
+              <div className="text-right">
+                <Link
+                  to="/forgot-password"
+                  className="text-white/60 hover:text-white text-sm transition-colors"
+                >
+                  Forgot your password?
+                </Link>
               </div>
             )}
             {/* Confirm Password */}

@@ -700,11 +700,52 @@ const ShopContextProvider = (props) => {
   };
 
   // Enhanced cart functions with variant support
+  // const addToCart = async (
+  //   productId,
+  //   quantity = 1,
+  //   variantId = null,
+  //   selectedAttributes = {}
+  // ) => {
+  //   if (!token) {
+  //     toast.error('Please log in to add items to cart');
+  //     navigate('/login');
+  //     return false;
+  //   }
+
+  //   setLoading(true);
+  //   try {
+  //     const response = await api.post('/user/cart/add', {
+  //       productId,
+  //       quantity,
+  //       variantId,
+  //       selectedAttributes,
+  //     });
+
+  //     if (response.data.success) {
+  //       await getCart();
+  //       toast.success('Item added to cart');
+  //       return true;
+  //     }
+  //   } catch (error) {
+  //     const message = error.response?.data?.message || 'Could not add to cart';
+  //     if (error.response?.data?.availableStock !== undefined) {
+  //       toast.error(
+  //         `Only ${error.response.data.availableStock} items available`
+  //       );
+  //     } else {
+  //       toast.error(message);
+  //     }
+  //     return false;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const addToCart = async (
     productId,
     quantity = 1,
     variantId = null,
-    selectedAttributes = {}
+    selectedAttributes = {},
+    isPreorder = false // Add this parameter
   ) => {
     if (!token) {
       toast.error('Please log in to add items to cart');
@@ -719,11 +760,21 @@ const ShopContextProvider = (props) => {
         quantity,
         variantId,
         selectedAttributes,
+        isPreorder, // Include this in the request
       });
 
       if (response.data.success) {
         await getCart();
-        toast.success('Item added to cart');
+
+        // Show appropriate message based on inventory status
+        if (response.data.inventoryStatus?.type === 'preorder') {
+          toast.success('Pre-order item added to cart');
+        } else if (response.data.inventoryStatus?.type === 'partial_preorder') {
+          toast.success('Item added to cart (some items as preorder)');
+        } else {
+          toast.success('Item added to cart');
+        }
+
         return true;
       }
     } catch (error) {
@@ -741,76 +792,51 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  // const getCart = async (authToken = token) => {
-  //   if (!authToken) return;
-
-  //   try {
-  //     const response = await api.get('/user/cart');
-  //     if (response.data) {
-  //       const cartData = {};
-  //       response.data.cartItems.forEach((item) => {
-  //         cartData[item.key] = {
-  //           ...item,
-  //           productId: item.productId,
-  //           variantId: item.variantId,
-  //           quantity: item.quantity,
-  //           selectedAttributes: item.selectedAttributes,
-  //           title: item.product.title,
-  //           image: item.product.image,
-  //           price: item.product.price,
-  //           finalPrice: item.product.price,
-  //           availableStock: item.product.availableStock,
-  //           isAvailable: item.product.isAvailable,
-  //         };
-  //       });
-  //       setCartItems(cartData);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching cart:', error);
-  //   }
-  // };
-
   const getCart = async (authToken = token) => {
-  if (!authToken) return;
+    if (!authToken) return;
 
-  try {
-    const response = await api.get('/user/cart');
-    if (response.data) {
-      const cartData = {};
-      response.data.cartItems.forEach((item) => {
-        // Clean up selectedAttributes to remove empty objects
-        const cleanedAttributes = {};
-        if (item.selectedAttributes) {
-          Object.entries(item.selectedAttributes).forEach(([key, value]) => {
-            // Only include attributes that have actual values (not empty objects)
-            if (value && typeof value === 'object' && Object.keys(value).length === 0) {
-              // Skip empty objects
-              return;
-            }
-            cleanedAttributes[key] = value;
-          });
-        }
+    try {
+      const response = await api.get('/user/cart');
+      if (response.data) {
+        const cartData = {};
+        response.data.cartItems.forEach((item) => {
+          // Clean up selectedAttributes to remove empty objects
+          const cleanedAttributes = {};
+          if (item.selectedAttributes) {
+            Object.entries(item.selectedAttributes).forEach(([key, value]) => {
+              // Only include attributes that have actual values (not empty objects)
+              if (
+                value &&
+                typeof value === 'object' &&
+                Object.keys(value).length === 0
+              ) {
+                // Skip empty objects
+                return;
+              }
+              cleanedAttributes[key] = value;
+            });
+          }
 
-        cartData[item.key] = {
-          ...item,
-          productId: item.productId,
-          variantId: item.variantId,
-          quantity: item.quantity,
-          selectedAttributes: cleanedAttributes, // Use cleaned attributes
-          title: item.product.title,
-          image: item.product.image,
-          price: item.product.price,
-          finalPrice: item.product.finalPrice || item.product.price,
-          availableStock: item.product.availableStock,
-          isAvailable: item.product.isAvailable,
-        };
-      });
-      setCartItems(cartData);
+          cartData[item.key] = {
+            ...item,
+            productId: item.productId,
+            variantId: item.variantId,
+            quantity: item.quantity,
+            selectedAttributes: cleanedAttributes, // Use cleaned attributes
+            title: item.product.title,
+            image: item.product.image,
+            price: item.product.price,
+            finalPrice: item.product.finalPrice || item.product.price,
+            availableStock: item.product.availableStock,
+            isAvailable: item.product.isAvailable,
+          };
+        });
+        setCartItems(cartData);
+      }
+    } catch (error) {
+      console.error('Error fetching cart:', error);
     }
-  } catch (error) {
-    console.error('Error fetching cart:', error);
-  }
-};
+  };
 
   const updateQuantity = async (cartKey, quantity) => {
     if (!token || quantity < 0) return;
@@ -949,11 +975,55 @@ const ShopContextProvider = (props) => {
   };
 
   // Enhanced order creation
+  // const createOrder = async (
+  //   addressData,
+  //   shippingMethod = 'standard',
+  //   notes = '',
+  //   isPreorder = false
+  // ) => {
+  //   if (Object.keys(cartItems).length === 0) {
+  //     toast.error('Your cart is empty');
+  //     return null;
+  //   }
+
+  //   setOrderProcessing(true);
+  //   try {
+  //     // Format items for order
+  //     const items = Object.values(cartItems).map((item) => ({
+  //       productId: item.productId,
+  //       variantId: item.variantId,
+  //       quantity: item.quantity,
+  //       selectedAttributes: item.selectedAttributes,
+  //     }));
+
+  //     const orderData = {
+  //       items,
+  //       shippingAddress: addressData,
+  //       billingAddress: addressData,
+  //       paymentMethod: 'paystack',
+  //       shippingMethod,
+  //       customerNotes: notes,
+  //       fulfillmentMethod: isPreorder ? 'preorder' : 'standard',
+  //     };
+
+  //     const response = await api.post('/order/create', orderData);
+
+  //     if (response.data.success) {
+  //       setCurrentOrder(response.data.order);
+  //       return response.data.order;
+  //     }
+  //   } catch (error) {
+  //     console.error('Order creation error:', error);
+  //     toast.error(error.response?.data?.message || 'Failed to create order');
+  //     return null;
+  //   } finally {
+  //     setOrderProcessing(false);
+  //   }
+  // };
   const createOrder = async (
     addressData,
     shippingMethod = 'standard',
-    notes = '',
-    isPreorder = false
+    notes = ''
   ) => {
     if (Object.keys(cartItems).length === 0) {
       toast.error('Your cart is empty');
@@ -962,13 +1032,17 @@ const ShopContextProvider = (props) => {
 
     setOrderProcessing(true);
     try {
-      // Format items for order
+      // Format items for order - include preorder status from cart items
       const items = Object.values(cartItems).map((item) => ({
         productId: item.productId,
         variantId: item.variantId,
         quantity: item.quantity,
         selectedAttributes: item.selectedAttributes,
+        isPreorder: item.isPreorder || false, // Get preorder status from cart item
       }));
+
+      // Check if any items are preorders
+      const hasPreorderItems = items.some((item) => item.isPreorder);
 
       const orderData = {
         items,
@@ -976,19 +1050,37 @@ const ShopContextProvider = (props) => {
         billingAddress: addressData,
         paymentMethod: 'paystack',
         shippingMethod,
-        customerNotes: notes,
-        fulfillmentMethod: isPreorder ? 'preorder' : 'standard',
+        notes,
       };
 
       const response = await api.post('/order/create', orderData);
 
       if (response.data.success) {
         setCurrentOrder(response.data.order);
+
+        // Show appropriate success message
+        if (response.data.hasPreorderItems) {
+          toast.success(
+            'Order created successfully! Some items are preorders and will require additional processing time.'
+          );
+        } else {
+          toast.success('Order created successfully!');
+        }
+
         return response.data.order;
       }
     } catch (error) {
       console.error('Order creation error:', error);
-      toast.error(error.response?.data?.message || 'Failed to create order');
+
+      // Handle specific error cases
+      if (error.response?.data?.canPreorder) {
+        toast.error(
+          `${error.response.data.message}. You can enable preorder for out-of-stock items.`
+        );
+      } else {
+        toast.error(error.response?.data?.message || 'Failed to create order');
+      }
+
       return null;
     } finally {
       setOrderProcessing(false);
@@ -1170,16 +1262,51 @@ const ShopContextProvider = (props) => {
   };
 
   // User profile functions
+  // const updateProfile = async (profileData) => {
+  //   try {
+  //     const response = await api.put('/user/profile', profileData);
+  //     if (response.data.success) {
+  //       await getUserData();
+  //       toast.success('Profile updated successfully');
+  //       return true;
+  //     }
+  //   } catch (error) {
+  //     toast.error('Failed to update profile');
+  //     return false;
+  //   }
+  // };
   const updateProfile = async (profileData) => {
     try {
       const response = await api.put('/user/profile', profileData);
+
       if (response.data.success) {
         await getUserData();
+        setUser(response.data.user);
         toast.success('Profile updated successfully');
         return true;
       }
+      return false;
     } catch (error) {
-      toast.error('Failed to update profile');
+      const message =
+        error.response?.data?.message || 'Failed to update profile';
+      toast.error(message);
+      return false;
+    }
+  };
+
+  const changePassword = async (passwordData) => {
+    try {
+      const response = await api.put('/user/change-password', passwordData);
+
+      if (response.data.success) {
+        toast.success('Password changed successfully');
+        return true;
+      }
+      return false;
+    } catch (error) {
+      const message =
+        error.response?.data?.message || 'Failed to change password';
+      toast.error(message);
       return false;
     }
   };
@@ -1305,15 +1432,9 @@ const ShopContextProvider = (props) => {
   const checkout = async (
     addressData,
     shippingMethod = 'standard',
-    notes = '',
-    isPreorder = false
+    notes = ''
   ) => {
-    const order = await createOrder(
-      addressData,
-      shippingMethod,
-      notes,
-      isPreorder
-    );
+    const order = await createOrder(addressData, shippingMethod, notes);
     if (order) {
       return await initializePayment(order._id);
     }
@@ -1406,6 +1527,7 @@ const ShopContextProvider = (props) => {
     // Profile functions
     updateProfile,
     updatePreferences,
+    changePassword,
 
     // Product functions
     addProductReview,

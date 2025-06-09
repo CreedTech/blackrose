@@ -353,6 +353,23 @@ const ProductPage = () => {
     }));
   };
 
+  // const handleAddToCart = async () => {
+  //   if (product.hasVariants && !selectedVariant) {
+  //     toast.error('Please select product options');
+  //     return;
+  //   }
+
+  //   const success = await addToCart(
+  //     product._id,
+  //     quantity,
+  //     selectedVariant?._id,
+  //     selectedAttributes
+  //   );
+
+  //   if (success && isPreorder) {
+  //     toast.info('Pre-order item added. Estimated delivery: 7-14 days');
+  //   }
+  // };
   const handleAddToCart = async () => {
     if (product.hasVariants && !selectedVariant) {
       toast.error('Please select product options');
@@ -363,7 +380,8 @@ const ProductPage = () => {
       product._id,
       quantity,
       selectedVariant?._id,
-      selectedAttributes
+      selectedAttributes,
+      isPreorder // Add this parameter
     );
 
     if (success && isPreorder) {
@@ -650,7 +668,7 @@ const ProductPage = () => {
             )}
 
             {/* Stock Status */}
-            <div className="mb-6">
+            <div className="mb-6 relative">
               {currentStock > 0 ? (
                 <p className="text-green-400">
                   In Stock ({currentStock} available)

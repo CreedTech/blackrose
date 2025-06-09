@@ -362,16 +362,7 @@ const Orders = () => {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
 
-  // const loadOrders = useCallback(async () => {
-  //   if (token) {
-  //     const status = filterStatus === 'all' ? null : filterStatus;
-  //     await fetchOrders(status);
-  //   }
-  // }, [token, fetchOrders, filterStatus]);
 
-  // useEffect(() => {
-  //   loadOrders();
-  // }, [loadOrders]);
   useEffect(() => {
     if (token) {
       const status = filterStatus === 'all' ? null : filterStatus;
