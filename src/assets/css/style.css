@@ -2498,7 +2498,6 @@ ul.team-info-social li {
   }
 }
 
-
 /* Required styles for masonry layout */
 .masonry-grid {
   display: flex;
@@ -2525,4 +2524,51 @@ ul.team-info-social li {
   100% {
     background-position: 200% 0;
   }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-petal {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+.animate-pulse-petal {
+  animation: pulse-petal 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 2s ease-in-out infinite;
+}
+
+.petal {
+  transform-origin: center bottom;
 }

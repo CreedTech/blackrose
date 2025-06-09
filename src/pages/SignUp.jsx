@@ -124,7 +124,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-black flex z-[999999] ">
-      {isLoading && (
+      {/* {isLoading && (
         <div
           id="Lfa-page-loading"
           className="blackrose-pageloading z-[999999999]"
@@ -133,7 +133,7 @@ const Signup = () => {
             <img src={assets.logo} className="logo" alt="" />
           </div>
         </div>
-      )}
+      )} */}
       {/* Left Side Image - Hidden on mobile */}
       <div className="hidden lg:block lg:w-1/2 relative">
         {!imageLoaded && (

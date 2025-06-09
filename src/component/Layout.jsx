@@ -113,15 +113,53 @@ const Layout = () => {
   //     );
   //   }
 
+  // <div id="Lfa-page-loading" className="blackrose-pageloading">
+  //   <div className="blackrose-pageloading-inner">
+  //     <img src={assets.logo} className="logo" alt="" />
+  //   </div>
+  // <div className="min-h-screen bg-black flex items-center justify-center">
+  //   <div className="blackrose-pageloading z-[999999999]">
+  //     <div className="blackrose-pageloading-inner relative w-32 h-32">
+  //       {/* Rotating petals */}
+  //       <div className="absolute inset-0 animate-spin-slow">
+  //         {[...Array(8)].map((_, i) => (
+  //           <div
+  //             key={i}
+  //             className="absolute w-full h-full"
+  //             style={{ transform: `rotate(${i * 45}deg)` }}
+  //           >
+  //             <div
+  //               className="petal absolute top-0 left-1/2 -translate-x-1/2 w-4 h-12 bg-gradient-to-t from-purple-600 to-pink-600 rounded-full opacity-80 animate-pulse-petal"
+  //               style={{ animationDelay: `${i * 0.1}s` }}
+  //             ></div>
+  //           </div>
+  //         ))}
+  //       </div>
+
+  //       {/* Center logo */}
+  //       <div className="absolute inset-0 flex items-center justify-center">
+  //         <img
+  //           src={assets.logo}
+  //           className="logo w-8 h-8 relative z-10 animate-float"
+  //           alt=""
+  //         />
+  //       </div>
+
+  //       {/* Glow effect */}
+  //       <div className="absolute inset-0 -inset-8">
+  //         <div className="w-full h-full bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-full blur-2xl animate-pulse"></div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
+  // </div>
   return (
     <div>
-      {isLoading && (
-        <div id="Lfa-page-loading" className="blackrose-pageloading">
-          <div className="blackrose-pageloading-inner">
-            <img src={assets.logo} className="logo" alt="" />
-          </div>
+      {/* {!isLoading && (
+        <div className="flex items-center justify-center h-screen bg-black">
+          <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-primary"></div>
         </div>
-      )}
+      )} */}
       <div className="progress-wrap cursor-pointer">
         <svg
           className="progress-circle svg-content"
