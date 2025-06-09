@@ -227,7 +227,14 @@ const Navigation = () => {
               {/* Account */}
               <div className="group relative">
                 <button
-                  onClick={() => !token && navigate('/login')}
+                  // onClick={() => !token && navigate('/login')}
+                   onClick={() => {
+                    if (token) {
+                      setShowDropdown(!showDropdown);
+                    } else {
+                      navigate('/login');
+                    }
+                  }}
                   className="p-2 text-gray-400 hover:text-white transition-colors"
                   aria-label="Account"
                 >
@@ -236,7 +243,7 @@ const Navigation = () => {
 
                 {/* Desktop Dropdown Menu */}
                 {token && (
-                  <div className="group-hover:block hidden absolute right-0 top-full mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-2">
+                  <div className="group-hover:block hidden absolute right-0 top-full  w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg py-2">
                     <button
                       onClick={() => navigate('/profile')}
                       className="block w-full text-left px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-800 transition-colors"
