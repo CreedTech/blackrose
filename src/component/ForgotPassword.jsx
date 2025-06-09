@@ -108,13 +108,13 @@ const ForgotPassword = () => {
   return (
     <div className="min-h-screen bg-black flex relative z-[999999999]">
       {/* Loading Overlay */}
-      {isLoading && (
+      {/* {isLoading && (
         <div className="blackrose-pageloading z-[999999999]">
           <div className="blackrose-pageloading-inner">
             <img src={assets.logo} className="logo" alt="" />
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Left Side Image - Hidden on mobile */}
       <div className="hidden lg:block lg:w-1/2 relative">
@@ -140,8 +140,8 @@ const ForgotPassword = () => {
               Reset Your Password
             </h2>
             <p className="text-white/70 mb-8">
-              Enter your email address and we&apos;ll send you a link to reset your
-              password.
+              Enter your email address and we&apos;ll send you a link to reset
+              your password.
             </p>
           </div>
 

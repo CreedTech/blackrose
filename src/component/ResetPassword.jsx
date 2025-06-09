@@ -179,13 +179,13 @@ const ResetPassword = () => {
   return (
     <div className="min-h-screen bg-black flex relative z-[999999999]">
       {/* Loading Overlay */}
-      {isLoading && (
+      {/* {isLoading && (
         <div className="blackrose-pageloading z-[999999999]">
           <div className="blackrose-pageloading-inner">
             <img src={assets.logo} className="logo" alt="" />
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Left Side Image - Hidden on mobile */}
       <div className="hidden lg:block lg:w-1/2 relative">
