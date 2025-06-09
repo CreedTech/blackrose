@@ -11,7 +11,7 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -28,8 +28,10 @@ const ResetPassword = () => {
 
   const verifyToken = async () => {
     try {
-      const response = await axios.get(`${backendUrl}/user/verify-reset-token/${token}`);
-      
+      const response = await axios.get(
+        `${backendUrl}/user/verify-reset-token/${token}`
+      );
+
       if (response.data.success) {
         setTokenValid(true);
         setUserInfo(response.data.user);
@@ -73,7 +75,9 @@ const ResetPassword = () => {
     // const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formData.newPassword);
 
     if (!hasUpperCase || !hasLowerCase || !hasNumbers) {
-      toast.error('Password must contain at least one uppercase letter, one lowercase letter, and one number');
+      toast.error(
+        'Password must contain at least one uppercase letter, one lowercase letter, and one number'
+      );
       return false;
     }
 
@@ -91,11 +95,13 @@ const ResetPassword = () => {
       const response = await axios.post(`${backendUrl}/user/reset-password`, {
         token,
         newPassword: formData.newPassword,
-        confirmPassword: formData.confirmPassword
+        confirmPassword: formData.confirmPassword,
       });
 
       if (response.data.success) {
-        toast.success('Password reset successfully! You can now login with your new password.');
+        toast.success(
+          'Password reset successfully! You can now login with your new password.'
+        );
         setTimeout(() => {
           navigate('/login');
         }, 2000);
@@ -128,14 +134,26 @@ const ResetPassword = () => {
   // Invalid token state
   if (!tokenValid) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center px-4">
+      <div className="min-h-screen bg-black flex items-center justify-center px-4 relative z-[999999999]">
         <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg text-center">
           <div className="mx-auto h-16 w-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-            <svg className="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+            <svg
+              className="h-8 w-8 text-red-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Invalid Reset Link</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Invalid Reset Link
+          </h2>
           <p className="text-gray-600 mb-6">
             This password reset link is invalid or has expired.
           </p>
@@ -159,7 +177,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black flex">
+    <div className="min-h-screen bg-black flex relative z-[999999999]">
       {/* Loading Overlay */}
       {isLoading && (
         <div className="blackrose-pageloading z-[999999999]">
@@ -216,7 +234,11 @@ const ResetPassword = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
               >
-                {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                {showPassword ? (
+                  <AiOutlineEyeInvisible size={20} />
+                ) : (
+                  <AiOutlineEye size={20} />
+                )}
               </button>
             </div>
 
@@ -236,7 +258,11 @@ const ResetPassword = () => {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
               >
-                {showConfirmPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                {showConfirmPassword ? (
+                  <AiOutlineEyeInvisible size={20} />
+                ) : (
+                  <AiOutlineEye size={20} />
+                )}
               </button>
             </div>
 
