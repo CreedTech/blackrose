@@ -1973,8 +1973,8 @@ ul.team-info-social li {
 
 .google-map {
   width: 100%;
-  -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(50%);
+  filter: grayscale(50%);
   height: calc(100% + 30px);
   overflow: hidden;
 }

@@ -733,6 +733,32 @@ const ProductPage = () => {
                 <button
                   onClick={handleAddToCart}
                   disabled={!currentStock && !isPreorder}
+                  className={`${
+                    currentStock || isPreorder
+                      ? 'border border-white px-10 py-3 flex-1 relative overflow-hidden group transition-all duration-300'
+                      : 'border border-white px-10 py-3 flex-1 relative overflow-hidden group transition-all duration-300 cursor-not-allowed'
+                  } `}
+                >
+                  <span
+                    className={` ${
+                      currentStock || isPreorder
+                        ? 'absolute inset-0 bg-white transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 z-0'
+                        : 'bg-white cursor-not-allowed'
+                    } `}
+                  ></span>
+                  <span
+                    className={`relative text-white group-hover:text-black transition-colors duration-300 z-10 ${
+                      currentStock || isPreorder
+                        ? 'relative text-white group-hover:text-black transition-colors duration-300 z-10 '
+                        : ' text-white-400  cursor-not-allowed'
+                    }`}
+                  >
+                    {isPreorder ? 'Pre-order Now' : 'Add to Cart'}
+                  </span>
+                </button>
+                {/* <button
+                  onClick={handleAddToCart}
+                  disabled={!currentStock && !isPreorder}
                   className={`flex-1 py-3 rounded-lg font-medium transition ${
                     currentStock || isPreorder
                       ? 'bg-white text-black hover:bg-gray-200'
@@ -740,7 +766,7 @@ const ProductPage = () => {
                   }`}
                 >
                   {isPreorder ? 'Pre-order Now' : 'Add to Cart'}
-                </button>
+                </button> */}
                 <button
                   onClick={handleWishlistToggle}
                   className="p-3 border border-gray-600 rounded-lg hover:border-white transition"
