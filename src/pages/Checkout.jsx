@@ -531,7 +531,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative">
+    <div className="min-h-screen  text-primary relative">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Checkout</h1>
 
@@ -572,7 +572,7 @@ const Checkout = () => {
           {/* Left Column - Order Details */}
           <div className="lg:col-span-2 space-y-6">
             {/* Delivery Address */}
-            <div className="bg-gray-900 rounded-lg p-6">
+            <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold">Delivery Address</h2>
                 <button
@@ -580,7 +580,7 @@ const Checkout = () => {
                     setShowAddressForm(true);
                     setEditingAddress(null);
                   }}
-                  className="flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300"
+                  className="flex items-center gap-2 text-sm text-primary/80 hover:text-primary font-medium"
                 >
                   <FaPlus /> Add New
                 </button>
@@ -588,7 +588,7 @@ const Checkout = () => {
 
               {addresses.length === 0 ? (
                 <div className="text-center py-8">
-                  <p className="text-gray-400 mb-4">No saved addresses</p>
+                  <p className="text-gray-900 mb-4">No saved addresses</p>
                   <button
                     onClick={() => setShowAddressForm(true)}
                     className="bg-white text-black px-6 py-2 rounded-lg hover:bg-gray-200 transition"
@@ -603,7 +603,7 @@ const Checkout = () => {
                       key={address._id}
                       className={`p-4 border rounded-lg cursor-pointer transition ${
                         selectedAddress?._id === address._id
-                          ? 'border-white bg-gray-800'
+                          ? 'bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm'
                           : 'border-gray-700 hover:border-gray-600'
                       }`}
                       onClick={() => setSelectedAddress(address)}
@@ -612,30 +612,30 @@ const Checkout = () => {
                         <div className="flex gap-3">
                           <div className="mt-1">
                             {selectedAddress?._id === address._id ? (
-                              <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
-                                <FaCheck className="text-black text-xs" />
+                              <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                                <FaCheck className="text-light text-xs" />
                               </div>
                             ) : (
-                              <div className="w-5 h-5 border-2 border-gray-600 rounded-full" />
+                              <div className="w-5 h-5 border-2 border-gray-900 rounded-full" />
                             )}
                           </div>
-                          <div className="flex-1">
+                          <div className="flex-1 font-medium">
                             <div className="flex items-center gap-2 mb-1">
                               <h3 className="font-medium">{address.label}</h3>
                               {address.isDefault && (
-                                <span className="text-xs bg-gray-700 px-2 py-1 rounded">
+                                <span className="text-xs bg-gray-900 text-light px-2 py-1 rounded">
                                   Default
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm text-gray-300">
+                            <p className="text-sm text-primary">
                               {address.fullName}
                             </p>
-                            <p className="text-sm text-gray-400">
+                            <p className="text-sm text-gray-800">
                               {address.address}, {address.city}, {address.state}{' '}
                               {address.zipCode}
                             </p>
-                            <p className="text-sm text-gray-400">
+                            <p className="text-sm text-gray-800">
                               {address.phone}
                             </p>
                           </div>
@@ -646,7 +646,7 @@ const Checkout = () => {
                             setEditingAddress(address);
                             setShowAddressForm(true);
                           }}
-                          className="text-gray-400 hover:text-white"
+                          className="text-primary hover:text-gray-700"
                         >
                           <FaEdit />
                         </button>
@@ -658,10 +658,14 @@ const Checkout = () => {
             </div>
 
             {/* Shipping Method */}
-            <div className="bg-gray-900 rounded-lg p-6">
+            <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm">
               <h2 className="text-xl font-bold mb-4">Shipping Method</h2>
               <div className="space-y-3">
-                <label className="flex items-center justify-between p-4 border border-gray-700 rounded-lg cursor-pointer hover:border-gray-600 transition">
+                <label
+                  className={`flex items-center justify-between p-4 border  rounded-lg cursor-pointer hover:border-gray-600 transition ${
+                    shippingMethod === 'standard' ? 'border-gray-900' : ''
+                  }`}
+                >
                   <div className="flex items-center gap-3">
                     <input
                       type="radio"
@@ -669,11 +673,11 @@ const Checkout = () => {
                       value="standard"
                       checked={shippingMethod === 'standard'}
                       onChange={(e) => setShippingMethod(e.target.value)}
-                      className="text-white"
+                      className="text-primary "
                     />
                     <div>
                       <h3 className="font-medium">Standard Shipping</h3>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-gray-600">
                         {hasPreorderItems
                           ? '7-14 days (includes preorder processing)'
                           : '3-5 business days'}
@@ -684,11 +688,18 @@ const Checkout = () => {
                 </label>
 
                 <label
-                  className={`flex items-center justify-between p-4 border rounded-lg cursor-pointer transition ${
-                    hasPreorderItems
-                      ? 'border-gray-800 opacity-50 cursor-not-allowed'
-                      : 'border-gray-700 hover:border-gray-600'
-                  }`}
+                  className={`flex items-center justify-between p-4 rounded-lg transition cursor-pointer
+  ${
+    hasPreorderItems
+      ? 'border border-gray-300 opacity-50 cursor-not-allowed'
+      : 'border  hover:border-gray-600'
+  }
+  ${
+    shippingMethod === 'express' && !hasPreorderItems
+      ? 'border-2 border-black'
+      : ''
+  }
+`}
                 >
                   <div className="flex items-center gap-3">
                     <input
@@ -697,12 +708,12 @@ const Checkout = () => {
                       value="express"
                       checked={shippingMethod === 'express'}
                       onChange={(e) => setShippingMethod(e.target.value)}
-                      className="text-white"
+                      className="text-primary"
                       disabled={hasPreorderItems}
                     />
                     <div>
                       <h3 className="font-medium">Express Shipping</h3>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-gray-600">
                         1-2 business days
                         {hasPreorderItems && ' (Not available for pre-orders)'}
                       </p>
@@ -711,7 +722,11 @@ const Checkout = () => {
                   <span className="font-medium">₦2,000</span>
                 </label>
 
-                <label className="flex items-center justify-between p-4 border border-gray-700 rounded-lg cursor-pointer hover:border-gray-600 transition">
+                <label
+                  className={`flex items-center justify-between p-4 border  rounded-lg cursor-pointer hover:border-gray-600 transition ${
+                    shippingMethod === 'pickup' ? 'border-gray-900' : ''
+                  }`}
+                >
                   <div className="flex items-center gap-3">
                     <input
                       type="radio"
@@ -719,11 +734,11 @@ const Checkout = () => {
                       value="pickup"
                       checked={shippingMethod === 'pickup'}
                       onChange={(e) => setShippingMethod(e.target.value)}
-                      className="text-white"
+                      className="text-primary"
                     />
                     <div>
                       <h3 className="font-medium">Store Pickup</h3>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-gray-600">
                         {hasPreorderItems
                           ? 'Ready in 7-14 days'
                           : 'Ready in 24 hours'}
@@ -736,25 +751,25 @@ const Checkout = () => {
             </div>
 
             {/* Order Notes */}
-            <div className="bg-gray-900 rounded-lg p-6">
+            <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm">
               <h2 className="text-xl font-bold mb-4">Order Notes (Optional)</h2>
               <textarea
                 value={orderNotes}
                 onChange={(e) => setOrderNotes(e.target.value)}
                 placeholder="Add any special instructions for your order..."
                 rows={3}
-                className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white focus:outline-none focus:border-white transition"
+                className="w-full px-4 py-3 bg-light border border-gray-400 rounded-lg text-primary focus:outline-none focus:border-primary transition"
               />
             </div>
           </div>
 
           {/* Right Column - Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-gray-900 rounded-lg p-6 sticky top-4">
+            <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm sticky top-4">
               <h2 className="text-xl font-bold mb-4">Order Summary</h2>
 
               {/* Cart Items */}
-              <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
+              <div className="space-y-3 mb-6 max-h-64 overflow-y-auto font-medium">
                 {Object.entries(cartItems).map(([key, item]) => (
                   <div key={key} className="flex gap-3">
                     <img
@@ -768,15 +783,15 @@ const Checkout = () => {
                       </h4>
                       {item.selectedAttributes &&
                         Object.keys(item.selectedAttributes).length > 0 && (
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-gray-700">
                             {Object.entries(item.selectedAttributes)
-                              .filter(([key, value]) => value)
+                              .filter(([value]) => value)
                               .map(([key, value]) => `${key}: ${value}`)
                               .join(', ')}
                           </p>
                         )}
                       <div className="flex justify-between items-center mt-1">
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-gray-700">
                           Qty: {item.quantity}
                         </span>
                         <span className="text-sm font-medium">
@@ -786,13 +801,13 @@ const Checkout = () => {
                           ).toLocaleString()}
                         </span>
                       </div>
-                      {item.isPreorder && (
+                      {!!item.isPreorder && (
                         <div className="flex items-center gap-1 mt-1">
                           <span className="text-xs bg-yellow-900 text-yellow-200 px-2 py-1 rounded">
                             Pre-order
                           </span>
-                          {item.estimatedDelivery && (
-                            <span className="text-xs text-gray-400">
+                          {!!item.estimatedDelivery && (
+                            <span className="text-xs text-gray-600">
                               ({item.estimatedDelivery})
                             </span>
                           )}
@@ -804,24 +819,24 @@ const Checkout = () => {
               </div>
 
               {/* Totals */}
-              <div className="space-y-2 py-4 border-t border-gray-800">
+              <div className="space-y-2 py-4 border-t border-gray-400 font-medium">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Subtotal</span>
+                  <span className="text-gray-800">Subtotal</span>
                   <span>₦{subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Shipping</span>
+                  <span className="text-gray-800">Shipping</span>
                   <span>
                     {shipping === 0 ? 'Free' : `₦${shipping.toLocaleString()}`}
                   </span>
                 </div>
                 {hasPreorderItems && (
-                  <div className="text-xs text-yellow-400 py-2 border-t border-gray-800">
+                  <div className="text-xs text-yellow-700 py-2 border-t border-gray-400">
                     <FaInfoCircle className="inline mr-1" />
                     This order contains {preorderItems.length} pre-order item(s)
                   </div>
                 )}
-                <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-800">
+                <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-400">
                   <span>Total</span>
                   <span>₦{total.toLocaleString()}</span>
                 </div>
@@ -830,7 +845,7 @@ const Checkout = () => {
               {/* Payment Method */}
               <div className="mb-6">
                 <h3 className="font-medium mb-3">Payment Method</h3>
-                <div className="p-4 bg-black rounded-lg flex items-center justify-between">
+                <div className="p-4 bg-light border-2 border-primary rounded-lg flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <img
                       src="https://assets.paystack.com/assets/img/logos/paystack-logo-white.svg"
@@ -838,7 +853,7 @@ const Checkout = () => {
                       className="h-6"
                     />
                   </div>
-                  <span className="text-sm text-gray-400">Secure Payment</span>
+                  <span className="text-sm text-primary">Secure Payment</span>
                 </div>
               </div>
 
@@ -848,8 +863,8 @@ const Checkout = () => {
                 disabled={loading || orderProcessing || !selectedAddress}
                 className={`w-full py-4 rounded-lg font-medium transition ${
                   loading || orderProcessing || !selectedAddress
-                    ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                    : 'bg-white text-black hover:bg-gray-200'
+                    ? 'bg-gray-700 text-gray-900 cursor-not-allowed'
+                    : 'bg-primary text-light hover:bg-gray-600'
                 }`}
               >
                 {loading || orderProcessing ? (
@@ -881,14 +896,14 @@ const Checkout = () => {
               </button>
 
               {!selectedAddress && (
-                <p className="text-sm text-red-400 text-center mt-2">
+                <p className="text-sm text-red-600 text-center mt-2">
                   Please select a delivery address
                 </p>
               )}
 
               {/* Security Note */}
               <div className="mt-4 text-center">
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-800">
                   Your payment information is secure and encrypted
                 </p>
               </div>

@@ -37,16 +37,48 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
   }, [address]);
 
   const nigerianStates = [
-    'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 
-    'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 
-    'FCT', 'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 
-    'Kogi', 'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 
-    'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
+    'Abia',
+    'Adamawa',
+    'Akwa Ibom',
+    'Anambra',
+    'Bauchi',
+    'Bayelsa',
+    'Benue',
+    'Borno',
+    'Cross River',
+    'Delta',
+    'Ebonyi',
+    'Edo',
+    'Ekiti',
+    'Enugu',
+    'FCT',
+    'Gombe',
+    'Imo',
+    'Jigawa',
+    'Kaduna',
+    'Kano',
+    'Katsina',
+    'Kebbi',
+    'Kogi',
+    'Kwara',
+    'Lagos',
+    'Nasarawa',
+    'Niger',
+    'Ogun',
+    'Ondo',
+    'Osun',
+    'Oyo',
+    'Plateau',
+    'Rivers',
+    'Sokoto',
+    'Taraba',
+    'Yobe',
+    'Zamfara',
   ];
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.label.trim()) {
       newErrors.label = 'Address label is required';
     }
@@ -73,7 +105,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Invalid email format';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -84,7 +116,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
       ...formData,
       [name]: type === 'checkbox' ? checked : value,
     });
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors({
@@ -96,13 +128,13 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setLoading(true);
-    
+
     try {
       let success;
       if (address) {
@@ -110,20 +142,20 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
       } else {
         success = await addAddress(formData);
       }
-      
+
       if (success) {
         onSuccess();
       }
     } catch (error) {
       console.error('Error saving address:', error);
     }
-    
+
     setLoading(false);
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-gray-900 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm max-w-2xl w-full max-h-[90vh] overflow-y-auto font-medium">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold">
@@ -131,7 +163,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-white transition"
+              className="text-gray-900 hover:text-primary transition"
             >
               <FaTimes size={20} />
             </button>
@@ -140,7 +172,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
-                <label className="block text-sm text-gray-400 mb-2">
+                <label className="block text-sm text-gray-900 mb-2">
                   Address Label *
                 </label>
                 <input
@@ -149,9 +181,9 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
                   value={formData.label}
                   onChange={handleChange}
                   placeholder="e.g., Home, Office, etc."
-                  className={`w-full px-4 py-2 bg-black border ${
-                    errors.label ? 'border-red-500' : 'border-gray-700'
-                  } rounded-lg focus:outline-none focus:border-white transition`}
+                  className={`w-full px-4 py-2 bg-light border text-primary ${
+                    errors.label ? 'border-red-500' : 'border-gray-400'
+                  } rounded-lg focus:outline-none focus:border-primary transition`}
                 />
                 {errors.label && (
                   <p className="text-red-500 text-xs mt-1">{errors.label}</p>
@@ -159,7 +191,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm text-gray-400 mb-2">
+                <label className="block text-sm text-gray-900 mb-2">
                   Full Name *
                 </label>
                 <input
@@ -167,9 +199,9 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
                   name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 bg-black border ${
-                    errors.fullName ? 'border-red-500' : 'border-gray-700'
-                  } rounded-lg focus:outline-none focus:border-white transition`}
+                  className={`w-full px-4 py-2 bg-light border text-primary ${
+                    errors.fullName ? 'border-red-500' : 'border-gray-400'
+                  } rounded-lg focus:outline-none focus:border-primary transition`}
                 />
                 {errors.fullName && (
                   <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
@@ -177,7 +209,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm text-gray-400 mb-2">
+                <label className="block text-sm text-gray-900 mb-2">
                   Address *
                 </label>
                 <textarea
@@ -185,9 +217,9 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
                   value={formData.address}
                   onChange={handleChange}
                   rows={2}
-                  className={`w-full px-4 py-2 bg-black border ${
-                    errors.address ? 'border-red-500' : 'border-gray-700'
-                  } rounded-lg focus:outline-none focus:border-white transition`}
+                  className={`w-full px-4 py-2 bg-light border text-primary ${
+                    errors.address ? 'border-red-500' : 'border-gray-400'
+                  } rounded-lg focus:outline-none focus:border-primary transition`}
                 />
                 {errors.address && (
                   <p className="text-red-500 text-xs mt-1">{errors.address}</p>
@@ -195,7 +227,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">
+                <label className="block text-sm text-gray-900 mb-2">
                   City *
                 </label>
                 <input
@@ -203,9 +235,9 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 bg-black border ${
-                    errors.city ? 'border-red-500' : 'border-gray-700'
-                  } rounded-lg focus:outline-none focus:border-white transition`}
+                  className={`w-full px-4 py-2 bg-light border text-primary ${
+                    errors.city ? 'border-red-500' : 'border-gray-400'
+                  } rounded-lg focus:outline-none focus:border-primary transition`}
                 />
                 {errors.city && (
                   <p className="text-red-500 text-xs mt-1">{errors.city}</p>
@@ -213,16 +245,16 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">
+                <label className="block text-sm text-gray-900 mb-2">
                   State *
                 </label>
                 <select
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 bg-black border ${
-                    errors.state ? 'border-red-500' : 'border-gray-700'
-                  } rounded-lg focus:outline-none focus:border-white transition`}
+                     className={`w-full px-4 py-2 bg-light border text-primary ${
+                    errors.state ? 'border-red-500' : 'border-gray-400'
+                   } rounded-lg focus:outline-none focus:border-primary transition`}
                 >
                   <option value="">Select State</option>
                   {nigerianStates.map((state) => (
@@ -237,7 +269,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">
+                <label className="block text-sm text-gray-900 mb-2">
                   Zip Code *
                 </label>
                 <input
@@ -245,9 +277,9 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
                   name="zipCode"
                   value={formData.zipCode}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 bg-black border ${
-                    errors.zipCode ? 'border-red-500' : 'border-gray-700'
-                  } rounded-lg focus:outline-none focus:border-white transition`}
+                     className={`w-full px-4 py-2 bg-light border text-primary ${
+                    errors.zipCode ? 'border-red-500' : 'border-gray-400'
+                   } rounded-lg focus:outline-none focus:border-primary transition`}
                 />
                 {errors.zipCode && (
                   <p className="text-red-500 text-xs mt-1">{errors.zipCode}</p>
@@ -255,7 +287,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">
+                <label className="block text-sm text-gray-900 mb-2">
                   Phone Number *
                 </label>
                 <input
@@ -264,9 +296,9 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+234 xxx xxx xxxx"
-                  className={`w-full px-4 py-2 bg-black border ${
-                    errors.phone ? 'border-red-500' : 'border-gray-700'
-                  } rounded-lg focus:outline-none focus:border-white transition`}
+                     className={`w-full px-4 py-2 bg-light border text-primary ${
+                    errors.phone ? 'border-red-500' : 'border-gray-400'
+                   } rounded-lg focus:outline-none focus:border-primary transition`}
                 />
                 {errors.phone && (
                   <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
@@ -274,7 +306,7 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm text-gray-400 mb-2">
+                <label className="block text-sm text-gray-900 mb-2">
                   Email (Optional)
                 </label>
                 <input
@@ -282,9 +314,9 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 bg-black border ${
-                    errors.email ? 'border-red-500' : 'border-gray-700'
-                  } rounded-lg focus:outline-none focus:border-white transition`}
+                     className={`w-full px-4 py-2 bg-light border text-primary ${
+                    errors.email ? 'border-red-500' : 'border-gray-400'
+                   } rounded-lg focus:outline-none focus:border-primary transition`}
                 />
                 {errors.email && (
                   <p className="text-red-500 text-xs mt-1">{errors.email}</p>
@@ -311,16 +343,20 @@ const AddressForm = ({ address, onClose, onSuccess }) => {
                 disabled={loading}
                 className={`flex-1 py-3 rounded-lg font-medium transition ${
                   loading
-                    ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                    : 'bg-white text-black hover:bg-gray-200'
+                    ? 'bg-gray-900 text-gray-700 cursor-not-allowed'
+                    : 'bg-primary text-light hover:bg-gray-800'
                 }`}
               >
-                {loading ? 'Saving...' : (address ? 'Update Address' : 'Add Address')}
+                {loading
+                  ? 'Saving...'
+                  : address
+                  ? 'Update Address'
+                  : 'Add Address'}
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 py-3 border border-gray-600 rounded-lg hover:border-white transition"
+                className="flex-1 py-3 border border-gray-600 rounded-lg hover:border-white hover:text-primary transition"
               >
                 Cancel
               </button>

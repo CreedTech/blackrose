@@ -6,11 +6,13 @@ import DownloadModal from '../component/DownloadModal';
 import AddToCollectionModal from '../component/AddToCollectionModal';
 import CreateCollectionModal from '../component/CreateNewCollection';
 import { toast } from 'react-toastify';
-import useCollections from '../hooks/customHooks';
 import { Helmet } from 'react-helmet';
 import { useGallery } from '../hooks/useGallery';
 import { IoHeartCircleOutline } from 'react-icons/io5';
 import { ShopContext } from '../context/ShopContext';
+import {
+  motion,
+} from 'framer-motion';
 
 const PhotographyDetails = () => {
   // const { id } = useParams();
@@ -40,7 +42,8 @@ const PhotographyDetails = () => {
     useCollections,
     useAddToCollection,
   } = useGallery();
-  const { data: images } = useImages();
+  const [page, setPage] = useState(1);
+  const { data: images } = useImages(page);
   const { data: image, isLoading, error } = useGetSingleImage(imageId);
   const { data: collections, isLoading: collectionsLoading } = useCollections();
   const addToCollectionMutation = useAddToCollection();
@@ -193,7 +196,7 @@ const PhotographyDetails = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -215,7 +218,7 @@ const PhotographyDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white container ">
+    <div className="min-h-screen bg-light text-primary container ">
       {/* Navigation */}
       <Helmet>
         <title>{image.title} | BlackRose</title>
@@ -223,12 +226,12 @@ const PhotographyDetails = () => {
       </Helmet>
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 md:py-4">
-        <div className="flex items-center text-sm text-white/60 relative">
-          <Link to="/" className="hover:text-white cursor-pointer">
+        <div className="flex items-center text-sm text-primary/60 relative">
+          <Link to="/" className="hover:text-primary cursor-pointer">
             Home
           </Link>
           <span className="mx-2">/</span>
-          <Link to="/photography" className="hover:text-white cursor-pointer">
+          <Link to="/photography" className="hover:text-primary cursor-pointer">
             Photography
           </Link>
           <span className="mx-2">/</span>
@@ -236,12 +239,12 @@ const PhotographyDetails = () => {
         </div>
       </div>
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto md:px-4 px-2 md:py-8 relative z-[99999] overflow-hidden">
-        <div className="w-full bg-black text-white md:px-4 py-3 flex md:items-center flex-col space-y-4 md:space-y-0 md:flex-row justify-between border-b border-white/10">
+      <div className="max-w-7xl mx-auto md:px-4 px-2 md:py-4 relative z-[99999] overflow-hidden">
+        <div className="w-full text-primary md:px-4 py-3 flex md:items-center flex-col space-y-4 md:space-y-0 md:flex-row justify-between ">
           {/* Left side - Profile Info */}
           <div className="flex items-center space-x-4">
             {/* Profile Image */}
-            <div className="w-10 h-10 rounded-full bg-white overflow-hidden">
+            <div className="w-10 h-10 rounded-full bg-primary overflow-hidden">
               <img
                 src={assets.about}
                 alt="Kurosaki Tinubu"
@@ -251,12 +254,12 @@ const PhotographyDetails = () => {
 
             {/* Name and Category */}
             <div>
-              <h2 className="font-medium md:text-lg text-base">
+              <h2 className="font-medium md:text-lg text-base text-primary">
                 {image.photographer.name}
               </h2>
-              <div className="flex items-center md:text-sm text-xs text-gray-400">
+              <div className="flex items-center md:text-sm text-xs text-primary">
                 <span>{image.category != null && 'Category:'}</span>
-                <span className="md:ml-1  text-white">
+                <span className="md:ml-1  text-primary">
                   {image.category?.title}
                 </span>
               </div>
@@ -272,7 +275,7 @@ const PhotographyDetails = () => {
               className={`w-10 h-10 border rounded flex items-center justify-center transition-colors ${
                 image.isLiked
                   ? 'bg-red-500 border-red-500 text-white'
-                  : 'border-white/20 hover:bg-white/10'
+                  : 'border-primary hover:bg-primary/90'
               }`}
             >
               <svg
@@ -293,7 +296,7 @@ const PhotographyDetails = () => {
             {/* Add Button */}
             <button
               onClick={() => setShowAddToCollection(true)}
-              className="w-10 h-10 border border-white/20 rounded flex items-center justify-center hover:bg-white/10 transition-colors"
+              className="w-10 h-10 border border-primary rounded flex items-center justify-center hover:bg-primary/90 transition-colors"
             >
               <svg
                 className="w-5 h-5"
@@ -313,57 +316,45 @@ const PhotographyDetails = () => {
             {/* Download Button */}
             <div className="relative download-dropdown">
               <button
-                // onClick={() => setIsModalOpen(true)}
                 onClick={handleDownload}
                 disabled={downloadMutation.isLoading}
-                // onClick={toggleDropdown}
-                className="h-10 px-6 bg-white text-black rounded flex items-center justify-center hover:bg-white/90 transition-colors"
+                className="relative h-10 px-6 overflow-hidden bg-primary text-light rounded flex items-center justify-center group border border-transparent hover:border-primary transition-all duration-300 ease-in-out"
               >
-                <span className="mr-4">
-                  {' '}
-                  {downloadMutation.isLoading ? (
-                    <span className="flex items-center">
-                      <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Downloading...
-                    </span>
-                  ) : (
-                    'Download'
-                  )}
+                {/* Sliding white background */}
+                <span className="absolute left-0 top-0 h-full w-0 bg-white group-hover:w-full transition-all duration-300 ease-in-out z-0"></span>
+
+                {/* Button content on top */}
+                <span className="relative z-10 flex items-center group-hover:text-primary transition-colors duration-300">
+                  <span className="mr-4">
+                    {downloadMutation.isLoading ? (
+                      <span className="flex items-center">
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Downloading...
+                      </span>
+                    ) : (
+                      'Download'
+                    )}
+                  </span>
                 </span>
-                {/* <svg
-                  className={`w-4 h-4 transform transition-transform ${
-                    isDropdownOpen ? 'rotate-180' : ''
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg> */}
               </button>
 
               <AddToCollectionModal
@@ -410,15 +401,15 @@ const PhotographyDetails = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-1 md:gap-12 gap-4 z-[99999999]">
+        <div className="grid grid-cols-1 lg:grid-cols-1 md:gap-12 gap-4 z-[9999]">
           {/* Left Column - Images */}
-          <div className="md:space-y-6">
+          <div className="md:space-y-6 rounded-md">
             {/* Main Image */}
-            <div className="w-full h-[400px] md:h-full bg-gray-900 ">
+            <div className="w-full h-[400px] md:h-full bg-gray-900 rounded-md">
               <img
                 src={image.url}
                 alt={image.title}
-                className="w-full h-full object-cover z-[99999999]"
+                className="w-full h-full object-cover z-[999] rounded-md"
               />
             </div>
           </div>
@@ -429,7 +420,9 @@ const PhotographyDetails = () => {
             <h1 className="text-4xl font-bold">{image.title}</h1>
 
             {/* Description */}
-            <p className="text-white/80 leading-relaxed">{image.description}</p>
+            <p className="text-primary/80 leading-relaxed">
+              {image.description}
+            </p>
           </div>
 
           {/* Right Column - Info */}
@@ -442,13 +435,13 @@ const PhotographyDetails = () => {
             {images?.images.map((photo, index) => (
               <div
                 key={photo._id}
-                className="group relative aspect-square  overflow-hidden bg-gray-900"
+                className="group relative aspect-square  overflow-hidden bg-gray-900 rounded-md"
                 onClick={() => handleImageClick(index)}
               >
                 <img
                   src={photo.watermarkedUrl}
                   alt=""
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 rounded-md group-hover:scale-105"
                   loading="lazy"
                 />
 
@@ -462,9 +455,74 @@ const PhotographyDetails = () => {
             ))}
           </div>
         </div>
+
+        {images?.total == 9 && (
+          <motion.div
+            className="text-center mt-8 text-gray-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            No more photos to load
+          </motion.div>
+        )}
+
+        {/* Pagination */}
+        {images?.totalPages > 1 && (
+          <motion.div
+            className="row"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <div
+              className="col-md-12 mt-40 mb-60 text-center animate-box"
+              data-animate-effect="fadeInUp"
+            >
+              <ul className="blackrose-pagination-wrap align-center relative">
+                <motion.li
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <a
+                    className="cursor-pointer text-gray-700 hover:text-gray-900"
+                    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={page === 1}
+                  >
+                    <i className="fa fa-angle-left"></i>
+                  </a>
+                </motion.li>
+
+                <motion.li
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <span className="text-gray-700">
+                    Page {page} of {image.totalPages}
+                  </span>
+                </motion.li>
+
+                <motion.li
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <a
+                    className="cursor-pointer text-gray-700 hover:text-gray-900"
+                    onClick={() => setPage((prev) => prev + 1)}
+                    disabled={page === image.totalPages}
+                  >
+                    <i className="fa fa-angle-right"></i>
+                  </a>
+                </motion.li>
+              </ul>
+            </div>
+          </motion.div>
+        )}
+
         {/* Lightbox */}
         {selectedImage && (
-          <div className="fixed inset-0 z-[999999] bg-black/90 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[999999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
             {/* Close button */}
             <button
               onClick={handleClose}
@@ -539,7 +597,9 @@ const PhotographyDetails = () => {
 
               {/* Image info */}
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black/60 to-transparent">
-                <h2 className="text-xl font-bold">{selectedImage.title}</h2>
+                <h2 className="text-xl font-bold text-white">
+                  {selectedImage.title}
+                </h2>
                 <p className="text-sm text-white">
                   {selectedImage.category?.title}
                 </p>

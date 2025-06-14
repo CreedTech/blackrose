@@ -366,25 +366,28 @@ const Home = () => {
       <section className="container">
         <section
           ref={heroRef}
-          className="blackrose-section-slider md:mt-10 mt-0 pb-0"
+          className="blackrose-section-slider mt-10 pb-0 !rounded-md"
         >
-          <div className="relative h-[600px] w-full overflow-hidden">
+          <div className="relative h-[600px] w-full overflow-hidden  !rounded-md">
             {/* Background Image with Parallax */}
-            <motion.div className="absolute inset-0" style={{ y, scale }}>
+            <motion.div
+              className="absolute inset-0 !rounded-md"
+              style={{ y, scale }}
+            >
               <img
                 src={assets.bg_img}
                 alt="Photographer capturing city"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover !rounded-md"
               />
               {/* Dark overlay */}
               <motion.div
-                className="absolute inset-0 bg-black/40"
+                className="absolute inset-0 bg-black/40 !rounded-md"
                 style={{ opacity }}
               />
             </motion.div>
 
             {/* Content */}
-            <div className="relative h-full flex flex-col items-center justify-center text-white px-4">
+            <div className="relative h-full flex flex-col items-center justify-center text-light px-4 !rounded-md">
               {/* Main Heading */}
               <motion.h1
                 className="text-2xl md:text-4xl font-bold text-center max-w-2xl mb-8 font-inter"
@@ -400,6 +403,7 @@ const Home = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.7 }}
+                  className="text-light"
                 >
                   Capture Beauty, Explore Stories, and Shop the Extraordinary
                 </motion.span>
@@ -440,8 +444,8 @@ const Home = () => {
               </motion.div>
 
               {/* Welcome Box */}
-              <motion.div
-                className="absolute bottom-0 right-0 bg-black/80 p-6 max-w-md"
+              {/* <motion.div
+                className="absolute bottom-0 right-0 bg-light/10 p-6 max-w-md"
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
@@ -452,7 +456,7 @@ const Home = () => {
                 whileHover={{ x: -10 }}
               >
                 <motion.h2
-                  className="text-sm font-semibold mb-2"
+                  className="text-sm font-semibold mb-2 text-light"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.2 }}
@@ -491,6 +495,75 @@ const Home = () => {
                     />
                   </svg>
                 </motion.a>
+              </motion.div> */}
+              <motion.div
+                className="absolute bottom-0 right-0 md:p-6  p-4 md:m-6 m-4 max-w-md"
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.8,
+                  ease: 'easeOut',
+                }}
+                whileHover={{ x: -10 }}
+              >
+                {/* Glass effect with subtle gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-white/10 to-transparent backdrop-blur-sm rounded-2xl" />
+                <div className="absolute inset-0 rounded-2xl shadow-2xl" />
+
+                <div className="relative">
+                  <motion.div
+                    className="w-16 h-0.5 bg-white/60 mb-4"
+                    initial={{ width: 0 }}
+                    animate={{ width: 64 }}
+                    transition={{ delay: 1.1, duration: 0.8 }}
+                  />
+
+                  <motion.h2
+                    className="text-sm font-bold mb-2 text-white/70 uppercase "
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.2 }}
+                  >
+                    WELCOME TO BLACK ROSE
+                  </motion.h2>
+
+                  <motion.p
+                    className="text-lg text-white font-light leading-relaxed mb-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.3 }}
+                  >
+                    Immerse yourself in breathtaking visuals, curated blogs, and
+                    a premium shopping experience - all in one place.
+                  </motion.p>
+
+                  <motion.a
+                    href="/lifestyle"
+                    className="inline-flex items-center text-white/90 hover:text-white text-sm font-medium group"
+                    whileHover={{ x: 5 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.4 }}
+                  >
+                    <span className="border-b border-white/40 group-hover:border-white pb-1 transition-colors">
+                      Explore
+                    </span>
+                    <svg
+                      className="w-4 h-4 ml-3 transform transition-all group-hover:translate-x-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </motion.a>
+                </div>
               </motion.div>
             </div>
           </div>
@@ -508,7 +581,7 @@ const Home = () => {
             viewport={{ once: true, amount: 0.3 }}
           >
             <motion.div
-              className="section-head col-md-12 text-start animate-box"
+              className="section-head col-md-12 text-start animate-box font-medium text-darker"
               variants={fadeInUp}
             >
               <h4>Discover the Best of The Black Rose</h4>
@@ -527,7 +600,7 @@ const Home = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <motion.div
-                    className="position-relative overflow-hidden aspect-square"
+                    className="position-relative overflow-hidden aspect-square rounded-md border border-gray-300 shadow"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.4 }}
                   >
@@ -576,7 +649,7 @@ const Home = () => {
             variants={containerVariants}
           >
             <motion.div
-              className="section-head text-start col-md-12 animate-box"
+              className="section-head md:text-start text-center col-md-12 animate-box font-medium"
               variants={fadeInUp}
             >
               <h4>Spotlight on photography</h4>
@@ -599,7 +672,7 @@ const Home = () => {
                     <motion.img
                       src={image.watermarkedUrl}
                       alt={image.title}
-                      className="w-full h-full object-cover aspect-square"
+                      className="w-full h-full object-cover aspect-square rounded-md"
                       loading="lazy"
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -632,7 +705,7 @@ const Home = () => {
             </motion.div>
           </motion.div>
 
-          <div className="">
+          <div className="blackrose-section">
             {/* Featured Products Section */}
             <motion.section
               className="max-w-7xl mx-auto px-4 py-10 relative"
@@ -642,17 +715,23 @@ const Home = () => {
               variants={containerVariants}
             >
               <motion.div
-                className="flex justify-between items-center mb-8"
+                className="flex justify-between md:items-center flex-col md:flex-row"
                 variants={fadeInUp}
               >
-                <h2 className="text-2xl font-bold">Shop Featured Products</h2>
+                <motion.div
+                  className="section-head text-start  animate-box font-medium"
+                  variants={fadeInUp}
+                >
+                  <h4> Shop Featured Products</h4>
+                </motion.div>
+
                 <motion.a
                   href="/shop"
-                  className="flex items-center hover:underline relative"
+                  className="flex items-center hover:underline relative text-darker font-medium"
                   whileHover={{ x: 5 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  Shop All Products
+                  View All
                   <motion.span
                     className="ml-2"
                     whileHover={{ rotate: 90 }}
@@ -681,14 +760,14 @@ const Home = () => {
                       className="w-full mx-auto"
                     >
                       <motion.div
-                        className="relative w-full h-64 mb-4 overflow-hidden"
+                        className="relative w-full h-64 mb-4 overflow-hidden rounded-md"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.3 }}
                       >
                         <motion.img
                           src={product?.images[0]}
                           alt={product.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover aspect-square rounded-md"
                           initial={{ scale: 1.2 }}
                           whileHover={{ scale: 1.1 }}
                           transition={{ duration: 0.6 }}
@@ -696,7 +775,7 @@ const Home = () => {
                       </motion.div>
                     </Link>
                     <motion.div
-                      className="flex justify-between items-center mb-2"
+                      className="flex justify-between items-center mb-2 text-lg text-darker font-medium"
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
@@ -736,7 +815,7 @@ const Home = () => {
                                   ? 'text-yellow-400'
                                   : half
                                   ? 'text-yellow-300'
-                                  : 'text-gray-400'
+                                  : 'text-gray'
                               }`}
                               fill="currentColor"
                               viewBox="0 0 20 20"
@@ -755,13 +834,13 @@ const Home = () => {
                         })}
                       </div>
 
-                      <span className="ml-2 text-sm">
+                      <span className="ml-2 text-sm text-darker font-medium">
                         ({product.reviews.length})
                       </span>
                     </motion.div>
                     <motion.button
                       onClick={() => addToCart(product._id, 1)}
-                      className="w-1/2 bg-white text-black py-2 hover:bg-gray-200 transition-colors"
+                      className="w-1/2 bg-black text-white py-2 hover:bg-secondary transition-colors"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ opacity: 0, y: 20 }}
@@ -785,15 +864,19 @@ const Home = () => {
               variants={containerVariants}
             >
               <motion.div
-                className="flex justify-between items-center mb-8"
+                className="flex justify-between md:items-center flex-col md:flex-row"
                 variants={fadeInUp}
               >
-                <h2 className="text-2xl font-bold">
-                  Trending Stories in Lifestyle
-                </h2>
+                <motion.div
+                  className="section-head md:text-start text-center  animate-box font-medium"
+                  variants={fadeInUp}
+                >
+                  <h4> Trending Stories in Lifestyle</h4>
+                </motion.div>
+
                 <motion.a
-                  href="/blogs"
-                  className="flex items-center hover:underline"
+                  href="/lifestyle"
+                  className="flex items-center hover:underline relative text-darker font-medium"
                   whileHover={{ x: 5 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
@@ -809,7 +892,7 @@ const Home = () => {
               </motion.div>
 
               <motion.div
-                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 md:mt-0"
                 variants={containerVariants}
               >
                 {blogs?.data?.posts?.map((post, index) => (
@@ -828,7 +911,7 @@ const Home = () => {
                         viewport={{ once: true }}
                       >
                         <motion.div
-                          className="overflow-hidden mb-4"
+                          className="overflow-hidden mb-4 rounded-md"
                           whileHover={{ scale: 1.05 }}
                           transition={{ duration: 0.3 }}
                         >

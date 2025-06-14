@@ -16,14 +16,15 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(true);
+  const [isVerifying, setIsVerifying] = useState(false);
   const [tokenValid, setTokenValid] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    verifyToken();
+    // verifyToken();
   }, [token]);
 
   const verifyToken = async () => {
@@ -121,7 +122,7 @@ const ResetPassword = () => {
   // Loading state while verifying token
   if (isVerifying) {
     return (
-      <div className="flex items-center justify-center h-screen bg-black">
+      <div className="flex items-center justify-center h-screen bg-light">
         <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-primary"></div>
       </div>
       //   <div className="min-h-screen bg-black flex items-center justify-center">
@@ -135,10 +136,10 @@ const ResetPassword = () => {
   }
 
   // Invalid token state
-  if (!tokenValid) {
+  if (tokenValid) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center px-4 relative z-[99999999]">
-        <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg text-center">
+      <div className="min-h-screen text-primary flex font-medium items-center justify-center px-4 relative z-[99999999]">
+        <div className="max-w-md w-full space-y-8 bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm text-center">
           <div className="mx-auto h-16 w-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <svg
               className="h-8 w-8 text-red-600"
@@ -157,19 +158,19 @@ const ResetPassword = () => {
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Invalid Reset Link
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-800 mb-6">
             This password reset link is invalid or has expired.
           </p>
           <div className="space-y-4">
             <button
               onClick={() => navigate('/forgot-password')}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+              className="w-full px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors"
             >
               Request New Reset Link
             </button>
             <button
               onClick={() => navigate('/login')}
-              className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50 transition-colors"
+              className="w-full px-4 py-2 border border-primary text-primary rounded-md hover:bg-primary hover:text-light transition-colors"
             >
               Back to Login
             </button>
@@ -180,7 +181,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black flex relative z-[99999999]">
+    <div className="min-h-screen text-primary font-medium flex relative z-[99999999]">
       {/* Loading Overlay */}
       {/* {isLoading && (
         <div className="blackrose-pageloading z-[999999999]">
@@ -192,15 +193,25 @@ const ResetPassword = () => {
 
       {/* Left Side Image - Hidden on mobile */}
       <div className="hidden lg:block lg:w-1/2 relative">
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gray-900 animate-pulse"></div>
+        )}
         <img
           src={assets.bg_img}
           alt="Reset Password"
-          className="absolute inset-0 w-full h-full object-cover"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+          onLoad={() => setImageLoaded(true)}
         />
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute bottom-10 left-0 right-0 text-center text-white">
-          <h2 className="text-4xl font-bold mb-4">Almost There!</h2>
-          <p className="text-lg text-white/80">
+
+        {/* Optional overlay */}
+        <div className="absolute inset-0 bg-black/40 "></div>
+
+        {/* Optional text overlay */}
+        <div className="relative h-full flex flex-col items-center justify-center text-light px-4 !rounded-md">
+          <h2 className="text-4xl font-bold mb-4 text-light">Almost There!</h2>
+          <p className="text-lg text-white/90">
             Choose a strong password for your account
           </p>
         </div>
@@ -210,11 +221,11 @@ const ResetPassword = () => {
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <h2 className="text-4xl font-bold text-white mb-2">
+            <h2 className="text-4xl font-bold text-primary text-center md:text-start mb-2">
               Create New Password
             </h2>
             {userInfo && (
-              <p className="text-white/70 mb-8">
+              <p className="text-primary mb-8">
                 Hi {userInfo.name}, please enter your new password below.
               </p>
             )}
@@ -229,13 +240,13 @@ const ResetPassword = () => {
                 value={formData.newPassword}
                 onChange={handleChange}
                 placeholder="New Password"
-                className="w-full px-4 py-3 bg-white rounded focus:outline-none"
+                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-900"
               >
                 {showPassword ? (
                   <AiOutlineEyeInvisible size={20} />
@@ -253,13 +264,13 @@ const ResetPassword = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="Confirm New Password"
-                className="w-full px-4 py-3 bg-white rounded focus:outline-none"
+                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-900"
               >
                 {showConfirmPassword ? (
                   <AiOutlineEyeInvisible size={20} />
@@ -270,7 +281,7 @@ const ResetPassword = () => {
             </div>
 
             {/* Password Requirements */}
-            <div className="text-white/70 text-sm space-y-1">
+            <div className="text-primary/70 text-sm space-y-1">
               <p className="font-medium">Password must contain:</p>
               <ul className="list-disc list-inside space-y-1 ml-2">
                 <li>At least 8 characters</li>
@@ -279,14 +290,28 @@ const ResetPassword = () => {
                 <li>One number</li>
               </ul>
             </div>
-
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-3 bg-white text-black rounded font-medium hover:bg-white/90 transition-colors disabled:opacity-50"
+              className={`relative group/button w-full px-4 py-3 rounded-md font-medium overflow-hidden border transition-all duration-500
+    ${
+      isLoading
+        ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+        : 'bg-black text-white border-primary border-2'
+    }
+  `}
             >
-              {isLoading ? 'Resetting Password...' : 'Reset Password'}
+              {/* Sliding white overlay on hover */}
+              {!isLoading && (
+                <div className="absolute inset-0 w-0 group-hover/button:w-full transition-all duration-500 ease-in-out bg-white"></div>
+              )}
+
+              {/* Text stays on top and transitions color */}
+              <span className="relative z-10 group-hover/button:text-black transition-colors duration-500">
+                  {isLoading ? 'Resetting Password...' : 'Reset Password'}
+              </span>
             </button>
+        
           </form>
         </div>
       </div>

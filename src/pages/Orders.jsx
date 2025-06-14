@@ -362,7 +362,6 @@ const Orders = () => {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
 
-
   useEffect(() => {
     if (token) {
       const status = filterStatus === 'all' ? null : filterStatus;
@@ -399,7 +398,7 @@ const Orders = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative">
+    <div className="min-h-screen  text-primary relative font-medium">
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">My Orders</h1>
@@ -408,7 +407,7 @@ const Orders = () => {
             <div className="flex gap-4">
               <button
                 onClick={selectAllOrders}
-                className="px-4 py-2 border border-gray-600 rounded-lg hover:border-white transition"
+                className="px-4 py-2 border border-gray-600 rounded-lg hover:bg-primary hover:text-light text-primary transition"
               >
                 {selectedOrders.length === orders.length
                   ? 'Deselect All'
@@ -419,7 +418,7 @@ const Orders = () => {
                 disabled={selectedOrders.length === 0}
                 className={`px-4 py-2 rounded-lg transition flex items-center gap-2 ${
                   selectedOrders.length > 0
-                    ? 'bg-white text-black hover:bg-gray-200'
+                    ? 'bg-primary text-light hover:bg-gray-800'
                     : 'bg-gray-700 text-gray-400 cursor-not-allowed'
                 }`}
               >
@@ -445,8 +444,8 @@ const Orders = () => {
               onClick={() => setFilterStatus(status)}
               className={`px-4 py-2 rounded-lg capitalize transition whitespace-nowrap ${
                 filterStatus === status
-                  ? 'bg-white text-black'
-                  : 'bg-gray-900 hover:bg-gray-800'
+                  ? 'bg-primary text-light'
+                  : 'bg-light hover:bg-gray-800'
               }`}
             >
               {status}
@@ -455,10 +454,10 @@ const Orders = () => {
         </div>
 
         {orders.length === 0 && !ordersLoading ? (
-          <div className="text-center py-12 bg-gray-900 rounded-lg">
+          <div className="text-center py-12 bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6 mb-8 border border-gray-200  shadow-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-16 w-16 mx-auto text-gray-500 mb-4"
+              className="h-16 w-16 mx-auto text-gray-900 mb-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -471,14 +470,14 @@ const Orders = () => {
               />
             </svg>
             <h3 className="text-xl font-medium mb-2">No Orders Yet</h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-700 mb-6">
               {filterStatus === 'all'
                 ? "You haven't placed any orders yet."
                 : `No ${filterStatus} orders found.`}
             </p>
             <Link
               to="/shop"
-              className="bg-white text-black px-6 py-3 rounded-lg inline-block hover:bg-gray-200 transition"
+              className="bg-primary text-light px-6 py-3 rounded-lg inline-block hover:bg-gray-800 transition"
             >
               Start Shopping
             </Link>
@@ -487,24 +486,24 @@ const Orders = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Orders List */}
             <div className="lg:col-span-1">
-              <div className="bg-gray-900 rounded-lg overflow-hidden">
-                <div className="p-4 border-b border-gray-800">
+              <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6 mb-8 border border-gray-200 shadow-md overflow-hidden">
+                <div className="p-4 ">
                   <h2 className="font-medium">Your Orders ({orders.length})</h2>
                 </div>
                 <div className="max-h-[600px] overflow-y-auto">
                   {ordersLoading ? (
                     <div className="p-6 text-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white mx-auto"></div>
-                      <p className="mt-2 text-gray-400">Loading orders...</p>
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+                      <p className="mt-2 text-gray-900">Loading orders...</p>
                     </div>
                   ) : (
-                    <div className="divide-y divide-gray-800">
+                    <div className="divide-y divide-gray-300">
                       {orders.map((order) => (
                         <div
                           key={order._id}
-                          className={`p-4 cursor-pointer hover:bg-gray-800 transition ${
+                          className={`p-4  hover:bg-gray-200 transition ${
                             selectedOrder?._id === order._id
-                              ? 'bg-gray-800'
+                              ? 'bg-gradient-to-r from-white via-gray-50 to-white border border-gray-200 shadow-md rounded-lg '
                               : ''
                           }`}
                         >
@@ -513,7 +512,7 @@ const Orders = () => {
                               type="checkbox"
                               checked={selectedOrders.includes(order._id)}
                               onChange={() => toggleOrderSelection(order._id)}
-                              className="mt-1"
+                              className="mt-1 cursor-pointer"
                               onClick={(e) => e.stopPropagation()}
                             />
                             <div
@@ -522,7 +521,7 @@ const Orders = () => {
                             >
                               <div className="flex justify-between items-start">
                                 <div>
-                                  <div className="text-sm text-gray-400">
+                                  <div className="text-sm text-gray-600">
                                     {order.orderNumber ||
                                       `#${order._id.substring(0, 8)}`}
                                   </div>
@@ -533,7 +532,7 @@ const Orders = () => {
                                     ₦{Number(order.amount).toLocaleString()}
                                   </div>
                                   {order.fulfillmentMethod === 'preorder' && (
-                                    <div className="text-xs text-yellow-400 mt-1">
+                                    <div className="text-xs text-yellow-700 mt-1">
                                       Pre-order
                                     </div>
                                   )}
@@ -566,10 +565,10 @@ const Orders = () => {
             </div>
 
             {/* Order Details */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 font-medium">
               {selectedOrder ? (
-                <div className="bg-gray-900 rounded-lg overflow-hidden">
-                  <div className="p-4 border-b border-gray-800 flex justify-between items-center">
+                <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6 mb-8 border border-gray-200 shadow-md overflow-hidden">
+                  <div className="p-4 border-b border-gray-300 flex justify-between items-center">
                     <h2 className="font-medium">
                       Order Details -{' '}
                       {selectedOrder.orderNumber || `#${selectedOrder._id}`}
@@ -606,23 +605,25 @@ const Orders = () => {
                     {/* Order Info */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
                       <div>
-                        <span className="text-gray-400">Order Date: </span>
+                        <span className="text-primary font-bold">
+                          Order Date:{' '}
+                        </span>
                         <span>{formatOrderDate(selectedOrder.date)}</span>
                       </div>
                       <div>
-                        <span className="text-gray-400">
+                        <span className="text-primary font-bold">
                           Estimated Delivery:{' '}
                         </span>
                         <span>{getEstimatedDelivery(selectedOrder)}</span>
                       </div>
-                      {selectedOrder.tracking?.trackingNumber && (
+                      {/* {selectedOrder.tracking?.trackingNumber && (
                         <>
                           <div>
-                            <span className="text-gray-400">Carrier: </span>
+                            <span className="text-primary font-bold">Carrier: </span>
                             <span>{selectedOrder.tracking.carrier}</span>
                           </div>
                           <div>
-                            <span className="text-gray-400">Tracking: </span>
+                            <span className="text-primary font-bold">Tracking: </span>
                             <a
                               href={selectedOrder.tracking.trackingUrl}
                               target="_blank"
@@ -633,14 +634,14 @@ const Orders = () => {
                             </a>
                           </div>
                         </>
-                      )}
+                      )} */}
                     </div>
 
                     {/* Status Timeline */}
                     {selectedOrder.statusHistory &&
                       selectedOrder.statusHistory.length > 0 && (
                         <div className="mb-8">
-                          <h3 className="text-sm text-gray-400 mb-4">
+                          <h3 className="text-sm text-primary font-bold mb-4">
                             Order Timeline
                           </h3>
                           <div className="space-y-3">
@@ -650,20 +651,20 @@ const Orders = () => {
                                   key={index}
                                   className="flex items-start gap-3"
                                 >
-                                  <div className="w-2 h-2 bg-white rounded-full mt-1.5"></div>
+                                  <div className="w-2 h-2 bg-primary rounded-full mt-1.5"></div>
                                   <div className="flex-1">
                                     <div className="flex justify-between">
                                       <span className="font-medium capitalize">
                                         {history.status}
                                       </span>
-                                      <span className="text-sm text-gray-400">
+                                      <span className="text-sm text-primary ">
                                         {new Date(
                                           history.timestamp
                                         ).toLocaleString()}
                                       </span>
                                     </div>
                                     {history.note && (
-                                      <p className="text-sm text-gray-400 mt-1">
+                                      <p className="text-sm text-gray-800 mt-1">
                                         {history.note}
                                       </p>
                                     )}
@@ -678,10 +679,10 @@ const Orders = () => {
                     {/* Addresses */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                       <div>
-                        <h3 className="text-sm text-gray-400 mb-2">
+                        <h3 className="text-sm text-gray-700 mb-2">
                           Shipping Address
                         </h3>
-                        <div className="bg-black p-4 rounded-lg">
+                        <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl lg:p-6 mb-8 border border-gray-200  bg-light p-4 ">
                           <p className="font-medium">
                             {selectedOrder.shippingAddress?.fullName}
                           </p>
@@ -703,26 +704,26 @@ const Orders = () => {
                       </div>
 
                       <div>
-                        <h3 className="text-sm text-gray-400 mb-2">
+                        <h3 className="text-sm text-gray-700 mb-2">
                           Payment Information
                         </h3>
-                        <div className="bg-black p-4 rounded-lg">
+                        <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl lg:p-6 mb-8 border border-gray-200  bg-light p-4 ">
                           <div className="space-y-2 text-sm">
                             <div className="flex justify-between">
-                              <span className="text-gray-400">Method:</span>
+                              <span className="text-gray-700">Method:</span>
                               <span className="capitalize">
                                 {selectedOrder.paymentMethod}
                               </span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-gray-400">Status:</span>
+                              <span className="text-gray-700">Status:</span>
                               <span className="capitalize">
                                 {selectedOrder.paymentStatus}
                               </span>
                             </div>
                             {selectedOrder.paymentReference && (
                               <div className="flex justify-between">
-                                <span className="text-gray-400">
+                                <span className="text-gray-700">
                                   Reference:
                                 </span>
                                 <span className="text-xs">
@@ -737,14 +738,14 @@ const Orders = () => {
 
                     {/* Order Items */}
                     <div>
-                      <h3 className="text-sm text-gray-400 mb-4">
+                      <h3 className="text-sm text-gray-700 mb-4">
                         Order Items
                       </h3>
                       <div className="space-y-4">
                         {selectedOrder.items.map((item, index) => (
                           <div
                             key={index}
-                            className="flex gap-4 p-4 bg-black rounded-lg"
+                            className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl lg:p-6 mb-8 border border-gray-200  p-4 "
                           >
                             <img
                               src={item.image}
@@ -752,13 +753,15 @@ const Orders = () => {
                               className="w-20 h-20 object-cover rounded"
                             />
                             <div className="flex-1">
-                              <h4 className="font-medium">{item.title}</h4>
+                              <h4 className="font-medium text-base">
+                                {item.title}
+                              </h4>
                               {item.selectedAttributes &&
                                 Object.keys(item.selectedAttributes).length >
                                   0 && (
-                                  <div className="text-sm text-gray-400 mt-1">
+                                  <div className="text-sm text-gray-800 mt-1">
                                     {Object.entries(item.selectedAttributes)
-                                      .filter(([key, value]) => value)
+                                      .filter(([value]) => value)
                                       .map(([key, value]) => (
                                         <span key={key} className="mr-3">
                                           {key}: {value}
@@ -778,7 +781,7 @@ const Orders = () => {
                                     ).toLocaleString()}
                                   </div>
                                   {item.discount > 0 && (
-                                    <div className="text-xs text-gray-400 line-through">
+                                    <div className="text-xs text-gray-700 line-through">
                                       ₦
                                       {Number(
                                         item.price * item.quantity
@@ -791,12 +794,12 @@ const Orders = () => {
                                 item.itemStatus !== 'pending' && (
                                   <div className="mt-2">
                                     <span
-                                      className={`text-xs px-2 py-1 rounded-full ${
+                                      className={`text-xs px-3 py-1.5 rounded-full ${
                                         item.itemStatus === 'delivered'
                                           ? 'bg-green-900 text-green-300'
                                           : item.itemStatus === 'shipped'
                                           ? 'bg-blue-900 text-blue-300'
-                                          : 'bg-gray-800 text-gray-300'
+                                          : 'bg-primary text-light'
                                       }`}
                                     >
                                       {item.itemStatus}
@@ -810,10 +813,10 @@ const Orders = () => {
                     </div>
 
                     {/* Order Summary */}
-                    <div className="mt-8 pt-6 border-t border-gray-800">
+                    <div className="mt-8 pt-6 border-t border-gray-830">
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Subtotal</span>
+                          <span className="text-gray-800">Subtotal</span>
                           <span>
                             ₦{Number(selectedOrder?.subtotal).toLocaleString()}
                           </span>
@@ -833,7 +836,7 @@ const Orders = () => {
                         )}
                         {selectedOrder.shipping?.cost > 0 && (
                           <div className="flex justify-between">
-                            <span className="text-gray-400">Shipping</span>
+                            <span className="text-gray-800">Shipping</span>
                             <span>
                               ₦
                               {Number(
@@ -844,7 +847,7 @@ const Orders = () => {
                         )}
                         {selectedOrder.tax?.amount > 0 && (
                           <div className="flex justify-between">
-                            <span className="text-gray-400">Tax</span>
+                            <span className="text-gray-800">Tax</span>
                             <span>
                               ₦
                               {Number(
@@ -853,7 +856,7 @@ const Orders = () => {
                             </span>
                           </div>
                         )}
-                        <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-800">
+                        <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-300">
                           <span>Total</span>
                           <span>
                             ₦{Number(selectedOrder.amount).toLocaleString()}
@@ -864,8 +867,8 @@ const Orders = () => {
 
                     {/* Customer Notes */}
                     {selectedOrder.customerNotes && (
-                      <div className="mt-6 p-4 bg-black rounded-lg">
-                        <h4 className="text-sm text-gray-400 mb-2">
+                      <div className="mt-6 p-4 bg-gradient-to-r from-white via-gray-50 to-white rounded-xl lg:p-6 mb-8 border border-gray-200">
+                        <h4 className="text-md text-primary mb-2">
                           Order Notes
                         </h4>
                         <p className="text-sm">{selectedOrder.customerNotes}</p>
@@ -876,7 +879,7 @@ const Orders = () => {
                     <div className="mt-8 flex flex-wrap gap-4">
                       <button
                         onClick={() => window.print()}
-                        className="px-6 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition"
+                        className="px-6 py-2 bg-primary rounded-lg hover:bg-gray-800 text-light transition"
                       >
                         Print Receipt
                       </button>
@@ -898,9 +901,9 @@ const Orders = () => {
                   </div>
                 </div>
               ) : (
-                <div className="bg-gray-900 rounded-lg p-10 text-center">
-                  <FaEye className="text-4xl text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-400">
+                <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl  lg:p-6 mb-8 border border-gray-200 shadow-md p-10 text-center">
+                  <FaEye className="text-4xl text-gray-900 mx-auto mb-4" />
+                  <p className="text-gray-800">
                     Select an order to view details
                   </p>
                 </div>

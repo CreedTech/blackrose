@@ -395,7 +395,7 @@ const ProfileDetails = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="">
       {/* Profile Section */}
       <div>
         <div className="flex justify-between items-center mb-6">
@@ -405,14 +405,14 @@ const ProfileDetails = () => {
               <>
                 <button
                   onClick={() => setShowPasswordModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors text-sm"
+                  className="flex items-center gap-2 px-4 py-2 text-light bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors text-sm"
                 >
                   <FaLock />
                   Change Password
                 </button>
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
+                  className="flex items-center gap-2 text-primary hover:text-blue-300 transition-colors"
                 >
                   <FaEdit /> Edit Profile
                 </button>
@@ -426,11 +426,11 @@ const ProfileDetails = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             onSubmit={handleSubmit}
-            className="space-y-6 max-w-4xl relative"
+            className="space-y-6 max-w-4xl relative font-medium"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name *
                 </label>
                 <input
@@ -439,28 +439,28 @@ const ProfileDetails = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors"
+                  className="w-full px-4 py-3 bg-light border border-gray-400 text-primary rounded-lg focus:outline-none focus:border-primary transition-colors"
                   placeholder="Enter your full name"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Email Address
                 </label>
                 <input
                   type="email"
                   value={user?.email}
                   disabled
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-gray-400 cursor-not-allowed"
+                  className="w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded-lg text-gray-400 cursor-not-allowed"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-700 mt-1">
                   Email cannot be changed for security reasons
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Phone Number
                 </label>
                 <input
@@ -469,12 +469,12 @@ const ProfileDetails = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+234 xxx xxx xxxx"
-                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors"
+                  className="w-full px-4 py-3 bg-light border border-gray-400 text-primary rounded-lg focus:outline-none focus:border-primary transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Date of Birth
                 </label>
                 <input
@@ -482,19 +482,19 @@ const ProfileDetails = () => {
                   name="dateOfBirth"
                   value={formData.dateOfBirth}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors"
+                  className="w-full px-4 py-3 bg-light border border-gray-400 text-primary rounded-lg focus:outline-none focus:border-primary transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Gender
                 </label>
                 <select
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors"
+                  className="w-full px-4 py-3 bg-light border border-gray-400 text-primary rounded-lg focus:outline-none focus:border-primary transition-colors"
                 >
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
@@ -506,7 +506,7 @@ const ProfileDetails = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Bio
               </label>
               <textarea
@@ -516,9 +516,9 @@ const ProfileDetails = () => {
                 rows={4}
                 maxLength={500}
                 placeholder="Tell us about yourself..."
-                className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors resize-none"
+                className="w-full px-4 py-3 bg-light border border-gray-400 rounded-lg focus:outline-none focus:border-primary text-primary transition-colors resize-none"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-800 mt-1">
                 {formData.bio.length}/500 characters
               </p>
             </div>
@@ -562,14 +562,14 @@ const ProfileDetails = () => {
               </div>
             </div> */}
 
-            <div className="flex gap-4 pt-6 border-t border-gray-700">
+            <div className="flex gap-4 pt-6 border-t border-gray-300">
               <button
                 type="submit"
                 disabled={loading}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
                   loading
                     ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                    : 'bg-white text-black hover:bg-gray-200 shadow-lg hover:shadow-xl'
+                    : 'bg-primary text-light hover:bg-gray-900 shadow-lg hover:shadow-xl'
                 }`}
               >
                 <FaSave />
@@ -579,7 +579,7 @@ const ProfileDetails = () => {
                 type="button"
                 onClick={handleCancel}
                 disabled={loading}
-                className="flex items-center gap-2 px-6 py-3 border border-gray-600 rounded-lg hover:border-white transition-colors"
+                className="flex items-center gap-2 px-6 py-3 border border-gray-600 rounded-lg hover:border-white text-primary transition-colors"
               >
                 <FaTimes />
                 Cancel
@@ -596,32 +596,21 @@ const ProfileDetails = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 <div>
-                  <p className="text-sm font-medium text-gray-400 mb-1">
+                  <p className="text-sm font-medium text-gray-500 mb-1">
                     Full Name
                   </p>
                   <p className="text-lg">{user?.name || 'Not provided'}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium text-gray-400 mb-1">
+                  <p className="text-sm font-medium text-gray-500 mb-1">
                     Email Address
                   </p>
                   <p className="text-lg">{user?.email}</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span
-                      className={`text-xs px-2 py-1 rounded-full ${
-                        user?.isEmailVerified
-                          ? 'bg-green-900 text-green-400'
-                          : 'bg-yellow-900 text-yellow-400'
-                      }`}
-                    >
-                      {user?.isEmailVerified ? 'Verified' : 'Unverified'}
-                    </span>
-                  </div>
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium text-gray-400 mb-1">
+                  <p className="text-sm font-medium text-gray-500 mb-1">
                     Phone Number
                   </p>
                   <p className="text-lg">{user?.phone || 'Not provided'}</p>
@@ -643,7 +632,7 @@ const ProfileDetails = () => {
 
               <div className="space-y-4">
                 <div>
-                  <p className="text-sm font-medium text-gray-400 mb-1">
+                  <p className="text-sm font-medium text-gray-500 mb-1">
                     Date of Birth
                   </p>
                   <p className="text-lg">
@@ -658,7 +647,7 @@ const ProfileDetails = () => {
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium text-gray-400 mb-1">
+                  <p className="text-sm font-medium text-gray-500 mb-1">
                     Gender
                   </p>
                   <p className="text-lg capitalize">
@@ -667,7 +656,7 @@ const ProfileDetails = () => {
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium text-gray-400 mb-1">
+                  <p className="text-sm font-medium text-gray-500 mb-1">
                     Member Since
                   </p>
                   <p className="text-lg">
@@ -744,25 +733,25 @@ const ProfileDetails = () => {
                   <p className="text-3xl font-bold text-blue-400">
                     {user?.orderCount || 0}
                   </p>
-                  <p className="text-sm text-gray-400 mt-1">Total Orders</p>
+                  <p className="text-sm text-gray-900 mt-1">Total Orders</p>
                 </div>
                 <div className="bg-gradient-to-br from-purple-900/20 to-purple-800/20 border border-purple-800/30 p-6 rounded-xl text-center">
                   <p className="text-3xl font-bold text-purple-400">
                     {user?.totalViews || 0}
                   </p>
-                  <p className="text-sm text-gray-400 mt-1">Photo Views</p>
+                  <p className="text-sm text-gray-900 mt-1">Photo Views</p>
                 </div>
                 <div className="bg-gradient-to-br from-red-900/20 to-red-800/20 border border-red-800/30 p-6 rounded-xl text-center">
                   <p className="text-3xl font-bold text-red-400">
                     {user?.likedPhotos.length || 0}
                   </p>
-                  <p className="text-sm text-gray-400 mt-1">Photo Likes</p>
+                  <p className="text-sm text-gray-900 mt-1">Photo Likes</p>
                 </div>
                 <div className="bg-gradient-to-br from-green-900/20 to-green-800/20 border border-green-800/30 p-6 rounded-xl text-center">
                   <p className="text-3xl font-bold text-green-400">
                     {user?.wishlist?.length || 0}
                   </p>
-                  <p className="text-sm text-gray-400 mt-1">Wishlist Items</p>
+                  <p className="text-sm text-gray-900 mt-1">Wishlist Items</p>
                 </div>
               </div>
             </div>
@@ -777,7 +766,7 @@ const ProfileDetails = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center "
             onClick={() => setShowPasswordModal(false)}
           >
             <motion.div
@@ -785,7 +774,7 @@ const ProfileDetails = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-gray-900 border border-gray-700 rounded-xl p-8 w-full max-w-md"
+              className="bg-light border border-primary/50 rounded-xl p-8 w-full max-w-md"
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-semibold">Change Password</h3>
@@ -799,7 +788,7 @@ const ProfileDetails = () => {
 
               <form onSubmit={handlePasswordSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Current Password
                   </label>
                   <div className="relative">
@@ -809,13 +798,13 @@ const ProfileDetails = () => {
                       value={passwordData.currentPassword}
                       onChange={handlePasswordChange}
                       required
-                      className="w-full px-4 py-3 pr-12 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors"
+                      className="w-full px-4 py-3 pr-12 bg-light border border-gray-400 rounded-lg focus:outline-none focus:border-primary text-primary transition-colors"
                       placeholder="Enter current password"
                     />
                     <button
                       type="button"
                       onClick={() => togglePasswordVisibility('current')}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-700 hover:text-primary transition-colors"
                     >
                       {showPasswords.current ? <FaEyeSlash /> : <FaEye />}
                     </button>
@@ -823,7 +812,7 @@ const ProfileDetails = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     New Password
                   </label>
                   <div className="relative">
@@ -834,13 +823,13 @@ const ProfileDetails = () => {
                       onChange={handlePasswordChange}
                       required
                       minLength={6}
-                      className="w-full px-4 py-3 pr-12 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors"
+                      className="w-full px-4 py-3 pr-12 bg-light border border-gray-400 rounded-lg focus:outline-none focus:border-primary text-primary transition-colors"
                       placeholder="Enter new password"
                     />
                     <button
                       type="button"
                       onClick={() => togglePasswordVisibility('new')}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-700 hover:text-primary transition-colors"
                     >
                       {showPasswords.new ? <FaEyeSlash /> : <FaEye />}
                     </button>
@@ -848,7 +837,7 @@ const ProfileDetails = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Confirm New Password
                   </label>
                   <div className="relative">
@@ -859,13 +848,13 @@ const ProfileDetails = () => {
                       onChange={handlePasswordChange}
                       required
                       minLength={6}
-                      className="w-full px-4 py-3 pr-12 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors"
+                      className="w-full px-4 py-3 pr-12 bg-light border border-gray-400 rounded-lg focus:outline-none focus:border-primary text-primary transition-colors"
                       placeholder="Confirm new password"
                     />
                     <button
                       type="button"
                       onClick={() => togglePasswordVisibility('confirm')}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-700 hover:text-primary transition-colors"
                     >
                       {showPasswords.confirm ? <FaEyeSlash /> : <FaEye />}
                     </button>
@@ -875,7 +864,7 @@ const ProfileDetails = () => {
                 {/* Password strength indicator */}
                 {passwordData.newPassword && (
                   <div className="mt-2">
-                    <div className="text-xs text-gray-400 mb-1">
+                    <div className="text-xs text-gray-800 mb-1">
                       Password strength:
                     </div>
                     <div className="flex gap-1">
@@ -902,7 +891,7 @@ const ProfileDetails = () => {
                                   : strength === 3
                                   ? 'bg-blue-500'
                                   : 'bg-green-500'
-                                : 'bg-gray-700'
+                                : 'bg-gray-800'
                             }`}
                           />
                         );
@@ -930,7 +919,7 @@ const ProfileDetails = () => {
                     className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-medium transition-all ${
                       passwordLoading
                         ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                        : 'bg-white text-black hover:bg-gray-200'
+                        : 'bg-primary text-light hover:bg-gray-800'
                     }`}
                   >
                     <FaLock />
@@ -940,7 +929,7 @@ const ProfileDetails = () => {
                     type="button"
                     onClick={() => setShowPasswordModal(false)}
                     disabled={passwordLoading}
-                    className="px-6 py-3 border border-gray-600 rounded-lg hover:border-white transition-colors"
+                    className="px-6 py-3 border border-gray-600 rounded-lg text-primary hover:border-white transition-colors"
                   >
                     Cancel
                   </button>

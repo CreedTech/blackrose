@@ -47,11 +47,12 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Signup />} />
         </Route>
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/login" element={<Signup />} />
+        
       </Routes>
       <ToastContainer
         position="bottom-right"

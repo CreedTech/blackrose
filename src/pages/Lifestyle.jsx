@@ -282,6 +282,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 const LifeStyle = () => {
   const [posts, setPosts] = useState([]);
@@ -443,7 +444,7 @@ const LifeStyle = () => {
         </motion.p>
         <motion.button
           onClick={() => window.location.reload()}
-          className="mt-4 px-4 py-2 bg-primary text-white rounded"
+          className="mt-4 px-4 py-2 bg-light text-primary rounded"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
@@ -458,7 +459,7 @@ const LifeStyle = () => {
 
   return (
     <motion.section
-      className="bg-black py-12"
+      className=" py-12"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -475,7 +476,7 @@ const LifeStyle = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <motion.h1
-              className="text-3xl font-bold text-white mb-2"
+              className="text-3xl font-bold text-primary mb-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -483,7 +484,7 @@ const LifeStyle = () => {
               Lifestyle Blog
             </motion.h1>
             <motion.p
-              className="text-gray-400"
+              className="text-gray-800"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -504,7 +505,7 @@ const LifeStyle = () => {
               transition={{ duration: 0.2 }}
             >
               <motion.select
-                className="appearance-none bg-transparent border border-gray-700 text-white px-4 py-2 pr-8 rounded focus:outline-none focus:ring-1 focus:ring-primary transition-all duration-300"
+                className="appearance-none bg-transparent border border-gray-700 text-primary px-4 py-2 pr-8 rounded focus:outline-none focus:ring-1 focus:ring-primary transition-all duration-300"
                 value={categoryParam}
                 onChange={(e) => handleCategoryFilter(e.target.value)}
                 whileFocus={{ borderColor: '#your-primary-color' }}
@@ -516,7 +517,7 @@ const LifeStyle = () => {
                   </option>
                 ))}
               </motion.select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-primary">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                   <path
                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -540,7 +541,7 @@ const LifeStyle = () => {
               transition={{ duration: 0.5 }}
             >
               <motion.p
-                className="text-white text-lg"
+                className="text-primary text-lg"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
@@ -600,7 +601,7 @@ const LifeStyle = () => {
                           transition={{ delay: 0.3 }}
                         >
                           <motion.span
-                            className="px-3 py-1 bg-primary text-white text-xs font-semibold rounded-full"
+                            className="px-3 py-1 bg-light text-primary text-xs font-semibold rounded-full"
                             whileHover={{ scale: 1.1 }}
                             transition={{ duration: 0.2 }}
                           >
@@ -616,7 +617,7 @@ const LifeStyle = () => {
                         transition={{ delay: 0.2 }}
                       >
                         <motion.h2
-                          className="text-xl font-semibold text-white mb-2 group-hover:text-primary transition-colors duration-300"
+                          className="text-xl font-semibold text-white mb-2  transition-colors duration-300"
                           whileHover={{ x: 5 }}
                           transition={{ duration: 0.2 }}
                         >
@@ -624,7 +625,7 @@ const LifeStyle = () => {
                         </motion.h2>
 
                         <motion.div
-                          className="text-gray-400 text-sm mb-3"
+                          className="text-gray-200 text-sm mb-3"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.3 }}
@@ -648,7 +649,7 @@ const LifeStyle = () => {
                             {post.tags.slice(0, 3).map((tag, tagIndex) => (
                               <motion.span
                                 key={tagIndex}
-                                className="text-xs px-2 py-1 bg-gray-800 text-gray-300 rounded"
+                                className="text-xs px-2 py-1 bg-gray-700 text-gray-200 rounded"
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.5 + tagIndex * 0.1 }}
@@ -669,114 +670,115 @@ const LifeStyle = () => {
               </motion.div>
 
               {/* Pagination */}
-              {totalPages > 1 && (
-                <motion.div
-                  className="flex justify-center mt-12"
-                  variants={paginationVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
-                  <div className="flex items-center space-x-1">
-                    <motion.button
-                      onClick={() =>
-                        handlePageChange(Math.max(1, currentPage - 1))
-                      }
-                      disabled={currentPage === 1}
-                      className="px-4 py-2 text-sm border border-gray-700 rounded-lg text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
-                      whileHover={{ scale: currentPage !== 1 ? 1.05 : 1 }}
-                      whileTap={{ scale: currentPage !== 1 ? 0.95 : 1 }}
+              {totalPages == 1 && (
+                <>
+                  <motion.div
+                    className="row"
+                    variants={paginationVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <div
+                      className="col-md-12 mt-40 mb-60 text-center animate-box"
+                      data-animate-effect="fadeInUp"
                     >
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </motion.button>
-
-                    {[...Array(totalPages)].map((_, i) => {
-                      if (
-                        i + 1 === currentPage ||
-                        i + 1 === 1 ||
-                        i + 1 === totalPages ||
-                        i + 1 === currentPage - 1 ||
-                        i + 1 === currentPage + 1
-                      ) {
-                        return (
-                          <motion.button
-                            key={i}
-                            onClick={() => handlePageChange(i + 1)}
-                            className={`px-4 py-2 text-sm rounded-lg transition-all duration-300 ${
-                              currentPage === i + 1
-                                ? 'bg-primary text-white'
-                                : 'border border-gray-700 text-white hover:bg-gray-800'
-                            }`}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.05 }}
+                      <ul className="blackrose-pagination-wrap align-center relative">
+                        <motion.li
+                          whileHover={{ scale: currentPage !== 1 ? 1.05 : 1 }}
+                          whileTap={{ scale: currentPage !== 1 ? 0.95 : 1 }}
+                        >
+                          <a
+                            className="cursor-pointer text-gray-700 hover:text-gray-900"
+                            onClick={() =>
+                              handlePageChange(Math.max(1, currentPage - 1))
+                            }
+                            disabled={currentPage === 1}
                           >
-                            {i + 1}
-                          </motion.button>
-                        );
-                      }
+                            <i className="fa fa-angle-left"></i>
+                          </a>
+                        </motion.li>
+                        {[...Array(totalPages)].map((_, i) => {
+                          if (
+                            i + 1 === currentPage ||
+                            i + 1 === 1 ||
+                            i + 1 === totalPages ||
+                            i + 1 === currentPage - 1 ||
+                            i + 1 === currentPage + 1
+                          ) {
+                            return (
+                              <motion.li
+                                key={i}
+                                onClick={() => handlePageChange(i + 1)}
+                                className={`p-0.5  transition-all rounded-full duration-300 ${
+                                  currentPage === i + 1
+                                    ? 'bg-primary text-white'
+                                    : 'border border-gray-700 text-white hover:bg-gray-800 hover:text-dark'
+                                }`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.05 }}
+                              >
+                                <span className="inline-block w-10 h-10 leading-10 text-center text-[#999] font-light border border-[#222] rounded-full hover:bg-light">
+                                  <span className=" font-thin hover:text-dark ">
+                                    {i + 1}
+                                  </span>
+                                </span>
+                              </motion.li>
+                            );
+                          }
 
-                      // Show ellipsis
-                      if (
-                        (i + 1 === currentPage - 2 && currentPage > 3) ||
-                        (i + 1 === currentPage + 2 &&
-                          currentPage < totalPages - 2)
-                      ) {
-                        return (
-                          <motion.span
-                            key={i}
-                            className="px-4 py-2 text-gray-500"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: i * 0.05 }}
+                          // Show ellipsis
+                          if (
+                            (i + 1 === currentPage - 2 && currentPage > 3) ||
+                            (i + 1 === currentPage + 2 &&
+                              currentPage < totalPages - 2)
+                          ) {
+                            return (
+                              <motion.span
+                                key={i}
+                                className="text-gray-700"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: i * 0.05 }}
+                              >
+                                ...
+                              </motion.span>
+                            );
+                          }
+
+                          return null;
+                        })}
+
+                        <motion.li
+                          whileHover={{
+                            scale: currentPage !== totalPages ? 1.05 : 1,
+                          }}
+                          whileTap={{
+                            scale: currentPage !== totalPages ? 0.95 : 1,
+                          }}
+                        >
+                          <a
+                            className="cursor-pointer text-gray-700 hover:text-gray-900"
+                            onClick={() =>
+                              handlePageChange(
+                                Math.min(totalPages, currentPage + 1)
+                              )
+                            }
+                            disabled={currentPage === totalPages}
                           >
-                            ...
-                          </motion.span>
-                        );
-                      }
-
-                      return null;
-                    })}
-
-                    <motion.button
-                      onClick={() =>
-                        handlePageChange(Math.min(totalPages, currentPage + 1))
-                      }
-                      disabled={currentPage === totalPages}
-                      className="px-4 py-2 text-sm border border-gray-700 rounded-lg text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
-                      whileHover={{
-                        scale: currentPage !== totalPages ? 1.05 : 1,
-                      }}
-                      whileTap={{
-                        scale: currentPage !== totalPages ? 0.95 : 1,
-                      }}
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </motion.button>
-                  </div>
-                </motion.div>
+                            <i className="fa fa-angle-right"></i>
+                          </a>
+                        </motion.li>
+                      </ul>
+                    </div>
+                  </motion.div>
+                
+                </>
               )}
             </motion.div>
           )}

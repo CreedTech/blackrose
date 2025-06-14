@@ -32,14 +32,14 @@ const Wishlist = () => {
   if (wishlist.length === 0) {
     return (
       <div className="text-center py-12">
-        <FaHeart className="text-4xl text-gray-600 mx-auto mb-4" />
+        <FaHeart className="text-4xl text-gray-900 mx-auto mb-4" />
         <h3 className="text-xl font-medium mb-2">Your wishlist is empty</h3>
-        <p className="text-gray-400 mb-6">
+        <p className="text-gray-700 mb-6">
           Save items you love for later
         </p>
         <Link
           to="/shop"
-          className="bg-white text-black px-6 py-2 rounded-lg inline-block hover:bg-gray-200 transition"
+          className="bg-primary text-light px-6 py-2 rounded-lg inline-block hover:bg-gray-800 transition"
         >
           Start Shopping
         </Link>
@@ -62,7 +62,7 @@ const Wishlist = () => {
           return (
             <div
               key={`${product._id}-${item.variantId || index}`}
-              className="bg-black rounded-lg overflow-hidden border border-gray-800 hover:border-gray-700 transition"
+              className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl  mb-8 border border-gray-200  shadow-sm overflow-hidden hover:shadow-lg transition"
             >
               <Link
                 to={`/shop/${product._id}`}
@@ -83,16 +83,16 @@ const Wishlist = () => {
               <div className="p-4">
                 <Link
                   to={`/shop/${product._id}`}
-                  className="font-medium hover:text-gray-300 transition line-clamp-1"
+                  className="font-medium hover:text-gray-700 transition line-clamp-1"
                 >
                   {product.title}
                 </Link>
                 
                 {/* Variant Details */}
                 {item.selectedAttributes && Object.keys(item.selectedAttributes).length > 0 && (
-                  <div className="text-xs text-gray-400 mt-1">
+                  <div className="text-xs text-gray-700 mt-1">
                     {Object.entries(item.selectedAttributes)
-                      .filter(([key, value]) => value)
+                      .filter(([ value]) => value)
                       .map(([key, value]) => (
                         <span key={key} className="mr-2">
                           {key}: {value}
@@ -107,7 +107,7 @@ const Wishlist = () => {
                       {currency}{product.finalPrice?.toLocaleString() || product.price?.toLocaleString()}
                     </span>
                     {product.discount > 0 && (
-                      <span className="text-sm text-gray-400 line-through">
+                      <span className="text-sm text-gray-700 line-through">
                         {currency}{product.price?.toLocaleString()}
                       </span>
                     )}
@@ -122,10 +122,10 @@ const Wishlist = () => {
                   <button
                     onClick={() => handleMoveToCart(item)}
                     disabled={product.stock === 0}
-                    className={`flex-1 py-2 rounded-lg transition flex items-center justify-center gap-2 ${
+                    className={`flex-1 py-2 rounded-lg transition flex items-center font-medium justify-center gap-2 ${
                       product.stock === 0
                         ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                        : 'bg-white text-black hover:bg-gray-200'
+                        : 'bg-primary text-light hover:bg-gray-800'
                     }`}
                   >
                     <FaShoppingCart size={14} />

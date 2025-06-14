@@ -56,7 +56,7 @@ const AddressBook = () => {
           {addresses.map((address) => (
             <div
               key={address._id}
-              className="bg-black p-6 rounded-lg border border-gray-800 hover:border-gray-700 transition"
+              className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6 mb-8 border border-gray-200  shadow-sm hover:shadow-lg transition"
             >
               <div className="flex justify-between items-start mb-4">
                 <div>
@@ -72,7 +72,7 @@ const AddressBook = () => {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEdit(address)}
-                    className="text-gray-400 hover:text-white transition"
+                    className="text-primary hover:text-gray-800 transition"
                   >
                     <FaEdit />
                   </button>
@@ -87,14 +87,14 @@ const AddressBook = () => {
               </div>
 
               <div className="space-y-1 text-sm">
-                <p className="font-medium">{address.fullName}</p>
-                <p className="text-gray-400">{address.address}</p>
-                <p className="text-gray-400">
+                <p className="font-medium text-primary">{address.fullName}</p>
+                <p className="text-gray-800">{address.address}</p>
+                <p className="text-gray-800">
                   {address.city}, {address.state} {address.zipCode}
                 </p>
-                <p className="text-gray-400 mt-2">{address.phone}</p>
+                <p className="text-gray-4=800 mt-2">{address.phone}</p>
                 {address.email && (
-                  <p className="text-gray-400">{address.email}</p>
+                  <p className="text-gray-800">{address.email}</p>
                 )}
               </div>
             </div>

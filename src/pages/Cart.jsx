@@ -56,30 +56,30 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white text-gray-900">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-gray-900 rounded-lg overflow-hidden">
-              <div className="p-4 border-b border-gray-800">
+            <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-2 lg:p-4 mb-8 border border-gray-200 overflow-hidden shadow">
+              <div className="p-4 border-b border-gray-300">
                 <h2 className="font-medium">
                   Cart Items ({Object.keys(cartItems).length})
                 </h2>
               </div>
 
-              <div className="divide-y divide-gray-800">
+              <div className="divide-y divide-gray-200">
                 {Object.entries(cartItems).map(([cartKey, item]) => (
-                  <div key={cartKey} className="p-4">
+                  <div key={cartKey} className="p-4 bg-white">
                     <div className="flex gap-4">
                       {/* Product Image */}
                       <Link to={`/shop/${item.productId}`}>
                         <img
                           src={item.image}
                           alt={item.title}
-                          className="w-24 h-24 object-cover rounded-lg"
+                          className="w-24 h-24 object-cover rounded-lg border"
                         />
                       </Link>
 
@@ -88,49 +88,32 @@ const Cart = () => {
                         <div className="flex justify-between mb-2">
                           <Link
                             to={`/shop/${item.productId}`}
-                            className="font-medium hover:text-gray-300 transition"
+                            className="font-medium text-gray-900 hover:text-gray-700 transition"
                           >
                             {item.title}
                           </Link>
                           <button
                             onClick={() => removeFromCart(cartKey)}
-                            className="text-red-400 hover:text-red-300 transition"
+                            className="text-red-500 hover:text-red-600 transition"
                           >
                             <FaTrash />
                           </button>
                         </div>
 
                         {/* Variant Details */}
-                        {/* {item.selectedAttributes &&
-                          Object.keys(item.selectedAttributes).length > 0 && (
-                            <div className="text-sm text-gray-400 mb-2">
-                              {Object.entries(item.selectedAttributes)
-                                .filter(([key, value]) => value)
-                                .map(([key, value]) => (
-                                  <span key={key} className="mr-3">
-                                    {key}: {value}
-                                  </span>
-                                ))}
-                            </div>
-                          )} */}
-                        {/* Variant Details */}
                         {item.selectedAttributes &&
                           Object.keys(item.selectedAttributes).length > 0 && (
-                            <div className="text-sm text-gray-400 mb-2">
+                            <div className="text-sm text-gray-500 mb-2">
                               {Object.entries(item.selectedAttributes)
-                                .filter(([key, value]) => {
-                                  // Filter out empty objects and falsy values
-                                  if (!value) return false;
-                                  if (
-                                    typeof value === 'object' &&
-                                    Object.keys(value).length === 0
-                                  )
-                                    return false;
-                                  return true;
-                                })
+                                .filter(
+                                  ([_, value]) =>
+                                    value &&
+                                    (typeof value !== 'object' ||
+                                      Object.keys(value).length)
+                                )
                                 .map(([key, value]) => (
                                   <span key={key} className="mr-3">
-                                    {String(key)}:{' '}
+                                    {key}:{' '}
                                     {typeof value === 'object'
                                       ? JSON.stringify(value)
                                       : String(value)}
@@ -146,7 +129,7 @@ const Cart = () => {
                               onClick={() =>
                                 handleQuantityChange(cartKey, item.quantity - 1)
                               }
-                              className="w-8 h-8 bg-gray-800 rounded flex items-center justify-center hover:bg-gray-700 transition"
+                              className="w-8 h-8 flex items-center justify-center  border border-primary rounded text-primary hover:bg-primary font-medium hover:text-white transition-colors"
                             >
                               <FaMinus size={12} />
                             </button>
@@ -159,7 +142,7 @@ const Cart = () => {
                                   parseInt(e.target.value) || 1
                                 )
                               }
-                              className="w-16 text-center bg-black border border-gray-700 rounded"
+                              className="text-primary w-10 text-center font-medium"
                               min="1"
                               max={item.availableStock || 99}
                             />
@@ -167,7 +150,7 @@ const Cart = () => {
                               onClick={() =>
                                 handleQuantityChange(cartKey, item.quantity + 1)
                               }
-                              className="w-8 h-8 bg-gray-800 rounded flex items-center justify-center hover:bg-gray-700 transition"
+                              className="w-8 h-8 flex items-center justify-center  border border-primary rounded text-primary hover:bg-primary font-medium hover:text-white transition-colors"
                             >
                               <FaPlus size={12} />
                             </button>
@@ -175,28 +158,23 @@ const Cart = () => {
 
                           {/* Price */}
                           <div className="text-right">
-                            <div className="font-medium">
+                            <div className="font-medium text-gray-900">
                               ₦{(item.price * item.quantity).toLocaleString()}
                             </div>
-                            {item.price !== item.price && (
-                              <div className="text-sm text-gray-400 line-through">
-                                ₦{(item.price * item.quantity).toLocaleString()}
-                              </div>
-                            )}
                           </div>
                         </div>
 
                         {/* Stock Warning */}
                         {item.availableStock && item.availableStock <= 5 && (
-                          <p className="text-xs text-yellow-400 mt-2">
+                          <p className="text-xs text-red-500 mt-2">
                             Only {item.availableStock} left in stock
                           </p>
                         )}
 
                         {/* Pre-order Notice */}
                         {!item.isAvailable && (
-                          <p className="text-xs text-yellow-400 mt-2">
-                            Pre-order item - Ships in 7-14 days
+                          <p className="text-xs text-primary mt-2">
+                            Pre-order item - Ships in 7–14 days
                           </p>
                         )}
                       </div>
@@ -209,25 +187,27 @@ const Cart = () => {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-gray-900 rounded-lg p-6 sticky top-20">
+            <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm sticky top-20">
               <h2 className="text-xl font-bold mb-4">Order Summary</h2>
 
-              <div className="space-y-3 mb-6">
+              <div className="space-y-3 mb-6 font-medium">
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Subtotal</span>
-                  <span>₦{subtotal.toLocaleString()}</span>
+                  <span className="text-gray-900">Subtotal</span>
+                  <span className="text-gray-900">
+                    ₦{subtotal.toLocaleString()}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Shipping</span>
-                  <span className="text-gray-400">Calculated at checkout</span>
+                  <span className="text-gray-900">Shipping</span>
+                  <span className="text-gray-900">Calculated at checkout</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Tax</span>
-                  <span className="text-gray-400">Calculated at checkout</span>
+                  <span className="text-gray-900">Tax</span>
+                  <span className="text-gray-900">Calculated at checkout</span>
                 </div>
               </div>
 
-              <div className="border-t border-gray-800 pt-4 mb-6">
+              <div className="border-t border-gray-300 pt-4 mb-6">
                 <div className="flex justify-between font-bold text-lg">
                   <span>Estimated Total</span>
                   <span>₦{subtotal.toLocaleString()}</span>
@@ -236,7 +216,7 @@ const Cart = () => {
 
               <button
                 onClick={() => navigate('/checkout')}
-                className="w-full bg-white text-black py-3 rounded-lg font-medium hover:bg-gray-200 transition"
+                className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/70 transition"
               >
                 Proceed to Checkout
               </button>
@@ -244,15 +224,15 @@ const Cart = () => {
               <div className="mt-4 text-center">
                 <Link
                   to="/shop"
-                  className="text-sm text-gray-400 hover:text-white transition"
+                  className="text-sm text-gray-600 hover:text-primary transition font-medium"
                 >
                   Continue Shopping
                 </Link>
               </div>
 
               {/* Security Badges */}
-              <div className="mt-6 pt-6 border-t border-gray-800">
-                <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
+              <div className="mt-6 pt-6 border-t border-gray-300">
+                <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
                   <svg
                     className="w-4 h-4"
                     fill="currentColor"

@@ -46,7 +46,7 @@ body {
   line-height: 1.75em;
   font-weight: 300;
   color: #999;
-  background: #000000;
+  background: #ffffff;
 }
 h1,
 h2,
@@ -57,7 +57,7 @@ h6 {
   font-family: 'Oswald', sans-serif;
   font-weight: 400;
   line-height: 1.25em;
-  color: #ffffff;
+  color: #000000;
 }
 h1 {
   font-size: 35px;
@@ -83,21 +83,21 @@ h3 span,
 h4 span,
 h5 span,
 h6 span {
-  color: #ffffff;
+  color: #000000;
 }
 p {
   font-family: 'Outfit', sans-serif;
   font-size: 15px;
   line-height: 1.75em;
   font-weight: 300;
-  color: #999;
+  color: #000000;
 }
 a {
-  color: #ffffff;
+  color: #000000;
 }
 a:focus,
 a:hover {
-  color: #ffffff;
+  color: #000000;
 }
 a:active,
 a:hover {
@@ -110,7 +110,7 @@ a:hover {
 }
 b,
 strong {
-  color: #ffffff;
+  color: #000000;
   font-weight: 300;
 }
 img {
@@ -192,13 +192,13 @@ textarea {
   font-weight: 300;
   color: #999;
   background-image: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid #181717;
   border-color: ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 input:focus,
 textarea:focus {
-  border-bottom-width: 1px;
-  border-color: #ffffff;
+  border-bottom-width: 2px;
+  border-color: #000000;
 }
 /* submit and alert success  */
 input[type='submit'],
@@ -415,7 +415,7 @@ a {
 
 /* =======  Preloader Style  ======= */
 .blackrose-pageloading {
-  color: #ffffff;
+  color: #000000;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -441,7 +441,7 @@ a {
   background-color: #191919;
 }
 .blackrose-pageloading h1 {
-  color: #ffffff;
+  color: #000000;
   font-size: 35px;
 }
 .blackrose-pageloading .logo {
@@ -480,14 +480,14 @@ a {
 
 /* =======  Lines Style  ======= */
 .content-lines-wrapper {
-  position: absolute;
+  /* position: absolute;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden; */
 }
 .content-lines-inner {
-  position: absolute;
+  /* position: absolute;
   width: 1140px;
   left: 50%;
   margin-left: -570px;
@@ -495,15 +495,15 @@ a {
   height: 100%;
   border-left: 1px solid #222;
   border-right: 1px solid #222;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid #222; */
 }
 .content-lines {
-  position: absolute;
+  /* position: absolute;
   left: 33.333333%;
   right: 33.333333%;
   height: 100%;
   border-left: 1px solid #222;
-  border-right: 1px solid #222;
+  border-right: 1px solid #222; */
 }
 
 /* =======  Section Style  ======= */
@@ -519,7 +519,7 @@ a {
   letter-spacing: 3px;
 }
 .section-head h4 span {
-  color: #ffffff;
+  color: #000000;
   padding-right: 30px;
 }
 .section-head h4 span i {
@@ -549,7 +549,7 @@ a {
 }
 .navbar .navbar-toggler-icon,
 .navbar .icon-bar {
-  color: #ffffff;
+  color: #000000;
 }
 .navbar .navbar-nav .nav-link {
   font-family: 'Outfit', serif;
@@ -712,7 +712,7 @@ a {
   display: none;
 }
 .navbar .dropdown-menu li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.02); */
 }
 .navbar .dropdown-menu li:last-child {
   border-bottom: none;
@@ -1001,7 +1001,7 @@ a {
   position: relative;
 }
 .swiper-slide-block .next-main-title {
-  color: #ffffff;
+  color: #000000;
   font-family: 'Oswald', sans-serif;
   font-weight: 400;
   font-size: 35px;
@@ -1025,7 +1025,7 @@ a {
   line-height: 1.75em;
   font-weight: 300;
   letter-spacing: 1px;
-  color: #ffffff;
+  color: #000000;
 }
 .swiper-slide-block .next-main-subtitle,
 .swiper-slide-block .next-main-title,
@@ -1035,7 +1035,7 @@ a {
 }
 .swiper-slide-block .next-paragraph {
   max-width: 413px;
-  color: #999;
+  color: #000000;
   margin: 30px 0;
   font-size: 15px;
   line-height: 1.75em;
@@ -1046,7 +1046,7 @@ a {
   font-weight: 700;
   width: 100%;
   display: block;
-  color: #222;
+  color: #000000;
   position: relative;
   bottom: 40px;
   z-index: -1;
@@ -1057,7 +1057,7 @@ a {
 .blackrose-section-slider {
   width: 100%;
   height: auto;
-  background-color: #000000;
+  background-color: rgba(28, 28, 28, 0.05);
 }
 .blackrose-section-slider .next-container-center {
   width: 100%;
@@ -1210,7 +1210,7 @@ ul.team-info-social li {
   margin-bottom: 0;
   vertical-align: middle;
   transition: color 0.3s;
-  color: #ffffff;
+  color: #000000;
   font-family: 'Outfit', sans-serif;
 }
 .team-box h4 {
@@ -1885,7 +1885,7 @@ ul.team-info-social li {
   font-family: 'Outfit', sans-serif;
 }
 .blog .item .cont h6 a:hover {
-  color: #ffffff;
+  color: #000000;
 }
 .blog .item .cont h5 {
   font-size: 35px;
@@ -1898,7 +1898,7 @@ ul.team-info-social li {
 }
 .blog .item .info a {
   margin-right: 0px;
-  color: #999;
+  color: #000000;
 }
 .blog .item .info a:last-child {
   margin-right: 0;
@@ -1934,7 +1934,7 @@ ul.team-info-social li {
   text-decoration: none;
   box-shadow: 0px 16px 28px 0px rgba(0, 0, 0, 0.2);
   background-color: #ffffff;
-  color: #fff;
+  color: #000000;
 }
 .blackrose-pagination-wrap li a.active {
   background-color: #ffffff;
@@ -2090,7 +2090,7 @@ ul.team-info-social li {
 .comming h2 {
   font-size: 36px;
   font-weight: 300;
-  color: #fff;
+  color: #000000;
   position: relative;
 }
 .comming h1 {
@@ -2098,7 +2098,7 @@ ul.team-info-social li {
   font-weight: 300;
   margin-bottom: 0px;
   position: relative;
-  color: #fff;
+  color: #000000;
   line-height: 1em;
 }
 .comming p {
@@ -2212,7 +2212,7 @@ ul.team-info-social li {
 .error-page .error-form .form-group input[type='text']:focus,
 .error-page .error-form .form-group input[type='email']:focus,
 .error-page .error-form .form-group input[type='search']:focus {
-  border-color: #ffffff;
+  border-color: #000000;
 }
 .error-page .error-form .form-group input::-webkit-input-placeholder {
   color: #999;
@@ -2248,7 +2248,7 @@ ul.team-info-social li {
   margin-bottom: 15px;
 }
 .blackrose-social-icon {
-  color: #ffffff;
+  color: #000000;
   font-size: 16px;
   margin: 0 10px;
 }
@@ -2257,7 +2257,7 @@ ul.team-info-social li {
   display: inline-block;
 }
 .blackrose-copyright {
-  color: #999;
+  color: #000000;
   font-size: 13px;
   margin-right: 10px;
   text-align: right;
@@ -2265,14 +2265,15 @@ ul.team-info-social li {
 .blackrose-copyright span {
   font-size: 13px;
   font-family: 'Outfit', sans-serif;
-  color: #ffffff;
+  color: #000000;
 }
-.blackrose-social-link:hover span {
-  color: #ffffff;
+/* .blackrose-social-link:hover span {
+  color: #2A2A2A;
+  scale: ;
 }
 .blackrose-social-link:hover span:hover {
-  color: #fff;
-}
+  color: #2A2A2A;
+} */
 .blackrose-separator {
   border-top-width: 1px;
   border-top-color: #222;
@@ -2415,7 +2416,7 @@ ul.team-info-social li {
     bottom: 0px;
     left: 0;
     z-index: 2;
-    background: linear-gradient(to top, #000000, rgba(25, 25, 25, 0));
+    background: linear-gradient(to top, #ffffff, rgba(25, 25, 25, 0));
   }
   .blackrose-section-slider .next-container-center {
     max-width: 1245px;
@@ -2470,7 +2471,7 @@ ul.team-info-social li {
     width: 200px;
     max-width: 408px;
     height: 100%;
-    background-color: #2222222d;
+    background-color: #ffffff;
     position: absolute;
     left: -50px;
   }

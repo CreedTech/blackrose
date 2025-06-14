@@ -1,162 +1,17 @@
-// import { useEffect, useState } from 'react';
-// import Swiper from 'swiper';
-import { Outlet } from 'react-router-dom'; // Assuming you're using React Router
-import { assets } from '../assets/images/assets';
+import { Outlet } from 'react-router-dom';
 import Navigation from './Navigation';
 import { useGallery } from '../hooks/useGallery';
-// import Navigation from './Navigation';
 
 const Layout = () => {
   // const [loading, setLoading] = useState(false);
 
   const { useImages } = useGallery();
   const { isLoading } = useImages();
-  // const [isNavbarOpen, setIsNavbarOpen] = useState(false); // State for navbar toggle
 
-  // useEffect(() => {
-  //   // Simulate loading process
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 3000); // Adjust the time as needed
-  // }, []);
-
-  // const toggleNavbar = () => {
-  //   setIsNavbarOpen(!isNavbarOpen); // Toggle navbar state
-  // };
-
-  //   const [scrollPos, setScrollPos] = useState(0);
-  //   const [loading, setLoading] = useState(true);
-
-  //   //   useEffect(() => {
-  //   //     // Preloader Logic
-  //   //     const preloader = document.getElementById('Lfa-page-loading');
-  //   //     if (preloader) {
-  //   //       preloader.style.display = 'none';
-  //   //     }
-  //   //     setLoading(false);
-  //   //   }, []);
-
-  //   useEffect(() => {
-  //     // Wait for the page to load and then hide the preloader
-  //     const preloader = document.getElementById('Lfa-page-loading');
-
-  //     if (preloader) {
-  //       preloader.style.display = 'block'; // Make sure preloader is visible initially
-
-  //       window.onload = () => {
-  //         // Fade out the preloader after page load
-  //         preloader.style.transition = 'opacity 1s ease-out';
-  //         preloader.style.opacity = 0;
-
-  //         // After the fade-out animation completes, set display to 'none'
-  //         setTimeout(() => {
-  //           preloader.style.display = 'none';
-  //         }, 1000); // Adjust the timeout to match the fade duration
-  //       };
-  //     }
-  //   }, []);
-
-  //   useEffect(() => {
-  //     // Scroll handling for navbar
-  //     const handleScroll = () => setScrollPos(window.scrollY);
-  //     window.addEventListener('scroll', handleScroll);
-  //     return () => window.removeEventListener('scroll', handleScroll);
-  //   }, []);
-
-  //   // Initialize Swiper on page load
-  //   useEffect(() => {
-  //     if (window.innerWidth < 1200) {
-  //       new Swiper('.swiper-container', {
-  //         /* Swiper config */
-  //       });
-  //     } else {
-  //       new Swiper('.swiper-container', {
-  //         /* Swiper config */
-  //       });
-  //     }
-  //   }, []);
-
-  //   // Scroll progress logic
-  //   useEffect(() => {
-  //     const progressPath = document.querySelector('.progress-wrap path');
-
-  //     if (progressPath) {
-  //       const pathLength = progressPath.getTotalLength();
-  //       progressPath.style.strokeDasharray = `${pathLength} ${pathLength}`;
-  //       progressPath.style.strokeDashoffset = pathLength;
-
-  //       const updateProgress = () => {
-  //         const scroll = window.scrollY;
-  //         const height =
-  //           document.documentElement.scrollHeight - window.innerHeight;
-  //         const progress = pathLength - (scroll * pathLength) / height;
-  //         progressPath.style.strokeDashoffset = progress;
-  //       };
-
-  //       window.addEventListener('scroll', updateProgress);
-  //       updateProgress(); // Call once to set the initial progress
-  //     }
-
-  //     // Clean up event listener
-  //     return () => {
-  //       window.removeEventListener('scroll', updateProgress);
-  //     };
-  //   }, []); // Empty dependency array to ensure it runs once when the component mounts
-
-  //   if (loading) {
-  //     return (
-  //       <div id="Lfa-page-loading" className="blackrose-pageloading">
-  //         <div className="blackrose-pageloading-inner">
-  //           <img src="../assets/images/logo.png" className="logo" alt="Logo" />
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-
-  // <div id="Lfa-page-loading" className="blackrose-pageloading">
-  //   <div className="blackrose-pageloading-inner">
-  //     <img src={assets.logo} className="logo" alt="" />
-  //   </div>
-  // <div className="min-h-screen bg-black flex items-center justify-center">
-  //   <div className="blackrose-pageloading z-[999999999]">
-  //     <div className="blackrose-pageloading-inner relative w-32 h-32">
-  //       {/* Rotating petals */}
-  //       <div className="absolute inset-0 animate-spin-slow">
-  //         {[...Array(8)].map((_, i) => (
-  //           <div
-  //             key={i}
-  //             className="absolute w-full h-full"
-  //             style={{ transform: `rotate(${i * 45}deg)` }}
-  //           >
-  //             <div
-  //               className="petal absolute top-0 left-1/2 -translate-x-1/2 w-4 h-12 bg-gradient-to-t from-purple-600 to-pink-600 rounded-full opacity-80 animate-pulse-petal"
-  //               style={{ animationDelay: `${i * 0.1}s` }}
-  //             ></div>
-  //           </div>
-  //         ))}
-  //       </div>
-
-  //       {/* Center logo */}
-  //       <div className="absolute inset-0 flex items-center justify-center">
-  //         <img
-  //           src={assets.logo}
-  //           className="logo w-8 h-8 relative z-10 animate-float"
-  //           alt=""
-  //         />
-  //       </div>
-
-  //       {/* Glow effect */}
-  //       <div className="absolute inset-0 -inset-8">
-  //         <div className="w-full h-full bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-full blur-2xl animate-pulse"></div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // </div>
-  // </div>
   return (
     <div>
       {isLoading && (
-        <div className="flex items-center justify-center h-screen bg-black">
+        <div className="flex items-center justify-center h-screen bg-main">
           <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-primary"></div>
         </div>
       )}
@@ -180,7 +35,7 @@ const Layout = () => {
           <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
       </div>
-      <div id="blackrose-page-wrapper">
+      <div id="">
         <div className="content-lines-wrapper">
           <div className="content-lines-inner">
             <div className="content-lines"></div>
@@ -188,12 +43,12 @@ const Layout = () => {
         </div>
         {/* Navbar */}
 
-        <div className="container">
+        <div className="">
           <Navigation />
           {/* </nav> */}
         </div>
         {/* Render child pages */}
-        <div>
+        <div className='min-h-[75vh]'>
           <Outlet />
         </div>
 
@@ -211,29 +66,41 @@ const Layout = () => {
               <div className="col-md-8">
                 <ul className="blackrose-social-icons">
                   <li className="blackrose-social-icons-item">
-                    <a className="blackrose-social-link" href="#">
+                    <a
+                      className="blackrose-social-link inline-flex items-center justify-center w-12 h-12  rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                      href="#"
+                    >
                       <span className="blackrose-social-icon fa fa-facebook-f"></span>
                     </a>
                   </li>
                   <li className="blackrose-social-icons-item">
-                    <a className="blackrose-social-link" href="#">
+                    <a
+                      className="blackrose-social-link inline-flex items-center justify-center w-12 h-12  rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                      href="#"
+                    >
                       <span className="blackrose-social-icon fa fa-twitter"></span>
                     </a>
                   </li>
                   <li className="blackrose-social-icons-item">
-                    <a className="blackrose-social-link" href="#">
+                    <a
+                      className="blackrose-social-link inline-flex items-center justify-center w-12 h-12  rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                      href="#"
+                    >
                       <span className="blackrose-social-icon fa fa-instagram"></span>
                     </a>
                   </li>
                   <li className="blackrose-social-icons-item">
-                    <a className="blackrose-social-link" href="#">
+                    <a
+                      className="blackrose-social-link inline-flex items-center justify-center w-12 h-12  rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                      href="#"
+                    >
                       <span className="blackrose-social-icon fa fa-behance"></span>
                     </a>
                   </li>
                 </ul>
               </div>
               <div className="col-md-4">
-                <p className="blackrose-copyright">
+                <p className="blackrose-copyright font-bold text-darker">
                   © {new Date().getFullYear()} <span>BLACKROSE</span> All right
                   reserved.
                 </p>

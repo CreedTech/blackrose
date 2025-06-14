@@ -1,4 +1,3 @@
-// // import { assets } from '../assets/images/assets';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 // import { Navigation, Parallax, EffectFade } from 'swiper/modules';
 // import 'swiper/css/effect-fade';
@@ -6,19 +5,18 @@
 // import { Link } from 'react-router-dom';
 // import { useGallery } from '../hooks/useGallery';
 // import { IoHeartCircleOutline } from 'react-icons/io5';
-
-
+// import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 // const Photography = () => {
 //   const [selectedImage, setSelectedImage] = useState(null);
 //   const [currentIndex, setCurrentIndex] = useState(0);
-//   // const [category, setCategory] = useState(null);
-//   // const [search, setSearch] = useState('');
 //   const [page, setPage] = useState(1);
 //   const { useImages, useLikeImage } = useGallery();
 //   const { data } = useImages(page);
-//   // const { data: singleImage } = useGetSingleImage();
 //   const likeMutation = useLikeImage();
+
+//   const { scrollY } = useScroll();
+//   const y = useTransform(scrollY, [0, 300], [0, -50]);
 
 //   const handleImageClick = (index) => {
 //     setSelectedImage(data?.images[index]);
@@ -66,20 +64,73 @@
 //     return () => window.removeEventListener('keydown', handleKeyDown);
 //   }, [selectedImage, currentIndex]);
 
+//   // Animation variants
+//   const containerVariants = {
+//     hidden: { opacity: 0 },
+//     visible: {
+//       opacity: 1,
+//       transition: {
+//         staggerChildren: 0.1,
+//         delayChildren: 0.3
+//       }
+//     }
+//   };
+
+//   const itemVariants = {
+//     hidden: { y: 20, opacity: 0 },
+//     visible: {
+//       y: 0,
+//       opacity: 1,
+//       transition: {
+//         type: "spring",
+//         stiffness: 100
+//       }
+//     }
+//   };
+
+//   const lightboxVariants = {
+//     hidden: { opacity: 0, scale: 0.8 },
+//     visible: {
+//       opacity: 1,
+//       scale: 1,
+//       transition: {
+//         duration: 0.3,
+//         ease: "easeOut"
+//       }
+//     },
+//     exit: {
+//       opacity: 0,
+//       scale: 0.8,
+//       transition: {
+//         duration: 0.2,
+//         ease: "easeIn"
+//       }
+//     }
+//   };
 
 //   return (
-//     <div className="container">
-//       <section className="blackrose-section-slider md:mt-10 mt-0 pb-0">
+//     <motion.div
+//       className="container"
+//       initial="hidden"
+//       animate="visible"
+//       variants={containerVariants}
+//     >
+//       {/* Slider Section */}
+//       <motion.section
+//         className="blackrose-section-slider md:mt-10 mt-0 pb-0"
+//         initial={{ opacity: 0, y: -50 }}
+//         animate={{ opacity: 1, y: 0 }}
+//         transition={{ duration: 0.8, ease: "easeOut" }}
+//         style={{ y }}
+//       >
 //         <div className="next-container-center">
 //           <Swiper
 //             effect={'cards'}
 //             grabCursor={true}
-//             // modules={[EffectCards]}
 //             modules={[Navigation, Parallax, EffectFade]}
 //             speed={3000}
 //             parallax={true}
 //             loop={true}
-//             // effect="fade"
 //             navigation={{
 //               nextEl: '.swiper-button-next',
 //               prevEl: '.swiper-button-prev',
@@ -89,159 +140,236 @@
 //             {data?.images.map((slide, index) => (
 //               <SwiperSlide key={slide._id}>
 //                 <div className="swiper-slide-block">
-//                   <div
+//                   <motion.div
 //                     className="swiper-slide-block-img animate-box"
 //                     data-animate-effect="fadeInLeft"
 //                     data-swiper-parallax-y="100%"
+//                     whileHover={{ scale: 1.02 }}
+//                     transition={{ duration: 0.3 }}
 //                   >
 //                     <Link to={`/photography/${slide._id}`}>
 //                       <img
 //                         src={slide.watermarkedUrl}
 //                         alt={slide.title}
-//                         className="w-full object-cover md:h-full h-[300px]" /* Limited height on mobile */
+//                         className="w-full object-cover md:h-full h-[300px]"
 //                       />
 //                     </Link>
-//                   </div>
+//                   </motion.div>
 //                   <div
 //                     className="swiper-slide-block-text animate-box"
 //                     data-animate-effect="fadeInRight"
 //                   >
-//                     <h2
+//                     <motion.h2
 //                       data-swiper-parallax-x="-60%"
 //                       className="next-main-title"
+//                       initial={{ opacity: 0, x: -50 }}
+//                       animate={{ opacity: 1, x: 0 }}
+//                       transition={{ delay: 0.2 }}
 //                     >
 //                       {slide.title}
-//                     </h2>
-//                     <h3
+//                     </motion.h2>
+//                     <motion.h3
 //                       data-swiper-parallax-x="-50%"
 //                       className="next-main-subtitle"
+//                       initial={{ opacity: 0, x: -50 }}
+//                       animate={{ opacity: 1, x: 0 }}
+//                       transition={{ delay: 0.3 }}
 //                     >
 //                       {slide.category?.title}
-//                     </h3>
-//                     {/* <p data-swiper-parallax-x="-40%" className="next-paragraph">
-//                       {slide.description}
-//                     </p> */}
-//                     <a
+//                     </motion.h3>
+//                     <motion.a
 //                       data-swiper-parallax-x="-30%"
 //                       className="next-link"
 //                       href="#"
+//                       whileHover={{ scale: 1.05 }}
+//                       whileTap={{ scale: 0.95 }}
 //                     >
 //                       View Details
-//                     </a>
-//                     <span data-swiper-parallax-y="60%" className="next-number">
+//                     </motion.a>
+//                     <motion.span
+//                       data-swiper-parallax-y="60%"
+//                       className="next-number"
+//                       initial={{ opacity: 0 }}
+//                       animate={{ opacity: 1 }}
+//                       transition={{ delay: 0.5 }}
+//                     >
 //                       {index + 1}
-//                     </span>
+//                     </motion.span>
 //                   </div>
 //                 </div>
 //               </SwiperSlide>
 //             ))}
 
 //             {/* Navigation buttons */}
-//             <div
+//             <motion.div
 //               className="swiper-button-next animate-box"
 //               data-animate-effect="fadeInRight"
+//               whileHover={{ scale: 1.2 }}
+//               whileTap={{ scale: 0.9 }}
 //             >
 //               <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
-//             </div>
-//             <div
+//             </motion.div>
+//             <motion.div
 //               className="swiper-button-prev animate-box"
 //               data-animate-effect="fadeInLeft"
+//               whileHover={{ scale: 1.2 }}
+//               whileTap={{ scale: 0.9 }}
 //             >
 //               <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
-//             </div>
+//             </motion.div>
 //           </Swiper>
 //         </div>
-//       </section>
+//       </motion.section>
 
-//       <div className=" bg-black p-4 md:p-8">
+//       <div className="bg-black p-4 md:p-8">
 //         {/* Header */}
-//         <div className="mb-8">
+//         <motion.div
+//           className="mb-8"
+//           initial={{ opacity: 0, y: -20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ delay: 0.2 }}
+//         >
 //           <div className="flex items-center text-white/60 text-sm mb-4">
-//             <a href="/" className="hover:text-white">
+//             <motion.a
+//               href="/"
+//               className="hover:text-white"
+//               whileHover={{ scale: 1.05 }}
+//             >
 //               Home
-//             </a>
+//             </motion.a>
 //             <span className="mx-2">/</span>
 //             <span>Photography</span>
 //           </div>
 
 //           {/* Title and Search */}
 //           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-//             <h1 className="text-white text-3xl font-bold">Recent Shots</h1>
-
-        
-//           </div>
-//         </div>
+//             <motion.h1
+//               className="text-white text-3xl font-bold"
+//               initial={{ opacity: 0, x: -30 }}
+//               animate={{ opacity: 1, x: 0 }}
+//               transition={{ delay: 0.3 }}
+//             >
+//               Recent Shots
+//             </motion.h1>
+//                     </div>
+//         </motion.div>
 
 //         {/* Photo Grid */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+//         <motion.div
+//           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+//           variants={containerVariants}
+//           initial="hidden"
+//           animate="visible"
+//         >
 //           {data?.images.map((photo, index) => (
-//             <div
+//             <motion.div
 //               key={photo._id}
-//               className="group relative aspect-square overflow-hidden bg-gray-900"
+//               className="group relative aspect-square overflow-hidden bg-gray-900 cursor-pointer"
 //               onClick={() => handleImageClick(index)}
+//               variants={itemVariants}
+//               whileHover={{ scale: 1.05 }}
+//               whileTap={{ scale: 0.95 }}
+//               layout
+//               layoutId={`photo-${photo._id}`}
 //             >
-//               <img
+//               <motion.img
 //                 src={photo.watermarkedUrl}
 //                 alt=""
-//                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+//                 className="w-full h-full object-cover"
 //                 loading="lazy"
+//                 initial={{ scale: 1.2 }}
+//                 animate={{ scale: 1 }}
+//                 transition={{ duration: 0.6 }}
 //               />
 
 //               {/* Hover Overlay */}
-//               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-//                 <button className="text-white border border-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors">
+//               <motion.div
+//                 className="absolute inset-0 bg-black/50 flex items-center justify-center"
+//                 initial={{ opacity: 0 }}
+//                 whileHover={{ opacity: 1 }}
+//                 transition={{ duration: 0.3 }}
+//               >
+//                 <motion.button
+//                   className="text-white border border-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors"
+//                   initial={{ y: 20, opacity: 0 }}
+//                   whileHover={{ y: 0, opacity: 1 }}
+//                   transition={{ duration: 0.3 }}
+//                 >
 //                   View Details
-//                 </button>
-//               </div>
-//             </div>
+//                 </motion.button>
+//               </motion.div>
+//             </motion.div>
 //           ))}
-//         </div>
+//         </motion.div>
+
+//         {/* Pagination */}
 //         {data?.totalPages > 1 && (
-//           <div className="row">
+//           <motion.div
+//             className="row"
+//             initial={{ opacity: 0, y: 20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ delay: 0.5 }}
+//           >
 //             <div
 //               className="col-md-12 mt-40 mb-60 text-center animate-box"
 //               data-animate-effect="fadeInUp"
 //             >
 //               <ul className="blackrose-pagination-wrap align-center relative">
-//                 <li>
+//                 <motion.li
+//                   whileHover={{ scale: 1.1 }}
+//                   whileTap={{ scale: 0.9 }}
+//                 >
 //                   <a
-//                     // href=""
 //                     className="cursor-pointer"
 //                     onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
 //                     disabled={page === 1}
 //                   >
 //                     <i className="fa fa-angle-left"></i>
 //                   </a>
-//                 </li>
+//                 </motion.li>
 
-//                 <li>
+//                 <motion.li
+//                   initial={{ opacity: 0 }}
+//                   animate={{ opacity: 1 }}
+//                   transition={{ delay: 0.6 }}
+//                 >
 //                   <span href="" className="">
 //                     Page {page} of {data.totalPages}
 //                   </span>
-//                 </li>
+//                 </motion.li>
 
-//                 <li>
+//                 <motion.li
+//                   whileHover={{ scale: 1.1 }}
+//                   whileTap={{ scale: 0.9 }}
+//                 >
 //                   <a
-//                     // href=""
 //                     className="cursor-pointer"
 //                     onClick={() => setPage((prev) => prev + 1)}
 //                     disabled={page === data.totalPages}
 //                   >
 //                     <i className="fa fa-angle-right"></i>
 //                   </a>
-//                 </li>
+//                 </motion.li>
 //               </ul>
 //             </div>
-//           </div>
+//           </motion.div>
 //         )}
-//         {/* Pagination */}
+
+//         {/* Pagination for single page */}
 //         {data?.totalPages == 1 && (
-//           <div className="row">
+//           <motion.div
+//             className="row"
+//             initial={{ opacity: 0, y: 20 }}
+//             animate={{ opacity: 1, y: 0 }}
+//             transition={{ delay: 0.5 }}
+//           >
 //             <div>
 //               <div className="col-md-12 mt-40 mb-60 text-center animate-box">
-            
 //                 <ul className="blackrose-pagination-wrap align-center">
-//                   <li>
+//                   <motion.li
+//                     whileHover={{ scale: 1.1 }}
+//                     whileTap={{ scale: 0.9 }}
+//                   >
 //                     <a
 //                       href=""
 //                       onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
@@ -249,13 +377,16 @@
 //                     >
 //                       <i className="fa fa-angle-left"></i>
 //                     </a>
-//                   </li>
-//                   <li>
+//                   </motion.li>
+//                   <motion.li>
 //                     <span className="px-4 py-2">
 //                       Page {page} of {data.totalPages}
 //                     </span>
-//                   </li>
-//                   <li>
+//                   </motion.li>
+//                   <motion.li
+//                     whileHover={{ scale: 1.1 }}
+//                     whileTap={{ scale: 0.9 }}
+//                   >
 //                     <a
 //                       href=""
 //                       onClick={() => setPage((prev) => prev + 1)}
@@ -263,157 +394,213 @@
 //                     >
 //                       <i className="fa fa-angle-right"></i>
 //                     </a>
-//                   </li>
+//                   </motion.li>
 //                 </ul>
 //               </div>
 //             </div>
-//           </div>
+//           </motion.div>
 //         )}
-
 
 //         {/* No More Photos Message */}
 //         {data?.images.length == 9 && (
-//           <div className="text-center mt-8 text-white/60">
+//           <motion.div
+//             className="text-center mt-8 text-white/60"
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             transition={{ delay: 0.7 }}
+//           >
 //             No more photos to load
-//           </div>
+//           </motion.div>
 //         )}
 
 //         {/* Lightbox */}
-//         {selectedImage && (
-//           <div className="fixed inset-0 z-[999999] bg-black/90 flex items-center justify-center p-4">
-//             {/* Close button */}
-//             <button
+//         <AnimatePresence>
+//           {selectedImage && (
+//             <motion.div
+//               className="fixed inset-0 z-[999999] bg-black/90 flex items-center justify-center p-4"
+//               initial={{ opacity: 0 }}
+//               animate={{ opacity: 1 }}
+//               exit={{ opacity: 0 }}
 //               onClick={handleClose}
-//               className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
 //             >
-//               <svg
-//                 className="w-8 h-8"
-//                 fill="none"
-//                 stroke="currentColor"
-//                 viewBox="0 0 24 24"
+//               {/* Close button */}
+//               <motion.button
+//                 onClick={handleClose}
+//                 className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
+//                 whileHover={{ scale: 1.2, rotate: 90 }}
+//                 whileTap={{ scale: 0.9 }}
+//                 initial={{ opacity: 0, y: -20 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 transition={{ delay: 0.2 }}
 //               >
-//                 <path
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                   strokeWidth={2}
-//                   d="M6 18L18 6M6 6l12 12"
-//                 />
-//               </svg>
-//             </button>
+//                 <svg
+//                   className="w-8 h-8"
+//                   fill="none"
+//                   stroke="currentColor"
+//                   viewBox="0 0 24 24"
+//                 >
+//                   <path
+//                     strokeLinecap="round"
+//                     strokeLinejoin="round"
+//                     strokeWidth={2}
+//                     d="M6 18L18 6M6 6l12 12"
+//                   />
+//                 </svg>
+//               </motion.button>
 
-//             {/* Navigation buttons */}
-//             <button
-//               className="absolute left-4 text-white hover:text-gray-300 z-50"
-//               onClick={handlePrevious}
-//             >
-//               <svg
-//                 className="w-8 h-8"
-//                 fill="none"
-//                 stroke="currentColor"
-//                 viewBox="0 0 24 24"
+//               {/* Navigation buttons */}
+//               <motion.button
+//                 className="absolute left-4 text-white hover:text-gray-300 z-50"
+//                 onClick={(e) => {
+//                   e.stopPropagation();
+//                   handlePrevious();
+//                 }}
+//                 whileHover={{ scale: 1.2, x: -5 }}
+//                 whileTap={{ scale: 0.9 }}
+//                 initial={{ opacity: 0, x: -20 }}
+//                 animate={{ opacity: 1, x: 0 }}
+//                 transition={{ delay: 0.2 }}
 //               >
-//                 <path
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                   strokeWidth={2}
-//                   d="M15 19l-7-7 7-7"
-//                 />
-//               </svg>
-//             </button>
+//                 <svg
+//                   className="w-8 h-8"
+//                   fill="none"
+//                   stroke="currentColor"
+//                   viewBox="0 0 24 24"
+//                 >
+//                   <path
+//                     strokeLinecap="round"
+//                     strokeLinejoin="round"
+//                     strokeWidth={2}
+//                     d="M15 19l-7-7 7-7"
+//                   />
+//                 </svg>
+//               </motion.button>
 
-//             <button
-//               className="absolute right-4 text-white hover:text-gray-300 z-50"
-//               onClick={handleNext}
-//             >
-//               <svg
-//                 className="w-8 h-8"
-//                 fill="none"
-//                 stroke="currentColor"
-//                 viewBox="0 0 24 24"
+//               <motion.button
+//                 className="absolute right-4 text-white hover:text-gray-300 z-50"
+//                 onClick={(e) => {
+//                   e.stopPropagation();
+//                   handleNext();
+//                 }}
+//                 whileHover={{ scale: 1.2, x: 5 }}
+//                 whileTap={{ scale: 0.9 }}
+//                 initial={{ opacity: 0, x: 20 }}
+//                 animate={{ opacity: 1, x: 0 }}
+//                 transition={{ delay: 0.2 }}
 //               >
-//                 <path
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                   strokeWidth={2}
-//                   d="M9 5l7 7-7 7"
-//                 />
-//               </svg>
-//             </button>
+//                 <svg
+//                   className="w-8 h-8"
+//                   fill="none"
+//                   stroke="currentColor"
+//                   viewBox="0 0 24 24"
+//                 >
+//                   <path
+//                     strokeLinecap="round"
+//                     strokeLinejoin="round"
+//                     strokeWidth={2}
+//                     d="M9 5l7 7-7 7"
+//                   />
+//                 </svg>
+//               </motion.button>
 
-//             {/* Main image */}
-//             <div className="relative max-w-7xl mx-auto">
-//               <Link to={`/photography/${selectedImage._id}`}>
-//                 <img
-//                   src={selectedImage.watermarkedUrl}
-//                   alt={selectedImage.category?.name}
-//                   className="max-h-[90vh] object-contain"
-//                 />
-//               </Link>
+//               {/* Main image */}
+//               <motion.div
+//                 className="relative max-w-7xl mx-auto"
+//                 variants={lightboxVariants}
+//                 initial="hidden"
+//                 animate="visible"
+//                 exit="exit"
+//                 onClick={(e) => e.stopPropagation()}
+//               >
+//                 <Link to={`/photography/${selectedImage._id}`}>
+//                   <motion.img
+//                     src={selectedImage.watermarkedUrl}
+//                     alt={selectedImage.category?.name}
+//                     className="max-h-[90vh] object-contain"
+//                     layoutId={`photo-${selectedImage._id}`}
+//                   />
+//                 </Link>
 
-//               {/* Image info */}
-//               <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black/60 to-transparent">
-//                 <h2 className="text-xl font-bold">{selectedImage.title}</h2>
-//                 <p className="text-sm text-white">
-//                   {selectedImage.category?.title}
-//                 </p>
-//                 {/* Additional info */}
-//                 <div className="flex items-center mt-2 space-x-4">
-//                   <button
-//                     onClick={(e) => {
-//                       e.stopPropagation();
-//                       likeMutation.mutate(selectedImage._id);
-//                     }}
-//                     className="flex items-center space-x-1 text-sm"
-//                   >
-//                     <IoHeartCircleOutline
-//                       className={`w-5 h-5 ${
-//                         selectedImage.isLiked ? 'text-red-500' : 'text-white'
+//                 {/* Image info */}
+//                 <motion.div
+//                   className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black/60 to-transparent"
+//                   initial={{ opacity: 0, y: 20 }}
+//                   animate={{ opacity: 1, y: 0 }}
+//                   transition={{ delay: 0.3 }}
+//                 >
+//                   <h2 className="text-xl font-bold">{selectedImage.title}</h2>
+//                   <p className="text-sm text-white">
+//                     {selectedImage.category?.title}
+//                   </p>
+//                   {/* Additional info */}
+//                   <div className="flex items-center mt-2 space-x-4">
+//                     <motion.button
+//                       onClick={(e) => {
+//                         e.stopPropagation();
+//                         likeMutation.mutate(selectedImage._id);
+//                       }}
+//                       className="flex items-center space-x-1 text-sm"
+//                       whileHover={{ scale: 1.1 }}
+//                       whileTap={{ scale: 0.9 }}
+//                     >
+//                       <IoHeartCircleOutline
+//                         className={`w-5 h-5 ${
+//                           selectedImage.isLiked ? 'text-red-500' : 'text-white'
+//                         }`}
+//                       />
+//                       <span>{selectedImage.likeCount}</span>
+//                     </motion.button>
+
+//                     {selectedImage.photographer && (
+//                       <div className="flex items-center space-x-2">
+//                         <span>{selectedImage.photographer.name}</span>
+//                       </div>
+//                     )}
+//                   </div>
+//                 </motion.div>
+//               </motion.div>
+
+//               {/* Optional: Thumbnails */}
+//               <motion.div
+//                 className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+//                 initial={{ opacity: 0, y: 20 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 transition={{ delay: 0.4 }}
+//               >
+//                 <div className="flex gap-2 overflow-x-auto p-2">
+//                   {data?.images.map((image, index) => (
+//                     <motion.button
+//                       key={image._id}
+//                       onClick={(e) => {
+//                         e.stopPropagation();
+//                         handleImageClick(index);
+//                       }}
+//                       className={`w-16 h-16 flex-shrink-0 ${
+//                         currentIndex === index
+//                           ? 'ring-2 ring-white'
+//                           : 'opacity-50'
 //                       }`}
-//                     />
-//                     <span>{selectedImage.likeCount}</span>
-//                   </button>
-
-//                   {selectedImage.photographer && (
-//                     <div className="flex items-center space-x-2">
-                    
-//                       <span>{selectedImage.photographer.name}</span>
-//                     </div>
-//                   )}
+//                       whileHover={{ scale: 1.1, opacity: 1 }}
+//                       whileTap={{ scale: 0.9 }}
+//                     >
+//                       <img
+//                         src={image.watermarkedUrl}
+//                         alt={image.title}
+//                         className="w-full h-full object-cover"
+//                       />
+//                     </motion.button>
+//                   ))}
 //                 </div>
-//               </div>
-//             </div>
-//             {/* Optional: Thumbnails */}
-//             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-//               <div className="flex gap-2 overflow-x-auto p-2">
-//                 {data?.images.map((image, index) => (
-//                   <button
-//                     key={image._id}
-//                     onClick={() => handleImageClick(index)}
-//                     className={`w-16 h-16 flex-shrink-0 ${
-//                       currentIndex === index
-//                         ? 'ring-2 ring-white'
-//                         : 'opacity-50'
-//                     }`}
-//                   >
-//                     <img
-//                       src={image.watermarkedUrl}
-//                       alt={image.title}
-//                       className="w-full h-full object-cover"
-//                     />
-//                   </button>
-//                 ))}
-//               </div>
-//             </div>
-//           </div>
-//         )}
+//               </motion.div>
+//             </motion.div>
+//           )}
+//         </AnimatePresence>
 //       </div>
-//     </div>
+//     </motion.div>
 //   );
 // };
 
 // export default Photography;
-
-
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Parallax, EffectFade } from 'swiper/modules';
@@ -422,7 +609,12 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGallery } from '../hooks/useGallery';
 import { IoHeartCircleOutline } from 'react-icons/io5';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from 'framer-motion';
 
 const Photography = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -431,7 +623,7 @@ const Photography = () => {
   const { useImages, useLikeImage } = useGallery();
   const { data } = useImages(page);
   const likeMutation = useLikeImage();
-  
+
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, -50]);
 
@@ -488,9 +680,9 @@ const Photography = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
+        delayChildren: 0.3,
+      },
+    },
   };
 
   const itemVariants = {
@@ -499,45 +691,45 @@ const Photography = () => {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring",
-        stiffness: 100
-      }
-    }
+        type: 'spring',
+        stiffness: 100,
+      },
+    },
   };
 
   const lightboxVariants = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
       transition: {
         duration: 0.3,
-        ease: "easeOut"
-      }
+        ease: 'easeOut',
+      },
     },
-    exit: { 
-      opacity: 0, 
+    exit: {
+      opacity: 0,
       scale: 0.8,
       transition: {
         duration: 0.2,
-        ease: "easeIn"
-      }
-    }
+        ease: 'easeIn',
+      },
+    },
   };
 
   return (
-    <motion.div 
-      className="container"
+    <motion.div
+      className="container bg-white"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {/* Slider Section */}
-      <motion.section 
+      <motion.section
         className="blackrose-section-slider md:mt-10 mt-0 pb-0"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
         style={{ y }}
       >
         <div className="next-container-center">
@@ -578,7 +770,7 @@ const Photography = () => {
                   >
                     <motion.h2
                       data-swiper-parallax-x="-60%"
-                      className="next-main-title"
+                      className="next-main-title text-gray-900 mx-4 md:mx-0"
                       initial={{ opacity: 0, x: -50 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.2 }}
@@ -587,7 +779,7 @@ const Photography = () => {
                     </motion.h2>
                     <motion.h3
                       data-swiper-parallax-x="-50%"
-                      className="next-main-subtitle"
+                      className="next-main-subtitle text-gray-600"
                       initial={{ opacity: 0, x: -50 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 }}
@@ -596,16 +788,16 @@ const Photography = () => {
                     </motion.h3>
                     <motion.a
                       data-swiper-parallax-x="-30%"
-                      className="next-link"
+                      className="next-link text-gray-700 hover:text-gray-900"
                       href="#"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       View Details
                     </motion.a>
-                    <motion.span 
-                      data-swiper-parallax-y="60%" 
-                      className="next-number"
+                    <motion.span
+                      data-swiper-parallax-y="60%"
+                      className="next-number "
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 }}
@@ -619,7 +811,7 @@ const Photography = () => {
 
             {/* Navigation buttons */}
             <motion.div
-              className="swiper-button-next animate-box"
+              className="swiper-button-next animate-box text-gray-700 hover:text-gray-900"
               data-animate-effect="fadeInRight"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -627,7 +819,7 @@ const Photography = () => {
               <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
             </motion.div>
             <motion.div
-              className="swiper-button-prev animate-box"
+              className="swiper-button-prev animate-box text-gray-700 hover:text-gray-900"
               data-animate-effect="fadeInLeft"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -638,18 +830,18 @@ const Photography = () => {
         </div>
       </motion.section>
 
-      <div className="bg-black p-4 md:p-8">
+      <div className=" p-4 md:p-8">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="mb-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="flex items-center text-white/60 text-sm mb-4">
-            <motion.a 
-              href="/" 
-              className="hover:text-white"
+          <div className="flex items-center text-gray-600 text-sm mb-4">
+            <motion.a
+              href="/"
+              className="hover:text-gray-900 transition-colors"
               whileHover={{ scale: 1.05 }}
             >
               Home
@@ -660,19 +852,19 @@ const Photography = () => {
 
           {/* Title and Search */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <motion.h1 
-              className="text-white text-3xl font-bold"
+            <motion.h1
+              className="text-gray-900 text-3xl font-bold"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
               Recent Shots
             </motion.h1>
-                    </div>
+          </div>
         </motion.div>
 
         {/* Photo Grid */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
           variants={containerVariants}
           initial="hidden"
@@ -681,7 +873,7 @@ const Photography = () => {
           {data?.images.map((photo, index) => (
             <motion.div
               key={photo._id}
-              className="group relative aspect-square overflow-hidden bg-gray-900 cursor-pointer"
+              className="group relative aspect-square overflow-hidden bg-primary border border-gray-800 cursor-pointer shadow-sm hover:shadow-lg transition-shadow rounded-md"
               onClick={() => handleImageClick(index)}
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
@@ -700,14 +892,14 @@ const Photography = () => {
               />
 
               {/* Hover Overlay */}
-              <motion.div 
-                className="absolute inset-0 bg-black/50 flex items-center justify-center"
+              <motion.div
+                className="absolute inset-0 bg-black/40 flex items-center justify-center"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <motion.button 
-                  className="text-white border border-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors"
+                <motion.button
+                  className="text-white border border-white px-6 py-2 rounded-full hover:bg-white hover:text-gray-900 transition-colors"
                   initial={{ y: 20, opacity: 0 }}
                   whileHover={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.3 }}
@@ -718,10 +910,21 @@ const Photography = () => {
             </motion.div>
           ))}
         </motion.div>
+        {/* No More Photos Message */}
+        {data?.total == 9 && (
+          <motion.div
+            className="text-center mt-8 text-gray-600"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            No more photos to load
+          </motion.div>
+        )}
 
         {/* Pagination */}
         {data?.totalPages > 1 && (
-          <motion.div 
+          <motion.div
             className="row"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -737,7 +940,7 @@ const Photography = () => {
                   whileTap={{ scale: 0.9 }}
                 >
                   <a
-                    className="cursor-pointer"
+                    className="cursor-pointer text-gray-700 hover:text-gray-900"
                     onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                     disabled={page === 1}
                   >
@@ -750,7 +953,7 @@ const Photography = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
                 >
-                  <span href="" className="">
+                  <span className="text-gray-700">
                     Page {page} of {data.totalPages}
                   </span>
                 </motion.li>
@@ -760,7 +963,7 @@ const Photography = () => {
                   whileTap={{ scale: 0.9 }}
                 >
                   <a
-                    className="cursor-pointer"
+                    className="cursor-pointer text-gray-700 hover:text-gray-900"
                     onClick={() => setPage((prev) => prev + 1)}
                     disabled={page === data.totalPages}
                   >
@@ -773,7 +976,7 @@ const Photography = () => {
         )}
 
         {/* Pagination for single page */}
-        {data?.totalPages == 1 && (
+        {/* {data?.totalPages == 1 && (
           <motion.div 
             className="row"
             initial={{ opacity: 0, y: 20 }}
@@ -791,12 +994,13 @@ const Photography = () => {
                       href=""
                       onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                       disabled={page === 1}
+                      className="text-gray-700 hover:text-gray-900"
                     >
                       <i className="fa fa-angle-left"></i>
                     </a>
                   </motion.li>
                   <motion.li>
-                    <span className="px-4 py-2">
+                    <span className="px-4 py-2 text-gray-700">
                       Page {page} of {data.totalPages}
                     </span>
                   </motion.li>
@@ -808,6 +1012,7 @@ const Photography = () => {
                       href=""
                       onClick={() => setPage((prev) => prev + 1)}
                       disabled={page === data.totalPages}
+                      className="text-gray-700 hover:text-gray-900"
                     >
                       <i className="fa fa-angle-right"></i>
                     </a>
@@ -816,25 +1021,13 @@ const Photography = () => {
               </div>
             </div>
           </motion.div>
-        )}
-
-        {/* No More Photos Message */}
-        {data?.images.length == 9 && (
-          <motion.div 
-            className="text-center mt-8 text-white/60"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-          >
-            No more photos to load
-          </motion.div>
-        )}
+        )} */}
 
         {/* Lightbox */}
         <AnimatePresence>
           {selectedImage && (
             <motion.div
-              className="fixed inset-0 z-[999999] bg-black/90 flex items-center justify-center p-4"
+              className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -843,7 +1036,7 @@ const Photography = () => {
               {/* Close button */}
               <motion.button
                 onClick={handleClose}
-                className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
+                className="absolute top-4 right-4 text-gray-700 hover:text-gray-900 z-50"
                 whileHover={{ scale: 1.2, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0, y: -20 }}
@@ -867,7 +1060,7 @@ const Photography = () => {
 
               {/* Navigation buttons */}
               <motion.button
-                className="absolute left-4 text-white hover:text-gray-300 z-50"
+                className="absolute left-4 text-gray-700 hover:text-gray-900 z-50"
                 onClick={(e) => {
                   e.stopPropagation();
                   handlePrevious();
@@ -894,7 +1087,7 @@ const Photography = () => {
               </motion.button>
 
               <motion.button
-                className="absolute right-4 text-white hover:text-gray-300 z-50"
+                className="absolute right-4 text-gray-700 hover:text-gray-900 z-50"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleNext();
@@ -921,7 +1114,7 @@ const Photography = () => {
               </motion.button>
 
               {/* Main image */}
-              <motion.div 
+              <motion.div
                 className="relative max-w-7xl mx-auto"
                 variants={lightboxVariants}
                 initial="hidden"
@@ -933,20 +1126,20 @@ const Photography = () => {
                   <motion.img
                     src={selectedImage.watermarkedUrl}
                     alt={selectedImage.category?.name}
-                    className="max-h-[90vh] object-contain"
+                    className="max-h-[90vh] object-contain shadow-2xl"
                     layoutId={`photo-${selectedImage._id}`}
                   />
                 </Link>
 
                 {/* Image info */}
-                <motion.div 
-                  className="absolute bottom-0 left-0 right-0 p-4 text-white bg-gradient-to-t from-black/60 to-transparent"
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 p-4 text-gray-900 bg-gradient-to-t from-white/90 to-transparent"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
                   <h2 className="text-xl font-bold">{selectedImage.title}</h2>
-                  <p className="text-sm text-white">
+                  <p className="text-sm text-gray-600">
                     {selectedImage.category?.title}
                   </p>
                   {/* Additional info */}
@@ -962,14 +1155,18 @@ const Photography = () => {
                     >
                       <IoHeartCircleOutline
                         className={`w-5 h-5 ${
-                          selectedImage.isLiked ? 'text-red-500' : 'text-white'
+                          selectedImage.isLiked
+                            ? 'text-red-500'
+                            : 'text-gray-700'
                         }`}
                       />
-                      <span>{selectedImage.likeCount}</span>
+                      <span className="text-gray-700">
+                        {selectedImage.likeCount}
+                      </span>
                     </motion.button>
 
                     {selectedImage.photographer && (
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 text-gray-700">
                         <span>{selectedImage.photographer.name}</span>
                       </div>
                     )}
@@ -978,13 +1175,13 @@ const Photography = () => {
               </motion.div>
 
               {/* Optional: Thumbnails */}
-              <motion.div 
+              <motion.div
                 className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                <div className="flex gap-2 overflow-x-auto p-2">
+                <div className="flex gap-2 overflow-x-auto p-2 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg">
                   {data?.images.map((image, index) => (
                     <motion.button
                       key={image._id}
@@ -992,9 +1189,9 @@ const Photography = () => {
                         e.stopPropagation();
                         handleImageClick(index);
                       }}
-                      className={`w-16 h-16 flex-shrink-0 ${
+                      className={`w-16 h-16 flex-shrink-0 rounded overflow-hidden ${
                         currentIndex === index
-                          ? 'ring-2 ring-white'
+                          ? 'ring-2 ring-gray-700'
                           : 'opacity-50'
                       }`}
                       whileHover={{ scale: 1.1, opacity: 1 }}

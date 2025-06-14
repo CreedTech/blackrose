@@ -214,7 +214,7 @@ const Contact = () => {
           >
             <h4>BlackRose Photography</h4>
             <p>
-              Capturing life's most precious moments with artistic vision and
+              Capturing life&apos;s most precious moments with artistic vision and
               professional expertise. From weddings to portraits, we bring your
               stories to life through the lens.
             </p>
@@ -290,7 +290,7 @@ const Contact = () => {
           </div>
 
           <div
-            className="col-md-4 mb-60 animate-box relative"
+            className="col-md-4 mb-60 animate-box relative transition-all duration-300 ease-out"
             data-animate-effect="fadeInUp"
           >
             <div>

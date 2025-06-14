@@ -15,12 +15,12 @@ const OrderCancellationModal = ({ order, onClose, onSuccess }) => {
     'Found a better price',
     'Ordered by mistake',
     'Shipping time too long',
-    'Other'
+    'Other',
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const finalReason = reason === 'Other' ? otherReason : reason;
     if (!finalReason.trim()) {
       return;
@@ -28,7 +28,7 @@ const OrderCancellationModal = ({ order, onClose, onSuccess }) => {
 
     setSubmitting(true);
     const success = await cancelOrder(order._id, finalReason);
-    
+
     if (success) {
       onSuccess();
     }
@@ -36,24 +36,24 @@ const OrderCancellationModal = ({ order, onClose, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-gray-900 rounded-lg max-w-md w-full">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm bg-opacity-50 z-50 flex items-center justify-center p-4">
+      <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6 mb-8 border border-gray-200 shadow-md max-w-md w-full">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold">Cancel Order</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-white"
+              className="text-gray-800 hover:text-primary"
             >
               <FaTimes />
             </button>
           </div>
 
           <div className="mb-6">
-            <p className="text-gray-300 mb-2">
+            <p className="text-gray-800 mb-2">
               Are you sure you want to cancel this order?
             </p>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-900">
               Order: {order.orderNumber || `#${order._id.substring(0, 8)}`}
             </p>
           </div>
@@ -87,7 +87,7 @@ const OrderCancellationModal = ({ order, onClose, onSuccess }) => {
                   onChange={(e) => setOtherReason(e.target.value)}
                   placeholder="Please specify..."
                   rows={3}
-                  className="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-white focus:outline-none focus:border-white transition"
+                  className="w-full px-4 py-2 bg-light border border-gray-400 rounded-lg text-primary focus:outline-none focus:border-primary transition"
                   required
                 />
               </div>
@@ -108,7 +108,7 @@ const OrderCancellationModal = ({ order, onClose, onSuccess }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 py-3 border border-gray-600 rounded-lg hover:border-white transition"
+                className="flex-1 py-3 border border-gray-600 text-primary rounded-lg hover:border-white transition"
               >
                 Keep Order
               </button>

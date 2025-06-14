@@ -123,7 +123,7 @@ const Signup = () => {
   }, [token]);
 
   return (
-    <div className="min-h-screen bg-black flex z-[99999] ">
+    <div className="min-h-screen  flex z-[99999] font-medium mb-5">
       {/* {isLoading && (
         <div
           id="Lfa-page-loading"
@@ -149,12 +149,14 @@ const Signup = () => {
         />
 
         {/* Optional overlay */}
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/40 "></div>
 
         {/* Optional text overlay */}
-        <div className="absolute bottom-10 left-0 right-0 txt-center text-white">
-          <h2 className="text-4xl font-bold mb-4">Discover Amazing Photos</h2>
-          <p className="text-lg text-white/80">
+        <div className="relative h-full flex flex-col items-center justify-center text-light px-4 !rounded-md">
+          <h2 className="text-4xl font-bold mb-4 text-light">
+            Discover Amazing Photos
+          </h2>
+          <p className="text-lg text-white/90">
             Join our community of photographers
           </p>
         </div>
@@ -165,7 +167,7 @@ const Signup = () => {
         <div className="max-w-md w-full space-y-8">
           {/* Header */}
           <div className="">
-            <h2 className="text-4xl font-bold text-white mb-2">
+            <h2 className="text-4xl font-bold text-primary text-center md:text-start mb-2">
               Join the Community of Inspiration
             </h2>
           </div>
@@ -183,7 +185,7 @@ const Signup = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Full Name"
-                  className="w-full px-4 py-3 bg-white rounded focus:outline-none"
+                  className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
                 />
               </div>
             )}
@@ -196,7 +198,7 @@ const Signup = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="w-full px-4 py-3 bg-white rounded focus:outline-none"
+                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
               />
             </div>
 
@@ -208,7 +210,7 @@ const Signup = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="w-full px-4 py-3 bg-white rounded focus:outline-none"
+                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
               />
               <button
                 type="button"
@@ -233,7 +235,7 @@ const Signup = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Confirm Password"
-                  className="w-full px-4 py-3 bg-white rounded focus:outline-none"
+                  className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
                 />
                 <button
                   type="button"
@@ -252,7 +254,7 @@ const Signup = () => {
               <div className="text-right">
                 <Link
                   to="/forgot-password"
-                  className="text-white/60 hover:text-white text-sm transition-colors"
+                  className="text-primary/80 hover:text-primary text-sm transition-colors"
                 >
                   Forgot your password?
                 </Link>
@@ -265,23 +267,36 @@ const Signup = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-3 bg-white text-black rounded font-medium hover:bg-white/90 transition-colors"
+              className={`relative group/button w-full px-4 py-3 rounded-md font-medium overflow-hidden border transition-all duration-500
+    ${
+      isLoading
+        ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+        : 'bg-black text-white border-primary border-2'
+    }
+  `}
             >
-              {isLoading
-                ? 'Loading...'
-                : currentState === 'Login'
-                ? 'Sign In'
-                : 'Create Account'}
-              {/* {currentState === 'Login' ? 'Sign In' : 'Create Account'} */}
+              {/* Sliding white overlay on hover */}
+              {!isLoading && (
+                <div className="absolute inset-0 w-0 group-hover/button:w-full transition-all duration-500 ease-in-out bg-white"></div>
+              )}
+
+              {/* Text stays on top and transitions color */}
+              <span className="relative z-10 group-hover/button:text-black transition-colors duration-500">
+                {isLoading
+                  ? 'Loading...'
+                  : currentState === 'Login'
+                  ? 'Sign In'
+                  : 'Create Account'}
+              </span>
             </button>
 
             {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/20"></div>
+                <div className="w-full border-t border-primary/20"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-black text-white/60">Or</span>
+                <span className="px-4  text-primary">Or</span>
               </div>
             </div>
 
@@ -290,20 +305,20 @@ const Signup = () => {
             {/* Login Link */}
             {currentState === 'Login' ? (
               <p
-                className="text-center text-white/60"
+                className="text-center text-primary/80"
                 onClick={() => setCurrentState('Sign Up')}
               >
                 Don&apos;t have an account?{' '}
-                <strong className="cursor-pointer"> Create Account</strong>
+                <strong className="cursor-pointer text-primary"> Create Account</strong>
               </p>
             ) : (
               <p
                 onClick={() => setCurrentState('Login')}
-                className="text-center text-white/60"
+                className="text-center text-primary/80"
               >
                 {' '}
                 Already have an account?{' '}
-                <strong className="cursor-pointer"> Login Here</strong>
+                <strong className="cursor-pointer text-primary"> Login Here</strong>
               </p>
             )}
           </form>

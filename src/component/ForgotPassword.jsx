@@ -9,10 +9,10 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  // components/ForgotPassword.jsx (continued)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,12 +56,12 @@ const ForgotPassword = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center px-4 relative z-[99999999]">
-        <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg">
+      <div className="min-h-screen text-primary flex items-center font-medium justify-center px-4 relative z-[99999999]">
+        <div className="max-w-md w-full space-y-8 bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm">
           <div className="text-center">
             <div className="mx-auto h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
               <svg
-                className="h-8 w-8 text-green-600"
+                className="h-10 w-10 text-green-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -74,10 +74,10 @@ const ForgotPassword = () => {
                 ></path>
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-2xl font-bold text-primary mb-2">
               Check Your Email
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-900 mb-6">
               We&apos;ve sent a password reset link to <strong>{email}</strong>
             </p>
             <div className="space-y-4">
@@ -86,7 +86,7 @@ const ForgotPassword = () => {
               </p>
               <button
                 onClick={handleResend}
-                className="text-blue-600 hover:text-blue-500 font-medium text-sm"
+                className="text-primary hover:text-primary/60 underline hover:scale-105 font-medium transition-all duration-300 ease-in-out text-sm"
               >
                 Resend reset link
               </button>
@@ -94,7 +94,7 @@ const ForgotPassword = () => {
             <div className="mt-6">
               <Link
                 to="/login"
-                className="text-gray-600 hover:text-gray-500 text-sm"
+                className="text-gray-800 hover:text-primary text-sm hover:scale-105 font-medium transition-all duration-300 ease-in-out"
               >
                 ← Back to login
               </Link>
@@ -106,7 +106,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black flex relative z-[99999999]">
+    <div className="min-h-screen font-medium text-primary flex relative z-[99999999]">
       {/* Loading Overlay */}
       {/* {isLoading && (
         <div className="blackrose-pageloading z-[999999999]">
@@ -118,15 +118,27 @@ const ForgotPassword = () => {
 
       {/* Left Side Image - Hidden on mobile */}
       <div className="hidden lg:block lg:w-1/2 relative">
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gray-900 animate-pulse"></div>
+        )}
         <img
           src={assets.bg_img}
           alt="Reset Password"
-          className="absolute inset-0 w-full h-full object-cover"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+            imageLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+          onLoad={() => setImageLoaded(true)}
         />
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute bottom-10 left-0 right-0 text-center text-white">
-          <h2 className="text-4xl font-bold mb-4">Forgot Your Password?</h2>
-          <p className="text-lg text-white/80">
+
+        {/* Optional overlay */}
+        <div className="absolute inset-0 bg-black/40 "></div>
+
+        {/* Optional text overlay */}
+        <div className="relative h-full flex flex-col items-center justify-center text-light px-4 !rounded-md">
+          <h2 className="text-4xl font-bold mb-4 text-light">
+            Forgot Your Password?
+          </h2>
+          <p className="text-lg text-white/90">
             No worries, we&apos;ll help you reset it
           </p>
         </div>
@@ -136,10 +148,10 @@ const ForgotPassword = () => {
       <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <h2 className="text-4xl font-bold text-white mb-2">
+            <h2 className="text-4xl font-bold text-primary text-center md:text-start mb-2">
               Reset Your Password
             </h2>
-            <p className="text-white/70 mb-8">
+            <p className="text-primary/70 mb-8  text-center md:text-start">
               Enter your email address and we&apos;ll send you a link to reset
               your password.
             </p>
@@ -152,7 +164,7 @@ const ForgotPassword = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
-                className="w-full px-4 py-3 bg-white rounded focus:outline-none"
+                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
                 required
               />
             </div>
@@ -160,15 +172,29 @@ const ForgotPassword = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-3 bg-white text-black rounded font-medium hover:bg-white/90 transition-colors disabled:opacity-50"
+              className={`relative group/button w-full px-4 py-3 rounded-md font-medium overflow-hidden border transition-all duration-500
+    ${
+      isLoading
+        ? 'bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed'
+        : 'bg-black text-white border-primary border-2'
+    }
+  `}
             >
-              {isLoading ? 'Sending...' : 'Send Reset Link'}
+              {/* Sliding white overlay on hover */}
+              {!isLoading && (
+                <div className="absolute inset-0 w-0 group-hover/button:w-full transition-all duration-500 ease-in-out bg-white"></div>
+              )}
+
+              {/* Text stays on top and transitions color */}
+              <span className="relative z-10 group-hover/button:text-black transition-colors duration-500">
+                {isLoading ? 'Sending...' : 'Send Reset Link'}
+              </span>
             </button>
 
             <div className="text-center">
               <Link
                 to="/login"
-                className="text-white/60 hover:text-white transition-colors"
+                className="text-primary/60 hover:text-primary transition-colors"
               >
                 ← Back to login
               </Link>

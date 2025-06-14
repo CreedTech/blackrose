@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
@@ -66,8 +64,8 @@ const PaymentStatus = () => {
       {/* Header - Same as Checkout page */}
 
       {/* Main Content */}
-      <main className="relative px-4 py-10 max-w-2xl mx-auto md:mt-10 mt-0">
-        <div className="border border-gray-800 rounded-md p-8">
+      <main className="relative px-4 py-10 max-w-2xl mx-auto md:mt-10 mt-0 font-medium">
+        <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl  mb-8 border border-gray-200 shadow-md p-8">
           <h1 className="text-2xl font-bold mb-8 text-center">
             Payment Status
           </h1>
@@ -75,9 +73,9 @@ const PaymentStatus = () => {
           {/* Loading State */}
           {(status === 'loading' || loading) && (
             <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary mx-auto mb-4"></div>
               <p className="text-lg">Verifying your payment...</p>
-              <p className="text-gray-400 mt-2">
+              <p className="text-gray-800 mt-2">
                 Please do not close this page.
               </p>
             </div>
@@ -102,22 +100,22 @@ const PaymentStatus = () => {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold mb-4">Payment Processing</h2>
-              <p className="text-gray-400 mb-2">
+              <p className="text-gray-700 mb-2">
                 Your payment is being processed by our payment provider.
               </p>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-700 mb-6">
                 This page will automatically update when complete. Please do not
                 close this page.
               </p>
 
               <div className="w-full max-w-md mx-auto bg-gray-800 h-2 rounded-full overflow-hidden mb-6">
                 <div
-                  className="bg-yellow-400 h-full animate-pulse"
+                  className="bg-yellow-300 h-full animate-pulse"
                   style={{ width: '60%' }}
                 ></div>
               </div>
 
-              <p className="text-sm text-gray-500 italic">
+              <p className="text-sm text-gray-700 italic">
                 This may take a few moments to complete
               </p>
             </div>
@@ -142,11 +140,11 @@ const PaymentStatus = () => {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold mb-4">Payment Successful!</h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-700 mb-6">
                 Your order has been placed successfully.
               </p>
 
-              <div className="bg-gray-800 p-4 rounded mb-6 text-left">
+              <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6  border border-gray-200 shadow-sm mb-6 text-left text-primary">
                 <div className="flex justify-between mb-2">
                   <span>Order ID:</span>
                   <span>{paymentData?.orderId}</span>
@@ -164,13 +162,13 @@ const PaymentStatus = () => {
               <div className="flex space-x-4 justify-center">
                 <Link
                   to="/orders"
-                  className="bg-white text-black px-6 py-3 rounded"
+                  className="bg-primary text-light px-6 py-3 rounded-md"
                 >
                   View Order
                 </Link>
                 <Link
                   to="/shop"
-                  className="bg-transparent border border-white text-white px-6 py-3 rounded"
+                  className="bg-transparent border-2 border-primary text-primary px-6 py-3 rounded-md"
                 >
                   Continue Shopping
                 </Link>
@@ -198,20 +196,20 @@ const PaymentStatus = () => {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold mb-4">Payment Failed</h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-700 mb-6">
                 Your payment could not be processed.
               </p>
 
               <div className="flex space-x-4 justify-center">
                 <button
                   onClick={() => navigate('/checkout')}
-                  className="bg-white text-black px-6 py-3 rounded"
+                  className="bg-primary text-light px-6 py-3 rounded-md"
                 >
                   Try Again
                 </button>
                 <Link
                   to="/shop"
-                  className="bg-transparent border border-white text-white px-6 py-3 rounded"
+                  className="bg-transparent border-2 border-primary text-primary px-6 py-3 rounded-md"
                 >
                   Return to Shop
                 </Link>
@@ -239,7 +237,7 @@ const PaymentStatus = () => {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold mb-4">Something Went Wrong</h2>
-              <p className="text-gray-400 mb-6">
+              <p className="text-gray-700 mb-6">
                 We couldn&apos;t verify your payment status. Please contact our
                 support team.
               </p>
@@ -247,13 +245,13 @@ const PaymentStatus = () => {
               <div className="flex space-x-4 justify-center">
                 <Link
                   to="/contact"
-                  className="bg-white text-black px-6 py-3 rounded"
+                  className="bg-primary text-light px-6 py-3 rounded-md"
                 >
                   Contact Support
                 </Link>
                 <Link
                   to="/orders"
-                  className="bg-white text-black px-6 py-3 rounded"
+                  className="bg-transparent border-2 border-primary text-primary px-6 py-3 rounded-md"
                 >
                   View Order
                 </Link>
