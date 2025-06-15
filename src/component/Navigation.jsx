@@ -111,7 +111,7 @@ const Navigation = () => {
       <nav className="w-full  sticky top-0 z-40  ">
         <div className="max-w-7xl mx-auto px-4 sm:px-0 lg:px-8">
           {/* Mobile Header */}
-          <div className="flex justify-between items-center h-16 md:hidden">
+          <div className="flex justify-between items-center h-16 z-50 bg-white shadow-md md:hidden ">
             {/* Left: Menu + Search */}
             <div className="flex items-center space-x-2">
               <button

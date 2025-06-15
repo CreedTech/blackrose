@@ -290,7 +290,7 @@ import { useGallery } from '../hooks/useGallery';
 import { useProducts } from '../hooks/useProducts';
 import { useContext, useRef } from 'react';
 import { ShopContext } from '../context/ShopContext';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Home = () => {
   const { useCategories, useImages, useBlogs } = useGallery();
@@ -366,28 +366,28 @@ const Home = () => {
       <section className="container">
         <section
           ref={heroRef}
-          className="blackrose-section-slider mt-10 pb-0 !rounded-md"
+          className="blackrose-section-slider  md:mt-10 pb-0 md:!rounded-md "
         >
-          <div className="relative h-[600px] w-full overflow-hidden  !rounded-md">
+          <div className="relative h-[600px] w-full overflow-hidden  md:!rounded-md ">
             {/* Background Image with Parallax */}
             <motion.div
-              className="absolute inset-0 !rounded-md"
+              className="absolute inset-0 md:!rounded-md "
               style={{ y, scale }}
             >
               <img
                 src={assets.bg_img}
                 alt="Photographer capturing city"
-                className="w-full h-full object-cover !rounded-md"
+                className="w-full h-full object-cover md:!rounded-md "
               />
               {/* Dark overlay */}
               <motion.div
-                className="absolute inset-0 bg-black/40 !rounded-md"
+                className="absolute inset-0 bg-black/40 md:!rounded-md "
                 style={{ opacity }}
               />
             </motion.div>
 
             {/* Content */}
-            <div className="relative h-full flex flex-col items-center justify-center text-light px-4 !rounded-md">
+            <div className="relative h-full flex flex-col items-center justify-center text-light px-4 md:!rounded-md ">
               {/* Main Heading */}
               <motion.h1
                 className="text-2xl md:text-4xl font-bold text-center max-w-2xl mb-8 font-inter"
@@ -422,7 +422,7 @@ const Home = () => {
               >
                 <Link to="/photography">
                   <motion.button
-                    className="animate-bounce p-2 rounded-full border-2 border-white/50 hover:border-white transition-colors"
+                    className="animate-bounce p-2 rounded-full border-2 border-white/50 hover:border-white transition-colors mb-20 md:mb-0"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -529,7 +529,7 @@ const Home = () => {
                   </motion.h2>
 
                   <motion.p
-                    className="text-lg text-white font-light leading-relaxed mb-6"
+                    className="text-md md:text-lg text-white font-light leading-relaxed mb-6"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.3 }}
@@ -571,7 +571,7 @@ const Home = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="projects pt-130 mb-30">
+      <section className="projects md:pt-20 pt-10 mb-30">
         <div className="container">
           <motion.div
             className="row"
@@ -581,7 +581,7 @@ const Home = () => {
             viewport={{ once: true, amount: 0.3 }}
           >
             <motion.div
-              className="section-head col-md-12 text-start animate-box font-medium text-darker"
+              className="section-head col-md-12 md:text-start text-center animate-box font-medium text-darker "
               variants={fadeInUp}
             >
               <h4>Discover the Best of The Black Rose</h4>
@@ -708,7 +708,7 @@ const Home = () => {
           <div className="blackrose-section">
             {/* Featured Products Section */}
             <motion.section
-              className="max-w-7xl mx-auto px-4 py-10 relative"
+              className="max-w-7xl mx-auto px-4 py-5 relative"
               initial="hidden"
               animate="visible"
               viewport={{ once: true, amount: 0.2 }}
@@ -719,7 +719,7 @@ const Home = () => {
                 variants={fadeInUp}
               >
                 <motion.div
-                  className="section-head text-start  animate-box font-medium"
+                  className="section-head md:text-start text-center  animate-box font-medium"
                   variants={fadeInUp}
                 >
                   <h4> Shop Featured Products</h4>
@@ -857,7 +857,7 @@ const Home = () => {
 
             {/* Trending Stories Section */}
             <motion.section
-              className="max-w-7xl mx-auto px-4 py-12 relative"
+              className="max-w-7xl mx-auto px-4 py-5 relative"
               initial="hidden"
               animate="visible"
               viewport={{ once: true, amount: 0.2 }}

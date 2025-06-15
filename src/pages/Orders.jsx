@@ -340,6 +340,7 @@ import { Link } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { FaDownload, FaEye, FaTimes, FaCheck } from 'react-icons/fa';
 import OrderCancellationModal from '../component/OrderCancellationModal';
+import StatusFilters from './StatusFilters';
 
 const Orders = () => {
   const {
@@ -396,15 +397,34 @@ const Orders = () => {
     }
     return '3-5 days';
   };
+  function OrdersList({ statusFilter }) {
+    // const allOrders = [
+    //   /* … */
+    // ];
+    const filtered = orders?.filter((o) =>
+      statusFilter === 'all' ? true : o.status === statusFilter
+    );
+    console.log(filtered);
+
+    return (
+      <ul>
+        {filtered.map((o) => (
+          <li key={o.id}>
+            {o.id} – {o.status}
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <div className="min-h-screen  text-primary relative font-medium">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between flex-col md:flex-row items-center mb-8">
           <h1 className="text-3xl font-bold">My Orders</h1>
 
           {orders.length > 0 && (
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-4 md:mt-0 ">
               <button
                 onClick={selectAllOrders}
                 className="px-4 py-2 border border-gray-600 rounded-lg hover:bg-primary hover:text-light text-primary transition"
@@ -430,7 +450,7 @@ const Orders = () => {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex gap-2 mb-6 overflow-x-auto">
+        {/* <div className="flex gap-2 mb-6 overflow-x-auto">
           {[
             'all',
             'Pending',
@@ -451,7 +471,12 @@ const Orders = () => {
               {status}
             </button>
           ))}
-        </div>
+        </div> */}
+        <StatusFilters
+          filterStatus={filterStatus}
+          setFilterStatus={setFilterStatus}
+        />
+        {/* <OrdersList statusFilter={filterStatus} /> */}
 
         {orders.length === 0 && !ordersLoading ? (
           <div className="text-center py-12 bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6 mb-8 border border-gray-200  shadow-sm">
@@ -568,13 +593,13 @@ const Orders = () => {
             <div className="lg:col-span-2 font-medium">
               {selectedOrder ? (
                 <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6 mb-8 border border-gray-200 shadow-md overflow-hidden">
-                  <div className="p-4 border-b border-gray-300 flex justify-between items-center">
-                    <h2 className="font-medium">
-                      Order Details -{' '}
+                  <div className="p-4 border-b border-gray-300 flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center sm:gap-0">
+                    <h2 className="font-medium text-lg text-center sm:text-left">
+                      Order Details –{' '}
                       {selectedOrder.orderNumber || `#${selectedOrder._id}`}
                     </h2>
-                    <div className="flex items-center gap-4">
-                      <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+                      <div className="flex flex-wrap gap-2">
                         <div
                           className={`px-3 py-1 rounded-full text-xs text-white ${getOrderStatusColor(
                             selectedOrder.status
@@ -593,7 +618,7 @@ const Orders = () => {
                       {canCancelOrder(selectedOrder) && (
                         <button
                           onClick={() => handleCancelOrder(selectedOrder)}
-                          className="text-red-400 hover:text-red-300 text-sm"
+                          className="text-red-400 hover:text-red-300 text-sm self-end sm:self-auto"
                         >
                           Cancel Order
                         </button>

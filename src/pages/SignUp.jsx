@@ -185,7 +185,7 @@ const Signup = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Full Name"
-                  className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
+                  className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-gray-400 "
                 />
               </div>
             )}
@@ -198,7 +198,7 @@ const Signup = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
+                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-gray-400 "
               />
             </div>
 
@@ -210,7 +210,7 @@ const Signup = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
+                className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-gray-400 "
               />
               <button
                 type="button"
@@ -235,7 +235,7 @@ const Signup = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Confirm Password"
-                  className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-primary "
+                  className="w-full px-4 py-3 bg-light border text-primary rounded-lg focus:outline-none focus:border-primary focus:border-2 transition border-gray-400 "
                 />
                 <button
                   type="button"
@@ -291,13 +291,10 @@ const Signup = () => {
             </button>
 
             {/* Divider */}
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-primary/20"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4  text-primary">Or</span>
-              </div>
+            <div className="flex items-center">
+              <div className="flex-1 border-t border-primary/20" />
+              <span className="mx-4 text-sm text-primary">Or</span>
+              <div className="flex-1 border-t border-primary/20" />
             </div>
 
             {/* Social Buttons */}
@@ -309,7 +306,10 @@ const Signup = () => {
                 onClick={() => setCurrentState('Sign Up')}
               >
                 Don&apos;t have an account?{' '}
-                <strong className="cursor-pointer text-primary"> Create Account</strong>
+                <strong className="cursor-pointer text-primary">
+                  {' '}
+                  Create Account
+                </strong>
               </p>
             ) : (
               <p
@@ -318,7 +318,10 @@ const Signup = () => {
               >
                 {' '}
                 Already have an account?{' '}
-                <strong className="cursor-pointer text-primary"> Login Here</strong>
+                <strong className="cursor-pointer text-primary">
+                  {' '}
+                  Login Here
+                </strong>
               </p>
             )}
           </form>

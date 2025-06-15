@@ -398,27 +398,28 @@ const ProfileDetails = () => {
     <div className="">
       {/* Profile Section */}
       <div>
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-xl font-semibold">Personal Information</h3>
-          <div className="flex gap-3">
-            {!isEditing && (
-              <>
-                <button
-                  onClick={() => setShowPasswordModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 text-light bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors text-sm"
-                >
-                  <FaLock />
-                  Change Password
-                </button>
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-2 text-primary hover:text-blue-300 transition-colors"
-                >
-                  <FaEdit /> Edit Profile
-                </button>
-              </>
-            )}
-          </div>
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
+          <h3 className="text-xl font-semibold text-center sm:text-left">
+            Personal Information
+          </h3>
+          {!isEditing && (
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+              <button
+                onClick={() => setShowPasswordModal(true)}
+                className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 text-sm text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <FaLock />
+                Change Password
+              </button>
+              <button
+                onClick={() => setIsEditing(true)}
+                className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 text-sm text-primary hover:text-blue-300 rounded-lg transition-colors"
+              >
+                <FaEdit />
+                Edit Profile
+              </button>
+            </div>
+          )}
         </div>
 
         {isEditing ? (

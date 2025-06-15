@@ -997,13 +997,13 @@ const ProductPage = () => {
 
               {/* Premium Price Display */}
               <div className="bg-gradient-to-r from-black/90 to-black/40 rounded-2xl p-6 border">
-                <div className="flex items-baseline gap-4 mb-2">
+                <div className="flex items-baseline flex-col md:flex-row gap-4 mb-2">
                   <span className="text-3xl font-black text-light">
                     {currency}
                     {currentPrice.finalPrice.toLocaleString()}
                   </span>
                   {currentPrice.discount > 0 && (
-                    <>
+                    <div className='flex gap-2'>
                       <span className="text-xl text-gray-300 line-through font-medium">
                         {currency}
                         {currentPrice.price.toLocaleString()}
@@ -1014,7 +1014,7 @@ const ProductPage = () => {
                           currentPrice.price - currentPrice.finalPrice
                         ).toLocaleString()}
                       </div>
-                    </>
+                    </div>
                   )}
                 </div>
                 {currentPrice.discount > 0 && (

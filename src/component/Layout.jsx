@@ -8,13 +8,16 @@ const Layout = () => {
   const { useImages } = useGallery();
   const { isLoading } = useImages();
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center flex-col justify-center h-screen bg-main">
+        <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-primary"></div>
+        <p>Loaing Contents</p>
+      </div>
+    );
+  }
   return (
     <div>
-      {isLoading && (
-        <div className="flex items-center justify-center h-screen bg-main">
-          <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-primary"></div>
-        </div>
-      )}
       <div className="progress-wrap cursor-pointer">
         <svg
           className="progress-circle svg-content"
@@ -22,7 +25,7 @@ const Layout = () => {
           height="100%"
           viewBox="-1 -1 102 102"
         >
-          <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+          <path d="M50,1 a49,49 0 0,1s 0,98 a49,49 0 0,1 0,-98" />
         </svg>
       </div>
       <div className="progress-wrap cursor-pointer">
@@ -48,7 +51,7 @@ const Layout = () => {
           {/* </nav> */}
         </div>
         {/* Render child pages */}
-        <div className='min-h-[75vh]'>
+        <div className="min-h-[75vh]">
           <Outlet />
         </div>
 

@@ -273,8 +273,8 @@ const ProductReviews = ({ product }) => {
     });
 
     return distribution.map(({ stars, count, percentage }) => (
-      <div key={stars} className="flex items-center gap-4 group">
-        <div className="flex items-center gap-2 w-16">
+      <div key={stars} className="flex items-center md:gap-4 group">
+        <div className="flex items-center gap-2 w-10">
           <span className="font-bold text-primary">{stars}</span>
           <FaStar className="text-amber-400 text-sm" />
         </div>
@@ -284,7 +284,7 @@ const ProductReviews = ({ product }) => {
             style={{ width: `${percentage}%` }}
           />
         </div>
-        <span className="text-sm font-bold text-primary w-12 text-right">
+        <span className="text-sm font-bold text-primary w-6 text-right">
           {count}
         </span>
       </div>

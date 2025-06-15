@@ -2379,6 +2379,10 @@ ul.team-info-social li {
   .blackrose-form-wrapper {
     width: 70%;
   }
+  .section-head h4 {
+    font-size: 20px;
+    font-weight: 500;
+  }
 }
 @media (max-width: 767px) {
   #blackrose-page-wrapper {
