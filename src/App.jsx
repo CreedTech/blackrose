@@ -49,10 +49,9 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
         </Route>
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Signup />} />
-        
       </Routes>
       <ToastContainer
         position="bottom-right"
@@ -65,6 +64,7 @@ function App() {
         draggable
         pauseOnHover
         theme="dark"
+        containerStyle={{ zIndex: 9999 }}
       />
     </>
   );

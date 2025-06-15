@@ -108,10 +108,10 @@ const Navigation = () => {
   return (
     <>
       {/* Main Navigation */}
-      <nav className="w-full  sticky top-0 z-40  ">
+      <nav className="w-full  sticky top-0 z-[999999]  ">
         <div className="max-w-7xl mx-auto px-4 sm:px-0 lg:px-8">
           {/* Mobile Header */}
-          <div className="flex justify-between items-center h-16 z-50 bg-white shadow-md md:hidden ">
+          <div className="flex justify-between items-center h-16 z-[99999] bg-white shadow-md md:hidden ">
             {/* Left: Menu + Search */}
             <div className="flex items-center space-x-2">
               <button
@@ -174,7 +174,7 @@ const Navigation = () => {
 
                 {/* Mobile Account Dropdown */}
                 {token && showDropdown && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-main border border-gray-400 rounded-lg backdrop-blur-sm shadow-lg py-2 z-50 font-medium">
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-main border border-gray-400 rounded-lg backdrop-blur-sm shadow-lg py-2 z-[999999] font-medium">
                     <button
                       onClick={() => {
                         navigate('/profile');
@@ -309,7 +309,7 @@ const Navigation = () => {
                 <span className="absolute inset-0 w-0 group-hover:w-full h-full bg-white transition-all duration-300 ease-in-out z-0"></span>
 
                 {/* Text content on top */}
-                <span className="relative z-10 text-white group-hover:text-black transition-colors duration-300">
+                <span className="relative z-[9999] text-white group-hover:text-black transition-colors duration-300">
                   Shop now
                 </span>
               </NavLink>

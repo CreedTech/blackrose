@@ -239,7 +239,7 @@ const PhotographyDetails = () => {
         </div>
       </div>
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto md:px-4 px-2 md:py-4 relative z-[99999] overflow-hidden">
+      <div className="max-w-7xl mx-auto md:px-4 px-2 md:py-4 relative z-[99] overflow-hidden">
         <div className="w-full text-primary md:px-4 py-3 flex md:items-center flex-col space-y-4 md:space-y-0 md:flex-row justify-between ">
           {/* Left side - Profile Info */}
           <div className="flex items-center space-x-4">
@@ -401,7 +401,7 @@ const PhotographyDetails = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-1 md:gap-12 gap-4 z-[9999]">
+        <div className="grid grid-cols-1 lg:grid-cols-1 md:gap-12 gap-4 z-[9]">
           {/* Left Column - Images */}
           <div className="md:space-y-6 rounded-md">
             {/* Main Image */}
@@ -409,7 +409,7 @@ const PhotographyDetails = () => {
               <img
                 src={image.url}
                 alt={image.title}
-                className="w-full h-full object-cover z-[999] rounded-md"
+                className="w-full h-full object-cover z-[9] rounded-md"
               />
             </div>
           </div>
