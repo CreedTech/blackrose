@@ -113,15 +113,15 @@ const Contact = () => {
 
   if (isSubmitted) {
     return (
-      <div className="relative px-4 py-10 max-w-2xl mx-auto md:mt-10 mt-0">
-        <div className="border border-gray-800 rounded-md p-8">
+      <div className="relative px-4 py-10 max-w-2xl mx-auto md:mt-10 mt-0 text-primary font-medium">
+        <div className="border border-gray-900 rounded-md p-8">
           <div className="row">
             <div className="col-md-12 text-center">
               <div className="success-message  p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
                 <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-white"
+                  className="h-8 w-8 text-primary"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -134,15 +134,15 @@ const Contact = () => {
                   />
                 </svg>
               </div>
-                <h2 className="text-3xl font-bold text-white mb-4">
+                <h2 className="text-3xl font-bold text-primary mb-4">
                   Message Sent Successfully!
                 </h2>
-                <p className="text-gray-400 mb-4">
+                <p className="text-gray-900 mb-4">
                   Thank you for reaching out to BlackRose Photography. We&apos;ve
                   received your message and will get back to you within 24
                   hours.
                 </p>
-                <div className="bg-gray-800 p-4 rounded-lg mb-6">
+                <div className="bg-gray-900 p-4 rounded-lg mb-6">
                   <p className="text-base ">
                     <strong>Reference ID:</strong> #{referenceId}
                   </p>
@@ -153,7 +153,7 @@ const Contact = () => {
                 <div className="space-y-3">
                   <button
                     onClick={resetForm}
-                    className="bg-white text-black px-6 py-3 rounded"
+                    className="bg-primary text-light px-6 py-3 rounded-md"
                   >
                     Send Another Message
                   </button>
@@ -162,7 +162,7 @@ const Contact = () => {
                       Need immediate assistance? Call us at{' '}
                       <a
                         href="tel:+2349137104825"
-                        className="text-blue-600 hover:underline"
+                        className="text-gray-900 hover:underline"
                       >
                         +234 913 710 4825
                       </a>
@@ -177,7 +177,7 @@ const Contact = () => {
     );
   }
   return (
-    <div className="contact next-section-contact md:mt-10 mt-0">
+    <div className="contact next-section-contact md:mt-10 mt-0 text-primary font-medium">
       <div className="container">
         <div className="row">
           <div
@@ -185,14 +185,14 @@ const Contact = () => {
             data-animate-effect="fadeInUp"
           >
             <h2>Contact Us</h2>
-            <p className="text-white mt-4 max-w-2xl mx-auto">
+            <p className="text-primary mt-4 max-w-2xl mx-auto">
               Ready to capture your special moments? Get in touch with BlackRose
               Photography and let&apos;s discuss how we can bring your vision to
               life.
             </p>
           </div>
           <div
-            className="col-md-12 mb-60 animate-box"
+            className="col-md-12 md:mb-60 mb-20 animate-box"
             data-animate-effect="fadeInUp"
           >
             <div className="google-map">
@@ -209,7 +209,7 @@ const Contact = () => {
           </div>
 
           <div
-            className="col-md-4 mb-60 animate-box"
+            className="col-md-4 md:mb-60 mb-20 animate-box"
             data-animate-effect="fadeInUp"
           >
             <h4>BlackRose Photography</h4>
@@ -231,7 +231,7 @@ const Contact = () => {
           </div>
 
           <div
-            className="col-md-4 mb-60 animate-box"
+            className="col-md-4 md:mb-60 mb-20 animate-box"
             data-animate-effect="fadeInUp"
           >
             <div className="space-y-6">
@@ -242,7 +242,7 @@ const Contact = () => {
                 <p>
                   <a
                     href="tel:+2349137104825"
-                    className="text-white hover:underline"
+                    className="text-primary hover:underline"
                   >
                     +234 913 710 4825
                   </a>
@@ -256,7 +256,7 @@ const Contact = () => {
                 <p>
                   <a
                     href="mailto:admin@blackrose.com"
-                    className="text-white hover:underline"
+                    className="text-primary hover:underline"
                   >
                     admin@blackrose.com
                   </a>
@@ -278,7 +278,7 @@ const Contact = () => {
                 <h4 className="flex items-center">
                   <span className="mr-2">🕒</span> Business Hours
                 </h4>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-800">
                   Monday - Friday: 9:00 AM - 6:00 PM
                   <br />
                   Saturday: 10:00 AM - 4:00 PM
@@ -290,7 +290,7 @@ const Contact = () => {
           </div>
 
           <div
-            className="col-md-4 mb-60 animate-box relative transition-all duration-300 ease-out"
+            className="col-md-4 md:mb-60 mb-20 animate-box relative transition-all duration-300 ease-out"
             data-animate-effect="fadeInUp"
           >
             <div>
@@ -374,14 +374,14 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="border border-white px-10 py-3 flex-1 relative overflow-hidden group transition-all duration-300"
+                    className="border border-primary bg-primary rounded-md px-10 py-3 flex-1 relative overflow-hidden group transition-all duration-300"
                   >
-                    <span className="absolute inset-0 bg-white transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 z-0"></span>
-                    <span className="relative text-white group-hover:text-black transition-colors duration-300 z-10 ">
+                    {/* <span className="absolute inset-0 bg-white transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 z-0"></span> */}
+                    <span className="relative text-light  transition-colors duration-300 z-10 ">
                       {isLoading ? (
                         <>
                           <svg
-                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                            className="animate-spin -ml-1 mr-3 h-5 w-5 text-light"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"

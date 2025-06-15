@@ -419,7 +419,7 @@ const Navigation = () => {
                 )}
 
                 {/* Shop Now Button */}
-                <div className="p-6 border-t border-gray-800">
+                <div className="p-6 border-t border-gray-800 mb-10">
                   <NavLink
                     to="/shop"
                     onClick={() => setIsOpen(false)}

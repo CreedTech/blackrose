@@ -442,7 +442,7 @@ const ProductReviews = ({ product }) => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-4 pt-4">
+              <div className="flex gap-4 pt-4 flex-col md:flex-row">
                 <button
                   type="submit"
                   disabled={submitting || !comment.trim()}
