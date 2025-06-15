@@ -180,7 +180,7 @@ const Navigation = () => {
                         navigate('/profile');
                         setShowDropdown(false);
                       }}
-                      className="block w-full text-left px-4 py-2 text-darker  hover:bg-dark hover:text-light transition-colors"
+                      className="block w-full text-left px-4 py-2 text-primary  hover:bg-dark hover:text-light transition-colors"
                     >
                       My Profile
                     </button>
@@ -189,7 +189,7 @@ const Navigation = () => {
                         navigate('/orders');
                         setShowDropdown(false);
                       }}
-                      className="block w-full text-left px-4 py-2 text-darker  hover:bg-dark hover:text-light transition-colors"
+                      className="block w-full text-left px-4 py-2 text-primary   hover:bg-dark hover:text-light transition-colors"
                     >
                       Orders
                     </button>
@@ -198,7 +198,7 @@ const Navigation = () => {
                         logout();
                         setShowDropdown(false);
                       }}
-                      className="block w-full text-left px-4 py-2 text-darker  hover:bg-dark hover:text-light transition-colors"
+                      className="block w-full text-left px-4 py-2 text-primary  hover:bg-dark hover:text-light transition-colors"
                     >
                       Logout
                     </button>
