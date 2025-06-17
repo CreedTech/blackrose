@@ -12,7 +12,7 @@ const Layout = () => {
     return (
       <div className="flex items-center flex-col justify-center h-screen bg-main">
         <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-primary"></div>
-        <p>Loaing Contents</p>
+        <p>Loading Contents</p>
       </div>
     );
   }
