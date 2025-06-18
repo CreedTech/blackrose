@@ -37,9 +37,11 @@ const ProductPage = () => {
   const [isPreorder, setIsPreorder] = useState(false);
   const [isImageZoomed, setIsImageZoomed] = useState(false);
   const [activeTab, setActiveTab] = useState('description');
+  const [wishlistLoading, setWishlistLoading] = useState(false);
 
   const { useGetSingleProduct, useSimilarProducts, useProductVariants } =
     useProducts();
+
   const {
     data: productData,
     isLoading,
@@ -47,11 +49,26 @@ const ProductPage = () => {
   } = useGetSingleProduct(productId);
   const { data: similarProducts = [], isLoading: loadingSimilar } =
     useSimilarProducts(productId);
-  const { data: allVariantsData } = useProductVariants(productId, {});
+  const product = productData?.product;
+  const { data: allVariantsData } = useProductVariants(
+    productId,
+    {},
+    { enabled: product?.hasVariants } // Only fetch if product has variants
+  );
+
   const { data: variantData } = useProductVariants(
     productId,
-    selectedAttributes
+    selectedAttributes,
+    {
+      enabled:
+        product?.hasVariants && Object.keys(selectedAttributes).length > 0,
+    }
   );
+  // const { data: allVariantsData } = useProductVariants(productId, {});
+  // const { data: variantData } = useProductVariants(
+  //   productId,
+  //   selectedAttributes
+  // );
   useEffect(() => {
     if (allVariantsData?.filteredVariants?.length && allVariants.length === 0) {
       setAllVariants(allVariantsData.filteredVariants);
@@ -60,6 +77,7 @@ const ProductPage = () => {
 
   const handleVariantSelect = (variant) => {
     const isSame = selectedVariant?._id === variant._id;
+    console.log(selectedVariant?._id);
 
     if (!isSame) {
       setSelectedVariant(variant);
@@ -76,8 +94,6 @@ const ProductPage = () => {
     }
   };
 
-  const product = productData?.product;
-
   useEffect(() => {
     if (product?.images?.length) {
       setCurrentMedia(product.images[0]);
@@ -88,11 +104,37 @@ const ProductPage = () => {
   }, [product, productId, token]);
 
   useEffect(() => {
-    // 🎯 Smart auto-selection for single variants
+    if (selectedVariant?.images?.length > 0) {
+      setCurrentMedia(selectedVariant.images[0]);
+    } else if (product?.images?.length > 0) {
+      setCurrentMedia(product.images[0]);
+    }
+  }, [selectedVariant, product?.images]);
+
+  // useEffect(() => {
+  //   // 🎯 Smart auto-selection for single variants
+  //   if (
+  //     variantData?.autoSelected &&
+  //     variantData?.exactMatch &&
+  //     !selectedVariant
+  //   ) {
+  //     console.log('🚀 Auto-selecting single variant');
+  //     setSelectedVariant(variantData.exactMatch);
+  //     console.log(variantData.exactMatch);
+  //     setSelectedAttributes({
+  //       color: variantData.exactMatch.color || '',
+  //       size: variantData.exactMatch.size || '',
+  //       material: variantData.exactMatch.material || '',
+  //       finish: variantData.exactMatch.finish || '',
+  //     });
+  //   }
+  // }, [variantData, selectedVariant]);
+  useEffect(() => {
+    // Only auto-select if no variant is currently selected and we have exactly one variant
     if (
-      variantData?.autoSelected &&
+      !selectedVariant &&
       variantData?.exactMatch &&
-      !selectedVariant
+      allVariants.length === 1
     ) {
       console.log('🚀 Auto-selecting single variant');
       setSelectedVariant(variantData.exactMatch);
@@ -103,7 +145,7 @@ const ProductPage = () => {
         finish: variantData.exactMatch.finish || '',
       });
     }
-  }, [variantData, selectedVariant]);
+  }, [variantData?.exactMatch, selectedVariant, allVariants.length]);
   useEffect(() => {
     if (variantData?.exactMatch) {
       setSelectedVariant(variantData.exactMatch);
@@ -111,238 +153,364 @@ const ProductPage = () => {
   }, [variantData]);
 
   const VariantSelector = ({
-    allVariants, // Change from variantData to allVariants
+    allVariants,
     selectedVariant,
     onVariantSelect,
   }) => {
+    const [showAll, setShowAll] = useState(false);
+    const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+
     const groupedVariants = useMemo(() => {
       return allVariants.map((variant) => ({
         ...variant,
         displayLabel: `${variant.color} • ${variant.size} • ${variant.material} • ${variant.finish}`,
+        shortLabel: `${variant.color} ${variant.size}`,
       }));
     }, [allVariants]);
 
+    // Show limited variants initially
+    const displayVariants = showAll
+      ? groupedVariants
+      : groupedVariants.slice(0, 6);
+    const hasMoreVariants = groupedVariants.length > 6;
+
     return (
       <div className="variant-selector space-y-6">
-        <h3 className="text-2xl font-bold text-gray-900">
-          Available Configurations
-        </h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl lg:text-2xl font-bold text-gray-900">
+            Available Options ({groupedVariants.length})
+          </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {groupedVariants.map((variant) => {
-            const isSelected = selectedVariant?._id === variant._id;
-
-            return (
-              <motion.div
-                key={variant._id}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => onVariantSelect(variant)}
-                className={`
-                cursor-pointer border rounded-xl p-4 transition-all 
-                flex items-center justify-between
-                ${
-                  isSelected
-                    ? 'border-primary bg-primary/10'
-                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                }
-              `}
+          {/* View Mode Toggle */}
+          {groupedVariants.length > 3 && (
+            <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded-md transition-colors ${
+                  viewMode === 'grid'
+                    ? 'bg-white shadow-sm text-primary'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
               >
-                <div className="flex items-center space-x-4">
-                  {variant.images && variant.images.length > 0 ? (
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-2 rounded-md transition-colors ${
+                  viewMode === 'list'
+                    ? 'bg-white shadow-sm text-primary'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Grid View */}
+        {viewMode === 'grid' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
+            {displayVariants.map((variant) => {
+              const isSelected = selectedVariant?._id === variant._id;
+              const isLowStock = variant.stock <= 5 && variant.stock > 0;
+              const isOutOfStock = variant.stock <= 0;
+
+              return (
+                <motion.div
+                  key={variant._id}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => !isOutOfStock && onVariantSelect(variant)}
+                  className={`
+                  relative cursor-pointer border-2 rounded-xl p-3 lg:p-4 transition-all duration-200
+                  ${isOutOfStock ? 'cursor-not-allowed opacity-50' : ''}
+                  ${
+                    isSelected
+                      ? 'border-primary bg-primary/5 shadow-md'
+                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                  }
+                `}
+                >
+                  {/* Variant Image */}
+                  <div className="flex items-start gap-3">
                     <div
                       className={`
-                      w-16 h-16 rounded-lg overflow-hidden 
-                      ${isSelected ? 'ring-2 ring-primary' : ''}
+                      w-12 h-12 lg:w-14 lg:h-14 rounded-lg overflow-hidden flex-shrink-0
+                      ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}
                     `}
                     >
-                      <img
-                        src={variant.images[0]}
-                        alt={variant.displayLabel}
-                        className="w-full h-full object-cover"
-                      />
+                      {variant.images && variant.images.length > 0 ? (
+                        <img
+                          src={variant.images[0]}
+                          alt={variant.shortLabel}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                          <svg
+                            className="w-6 h-6 text-gray-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div
-                      className={`
-                      w-16 h-16 bg-gray-100 rounded-lg 
-                      flex items-center justify-center 
-                      ${isSelected ? 'ring-2 ring-primary' : ''}
-                    `}
+
+                    {/* Variant Info */}
+                    <div className="flex-1 min-w-0">
+                      <p
+                        className={`font-semibold text-sm lg:text-base truncate ${
+                          isSelected ? 'text-primary' : 'text-gray-900'
+                        }`}
+                      >
+                        {variant.shortLabel}
+                      </p>
+                      <p className="text-xs lg:text-sm text-gray-500 truncate">
+                        {variant.material} • {variant.finish}
+                      </p>
+
+                      {/* Stock Status */}
+                      <div className="flex items-center gap-2 mt-1">
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            isOutOfStock
+                              ? 'bg-red-400'
+                              : isLowStock
+                              ? 'bg-yellow-400'
+                              : 'bg-green-400'
+                          }`}
+                        />
+                        <span className="text-xs text-gray-600">
+                          {isOutOfStock
+                            ? 'Out of stock'
+                            : isLowStock
+                            ? `${variant.stock} left`
+                            : 'In stock'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Price */}
+                  <div className="mt-2 flex items-center justify-between">
+                    <span
+                      className={`font-bold text-sm lg:text-base ${
+                        isSelected ? 'text-primary' : 'text-gray-900'
+                      }`}
                     >
+                      {currency}
+                      {variant.finalPrice.toLocaleString()}
+                    </span>
+
+                    {isSelected && (
+                      <div className="text-primary">
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Out of stock overlay */}
+                  {isOutOfStock && (
+                    <div className="absolute inset-0 bg-gray-100/80 rounded-xl flex items-center justify-center">
+                      <span className="text-gray-600 font-semibold text-sm">
+                        Out of Stock
+                      </span>
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* List View */}
+        {viewMode === 'list' && (
+          <div className="space-y-2">
+            {displayVariants.map((variant) => {
+              const isSelected = selectedVariant?._id === variant._id;
+              const isOutOfStock = variant.stock <= 0;
+
+              return (
+                <motion.div
+                  key={variant._id}
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  onClick={() => !isOutOfStock && onVariantSelect(variant)}
+                  className={`
+                  flex items-center justify-between p-3 lg:p-4 border rounded-lg cursor-pointer transition-all
+                  ${isOutOfStock ? 'cursor-not-allowed opacity-50' : ''}
+                  ${
+                    isSelected
+                      ? 'border-primary bg-primary/5'
+                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                  }
+                `}
+                >
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div
+                      className={`w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 ${
+                        isSelected ? 'ring-2 ring-primary' : ''
+                      }`}
+                    >
+                      {variant.images?.[0] ? (
+                        <img
+                          src={variant.images[0]}
+                          alt={variant.shortLabel}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                          <svg
+                            className="w-5 h-5 text-gray-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <p
+                        className={`font-semibold truncate ${
+                          isSelected ? 'text-primary' : 'text-gray-900'
+                        }`}
+                      >
+                        {variant.displayLabel}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Stock: {variant.stock} • {currency}
+                        {variant.finalPrice.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  {isSelected && (
+                    <div className="text-primary ml-2">
                       <svg
-                        className="w-8 h-8 text-gray-400"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
                         <path
-                          fillRule="evenodd"
-                          d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                          clipRule="evenodd"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
                         />
                       </svg>
                     </div>
                   )}
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
 
-                  <div>
-                    <p
-                      className={`
-                      font-semibold 
-                      ${isSelected ? 'text-primary' : 'text-gray-900'}
-                    `}
-                    >
-                      {variant.displayLabel}
-                    </p>
-                    <div className="flex items-center space-x-2 text-sm text-gray-500">
-                      <span>Stock: {variant.stock}</span>
-                      <span>•</span>
-                      <span
-                        className={`
-                        font-bold 
-                        ${isSelected ? 'text-primary' : 'text-green-600'}
-                      `}
-                      >
-                        {currency}
-                        {variant.finalPrice.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {isSelected && (
-                  <div className="text-primary">
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
-        </div>
+        {/* Show More/Less Button */}
+        {hasMoreVariants && (
+          <div className="text-center pt-4 border-t border-gray-200">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors font-medium text-gray-700"
+            >
+              {showAll ? (
+                <>
+                  <span>Show Less</span>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 15l7-7 7 7"
+                    />
+                  </svg>
+                </>
+              ) : (
+                <>
+                  <span>Show {groupedVariants.length - 6} More Options</span>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </>
+              )}
+            </button>
+          </div>
+        )}
       </div>
     );
   };
 
-  const handleAttributeChange = (attributeType, value) => {
-    setSelectedAttributes((prev) => {
-      const newAttributes = {
-        ...prev,
-        [attributeType]: value,
-      };
-
-      // Find matching variants
-      const matchingVariants = variantData.filteredVariants.filter((variant) =>
-        Object.entries(newAttributes).every(
-          ([key, val]) => val === null || val === variant[key]
-        )
-      );
-
-      // If only one variant matches, auto-select
-      if (matchingVariants.length === 1) {
-        setSelectedVariant(matchingVariants[0]);
-
-        // Automatically fill in all attributes
-        const completeAttributes = {
-          color: matchingVariants[0].color,
-          size: matchingVariants[0].size,
-          material: matchingVariants[0].material,
-          finish: matchingVariants[0].finish,
-        };
-
-        setSelectedAttributes(completeAttributes);
-      }
-
-      return newAttributes;
-    });
-  };
-
   // Add this debug code to see what's missing:
-  useEffect(() => {
-    console.log('🔍 Debug Selected Attributes:', selectedAttributes);
-    console.log('🔍 Required for exact match:');
-    console.log('  - Color:', selectedAttributes.color, '(should be Yellow)');
-    console.log('  - Size:', selectedAttributes.size, '(should be L)');
-    console.log(
-      '  - Material:',
-      selectedAttributes.material,
-      '(should be Wood)'
-    );
-    console.log('  - Finish:', selectedAttributes.finish, '(should be Modern)');
-    console.log('🔍 Exact Match Result:', variantData?.exactMatch);
-  }, [selectedAttributes, variantData]);
-
-  // const handleAttributeChange = (attributeType, value) => {
-  //   setSelectedAttributes((prev) => ({
-  //     ...prev,
-  //     [attributeType]: value,
-  //   }));
-  // };
-  // const handleAttributeChange = (attributeType, value) => {
-  //   setSelectedAttributes((prev) => {
-  //     const newAttributes = {
-  //       ...prev,
-  //       [attributeType]: value,
-  //     };
-
-  //     // Find matching variant based on selected attributes
-  //     const matchingVariant = variantData.filteredVariants.find((variant) =>
-  //       Object.entries(newAttributes).every(
-  //         ([key, val]) => val === null || variant[key] === val
-  //       )
-  //     );
-
-  //     if (matchingVariant) {
-  //       setSelectedVariant(matchingVariant);
-  //     }
-
-  //     return newAttributes;
-  //   });
-  // };
-
-  // const handleAttributeChange = (attributeType, value) => {
-  //   setSelectedAttributes((prev) => {
-  //     const newAttributes = {
-  //       ...prev,
-  //       [attributeType]: value,
-  //     };
-
-  //     // Smart variant matching
-  //     const matchingVariants = variantData.filteredVariants.filter((variant) =>
-  //       Object.entries(newAttributes).every(
-  //         ([key, val]) => val === null || variant[key] === val
-  //       )
-  //     );
-
-  //     // If only one variant matches, auto-select
-  //     if (matchingVariants.length === 1) {
-  //       setSelectedVariant(matchingVariants[0]);
-
-  //       // Auto-fill remaining attributes
-  //       const completeAttributes = {
-  //         ...newAttributes,
-  //         color: matchingVariants[0].color,
-  //         size: matchingVariants[0].size,
-  //         material: matchingVariants[0].material,
-  //         finish: matchingVariants[0].finish,
-  //       };
-
-  //       setSelectedAttributes(completeAttributes);
-  //     }
-
-  //     return newAttributes;
-  //   });
-  // };
+  // useEffect(() => {
+  //   console.log('🔍 Debug Selected Attributes:', selectedAttributes);
+  //   console.log('🔍 Required for exact match:');
+  //   console.log('  - Color:', selectedAttributes.color, '(should be Yellow)');
+  //   console.log('  - Size:', selectedAttributes.size, '(should be L)');
+  //   console.log(
+  //     '  - Material:',
+  //     selectedAttributes.material,
+  //     '(should be Wood)'
+  //   );
+  //   console.log('  - Finish:', selectedAttributes.finish, '(should be Modern)');
+  //   console.log('🔍 Exact Match Result:', variantData?.exactMatch);
+  // }, [selectedAttributes, variantData]);
 
   const handleAddToCart = async () => {
     const variantToUse = selectedVariant || variantData?.exactMatch;
@@ -364,23 +532,48 @@ const ProductPage = () => {
     }
   };
 
+  // const handleWishlistToggle = async () => {
+  //   if (!token) {
+  //     toast.error('Please login to add to wishlist');
+  //     return;
+  //   }
+
+  //   if (isInWishlist(product._id, selectedVariant?._id)) {
+  //     await removeFromWishlist(product._id, selectedVariant?._id);
+  //   } else {
+  //     await addToWishlist(
+  //       product._id,
+  //       selectedVariant?._id,
+  //       selectedAttributes
+  //     );
+  //   }
+  // };
+
   const handleWishlistToggle = async () => {
     if (!token) {
       toast.error('Please login to add to wishlist');
       return;
     }
 
-    if (isInWishlist(product._id, selectedVariant?._id)) {
-      await removeFromWishlist(product._id, selectedVariant?._id);
-    } else {
-      await addToWishlist(
-        product._id,
-        selectedVariant?._id,
-        selectedAttributes
-      );
+    setWishlistLoading(true);
+    try {
+      if (isInWishlist(product._id, selectedVariant?._id)) {
+        await removeFromWishlist(product._id, selectedVariant?._id);
+        // toast.success('Removed from wishlist');
+      } else {
+        await addToWishlist(
+          product._id,
+          selectedVariant?._id,
+          selectedAttributes
+        );
+        // toast.success('Added to wishlist');
+      }
+    } catch (error) {
+      toast.error('Failed to update wishlist');
+    } finally {
+      setWishlistLoading(false);
     }
   };
-
   const getPrice = () => {
     if (selectedVariant) {
       return {
@@ -468,7 +661,7 @@ const ProductPage = () => {
     );
   }
 
- const currentPrice = getPrice();
+  const currentPrice = getPrice();
   const currentStock = getStock();
 
   return (
@@ -653,7 +846,6 @@ const ProductPage = () => {
                 onVariantSelect={handleVariantSelect}
               />
             )}
-        
 
             {/* Stock & Availability */}
             <div className="mt-4 mb-6">
@@ -713,7 +905,7 @@ const ProductPage = () => {
 
             {/* Quantity & Actions */}
             <div className=" space-y-6 mb-6 mt-4">
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4">
                 <label className="text-base font-bold text-gray-900">
                   Quantity:
                 </label>
@@ -751,11 +943,11 @@ const ProductPage = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex  gap-3">
                 <button
                   onClick={handleAddToCart}
                   disabled={currentStock <= 0 && !isPreorder}
-                  className={`px-10 py-3 flex-1 relative overflow-hidden border rounded-xl border-white group transition-all duration-300 bg-black ${
+                  className={`px-10 py-3  flex-1 relative overflow-hidden border rounded-xl border-white group transition-all duration-300 bg-black ${
                     currentStock <= 0 && !isPreorder
                       ? 'cursor-not-allowed opacity-50'
                       : 'border border-transparent hover:border-black'
@@ -786,7 +978,7 @@ const ProductPage = () => {
                     {isPreorder ? 'Pre-order Now' : 'Add to Cart'}
                   </span>
                 </button>
-                <button
+                {/* <button
                   //  onLike={() => likeMutation.mutate(image._id)}
                   onClick={handleWishlistToggle}
                   className={`w-10 h-10 border rounded flex items-center justify-center transition-colors ${
@@ -812,6 +1004,37 @@ const ProductPage = () => {
                       d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                     />
                   </svg>
+                </button> */}
+                <button
+                  onClick={handleWishlistToggle}
+                  disabled={wishlistLoading} // Add this state
+                  className={`min-w-[44px] h-11 px-3 border rounded-lg flex items-center justify-center transition-all duration-200 ${
+                    isInWishlist(product._id, selectedVariant?._id)
+                      ? 'bg-red-500 border-red-500 text-white hover:bg-red-600'
+                      : 'border-primary text-primary hover:bg-primary hover:text-white'
+                  } ${wishlistLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  {wishlistLoading ? (
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <svg
+                      className={`w-5 h-5 ${
+                        isInWishlist(product._id, selectedVariant?._id)
+                          ? 'fill-current'
+                          : ''
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                      />
+                    </svg>
+                  )}
                 </button>
               </div>
             </div>

@@ -454,7 +454,7 @@ const Navigation = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="fixed right-0 top-0 h-full w-full max-w-md bg-light rounded-lg  z-[99999] flex flex-col"
+              className="fixed right-0 top-0 h-full w-full max-w-md bg-light rounded-lg  z-[9999999999] flex flex-col"
             >
               {/* Header */}
               <div className="flex justify-between items-center p-6 border-b border-gray-300">

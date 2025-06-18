@@ -183,52 +183,6 @@ const Profile = () => {
           </div>
         </motion.div>
 
-        {/* <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 rounded-xl p-6 lg:p-8 mb-8 border border-gray-700"
-        >
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 lg:gap-6">
-              <div className="relative">
-                <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-gray-600 to-gray-800 rounded-full flex items-center justify-center ring-4 ring-gray-700">
-                  <FaUser className="text-2xl lg:text-3xl text-gray-300" />
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-gray-900"></div>
-              </div>
-              <div className="space-y-1">
-                <h1 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  {user.name}
-                </h1>
-                <div className="flex items-center gap-2 text-gray-400">
-                  <FaEnvelope className="text-sm" />
-                  <span className="text-sm lg:text-base">{user.email}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-500">
-                  <FaCalendar className="text-sm" />
-                  <span className="text-xs lg:text-sm">
-                    Member since {new Date(user.createdAt).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-             
-              <button
-                onClick={logout}
-                className="flex items-center gap-2 px-4 py-2 border border-red-500/30 text-red-400 rounded-lg hover:bg-red-500/10 hover:border-red-500 transition-all text-sm"
-              >
-                <FaSignOutAlt />
-                <span className="hidden sm:inline">Logout</span>
-              </button>
-            </div>
-          </div>
-        </motion.div> */}
-
         {/* Quick Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -400,15 +354,6 @@ const Profile = () => {
                     {activeTab === 'details' && <ProfileDetails />}
                     {activeTab === 'wishlist' && <Wishlist />}
                     {activeTab === 'addresses' && <AddressBook />}
-                    {/* {activeTab === 'preferences' && (
-                      <div className="text-center py-12">
-                        <FaCog className="text-4xl text-gray-600 mx-auto mb-4" />
-                        <h3 className="text-xl font-semibold mb-2">
-                          Preferences
-                        </h3>
-                        <p className="text-gray-400">Coming soon...</p>
-                      </div>
-                    )} */}
                   </motion.div>
                 </AnimatePresence>
               </div>
