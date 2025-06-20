@@ -7,11 +7,11 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
   // const [collectionName, setCollectionName] = useState('');
   // const [isCreating, setIsCreating] = useState(false);
   const [newCollectionName, setNewCollectionName] = useState('');
-  const { useCollections, useCreateCollection, useAddToCollection } =
+  const {  useCreateCollection, useAddToCollection } =
     useGallery();
 
   // Get collections
-  const { data: collections, isLoading: collectionsLoading } = useCollections();
+  
 
   // Create collection mutation
   const createCollectionMutation = useCreateCollection();

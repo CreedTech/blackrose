@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-// components/PasswordStrengthMeter.jsx
 import { useState, useEffect } from 'react';
 
 const PasswordStrengthMeter = ({ password }) => {
@@ -56,19 +56,6 @@ const PasswordStrengthMeter = ({ password }) => {
     setFeedback(feedbackItems);
   };
 
-  const getStrengthColor = () => {
-    if (strength <= 25) return 'bg-red-500';
-    if (strength <= 50) return 'bg-yellow-500';
-    if (strength <= 75) return 'bg-blue-500';
-    return 'bg-green-500';
-  };
-
-  const getStrengthText = () => {
-    if (strength < 25) return 'Weak';
-    if (strength < 50) return 'Fair';
-    if (strength < 75) return 'Good';
-    return 'Strong';
-  };
 
   if (!password) return null;
 

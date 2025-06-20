@@ -6,14 +6,11 @@ import {
   FaUser,
   FaHeart,
   FaMapMarkerAlt,
-  FaCog,
   FaBox,
   FaEye,
   FaSignOutAlt,
-  FaEdit,
   FaCalendar,
   FaEnvelope,
-  FaPhone,
 } from 'react-icons/fa';
 import { HiMenu, HiX } from 'react-icons/hi';
 import ProfileDetails from '../component/ProfileDetails';

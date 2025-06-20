@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+
 
 export default function StatusFilters({ filterStatus, setFilterStatus }) {
   const statuses = [

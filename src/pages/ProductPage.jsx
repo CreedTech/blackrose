@@ -497,20 +497,6 @@ const ProductPage = () => {
     );
   };
 
-  // Add this debug code to see what's missing:
-  // useEffect(() => {
-  //   console.log('🔍 Debug Selected Attributes:', selectedAttributes);
-  //   console.log('🔍 Required for exact match:');
-  //   console.log('  - Color:', selectedAttributes.color, '(should be Yellow)');
-  //   console.log('  - Size:', selectedAttributes.size, '(should be L)');
-  //   console.log(
-  //     '  - Material:',
-  //     selectedAttributes.material,
-  //     '(should be Wood)'
-  //   );
-  //   console.log('  - Finish:', selectedAttributes.finish, '(should be Modern)');
-  //   console.log('🔍 Exact Match Result:', variantData?.exactMatch);
-  // }, [selectedAttributes, variantData]);
 
   const handleAddToCart = async () => {
     const variantToUse = selectedVariant || variantData?.exactMatch;

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-// components/OrderCancellationModal.jsx
+
 import { useState, useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import { FaTimes } from 'react-icons/fa';

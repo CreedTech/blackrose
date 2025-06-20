@@ -1,5 +1,5 @@
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
@@ -79,7 +79,6 @@ const productsAPI = {
 };
 
 export const useProducts = () => {
-  const queryClient = useQueryClient();
 
   const useLists = () => {
     return useQuery({

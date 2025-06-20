@@ -366,32 +366,7 @@ const SingleBlog = () => {
                         Add to Cart
                       </motion.button>
                     </motion.div>
-                    {/* <Link
-                      key={product._id}
-                      to={`/shop/${product._id}`}
-                      className="group"
-                    >
-                      <div className="rounded-lg overflow-hidden mb-4">
-                        <img
-                          src={product.images[0]}
-                          alt={product.name}
-                          className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      </div>
-                      <div>
-                        <h3 className="text-white font-medium mb-1 group-hover:text-primary transition-colors">
-                          {product.name}
-                        </h3>
-                        <div className="flex justify-between items-center">
-                          <span className="text-gray-300">
-                            ${product.price.toFixed(2)}
-                          </span>
-                          <button className="px-3 py-1 bg-primary text-white text-sm rounded hover:bg-primary/90 transition-colors">
-                            Add to Cart
-                          </button>
-                        </div>
-                      </div>
-                    </Link> */}
+                  
                   </>
                 ))}
               </div>

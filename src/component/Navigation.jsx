@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
@@ -6,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   XMarkIcon,
   Bars3Icon,
-  MagnifyingGlassIcon,
   ShoppingBagIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
@@ -17,7 +17,6 @@ const Navigation = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const location = useLocation();
   const {
-    setShowSearch,
     getCartCount,
     getCartAmount,
     navigate,

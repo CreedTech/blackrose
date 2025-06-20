@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // components/ResetPassword.jsx
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -24,7 +25,7 @@ const ResetPassword = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    // verifyToken();
+    verifyToken();
   }, [token]);
 
   const verifyToken = async () => {
@@ -125,13 +126,7 @@ const ResetPassword = () => {
       <div className="flex items-center justify-center h-screen bg-light">
         <div className="animate-spin rounded-full h-16 w-16 md:h-32 md:w-32 border-t-2 border-b-2 border-primary"></div>
       </div>
-      //   <div className="min-h-screen bg-black flex items-center justify-center">
-      //     <div className="blackrose-pageloading z-[999999999]">
-      //       <div className="blackrose-pageloading-inner">
-      //         <img src={assets.logo} className="logo" alt="" />
-      //       </div>
-      //     </div>
-      //   </div>
+    
     );
   }
 
