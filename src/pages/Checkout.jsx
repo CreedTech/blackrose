@@ -36,14 +36,12 @@ const Checkout = () => {
   const total = subtotal + shipping;
 
   useEffect(() => {
-    // Check for preorder items - updated logic
     const preorderItemsList = Object.values(cartItems).filter(
       (item) => item.isPreorder === true
     );
 
     setPreorderItems(preorderItemsList);
 
-    // Set default address
     if (addresses.length > 0 && !selectedAddress) {
       const defaultAddr =
         addresses.find((addr) => addr.isDefault) || addresses[0];
@@ -54,7 +52,6 @@ const Checkout = () => {
   const hasPreorderItems = preorderItems.length > 0;
 
   const handlePayment = async () => {
-    // In your checkout component, add this to debug:
     console.log('Cart items:', cartItems);
     console.log(
       'Items being sent to backend:',
@@ -76,7 +73,7 @@ const Checkout = () => {
       return;
     }
 
-    setError(null); // Clear any previous errors
+    setError(null); 
 
     const addressData = {
       fullName: selectedAddress.fullName,
@@ -88,11 +85,9 @@ const Checkout = () => {
       email: selectedAddress.email || user?.email,
     };
 
-    // Updated to not pass isPreorder as a single flag
     const order = await checkout(addressData, shippingMethod, orderNotes);
 
     if (order) {
-      // Order created successfully, navigate to payment or success page
       navigate('/payment', { state: { order } });
     } else {
       setError('Failed to create order. Please try again.');

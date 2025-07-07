@@ -106,7 +106,7 @@ const Cart = () => {
                             <div className="text-sm text-gray-500 mb-2">
                               {Object.entries(item.selectedAttributes)
                                 .filter(
-                                  ([_, value]) =>
+                                  ([value]) =>
                                     value &&
                                     (typeof value !== 'object' ||
                                       Object.keys(value).length)

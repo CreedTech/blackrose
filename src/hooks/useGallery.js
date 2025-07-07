@@ -41,27 +41,26 @@ const galleryApi = {
   },
 
   likeImage: async (imageId) => {
-    const token = localStorage.getItem('token'); // Retrieve the auth token from localStorage (or wherever it's stored)
+    const token = localStorage.getItem('token');
 
     if (!token) {
       console.log('No token found, user may not be logged in.');
-      return; // Optionally handle this case, e.g., show a message to the user
+      return;
     }
 
     try {
       const { data } = await axios.post(
         `${API_URL}/gallery/images/${imageId}/like`,
-        {}, // No body is needed for like/unlike action, so pass an empty object
+        {},
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the token in the headers
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      return data; // Return the response data from the backend
+      return data;
     } catch (error) {
       console.error('Error liking image:', error);
-      // Optionally handle the error (show an alert or message to the user)
     }
   },
 
@@ -125,7 +124,7 @@ const galleryApi = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      responseType: 'blob', // Important for downloading files
+      responseType: 'blob',
     });
     return response.data;
   },
@@ -134,7 +133,6 @@ const galleryApi = {
 export const useGallery = () => {
   const queryClient = useQueryClient();
 
-  // Images queries and mutations
   const useImages = (options = {}) => {
     const { page = 1, category, search } = options;
 
@@ -219,35 +217,29 @@ export const useGallery = () => {
       },
     });
   };
-  // Collections queries and mutations
 
-  // Get user's collections
   const useCollections = () => {
     return useQuery({
       queryKey: ['collections'],
       queryFn: galleryApi.getUserCollections,
-      // Only fetch if user is authenticated
+
       enabled: !!localStorage.getItem('token'),
     });
   };
 
-  // Create new collection
   const useCreateCollection = () => {
     return useMutation({
       mutationFn: galleryApi.createCollection,
       onSuccess: () => {
-        // Invalidate collections query to refetch
         queryClient.invalidateQueries(['collections']);
       },
     });
   };
 
-  // Add image to collection
   const useAddToCollection = () => {
     return useMutation({
       mutationFn: galleryApi.addToCollection,
       onSuccess: () => {
-        // Invalidate collections query to refetch
         queryClient.invalidateQueries(['collections']);
       },
     });

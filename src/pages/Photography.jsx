@@ -372,55 +372,7 @@ const Photography = () => {
           </motion.div>
         )}
 
-        {/* Pagination for single page */}
-        {/* {data?.totalPages == 1 && (
-          <motion.div 
-            className="row"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <div>
-              <div className="col-md-12 mt-40 mb-60 text-center animate-box">
-                <ul className="blackrose-pagination-wrap align-center">
-                  <motion.li
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <a
-                      href=""
-                      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                      disabled={page === 1}
-                      className="text-gray-700 hover:text-gray-900"
-                    >
-                      <i className="fa fa-angle-left"></i>
-                    </a>
-                  </motion.li>
-                  <motion.li>
-                    <span className="px-4 py-2 text-gray-700">
-                      Page {page} of {data.totalPages}
-                    </span>
-                  </motion.li>
-                  <motion.li
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <a
-                      href=""
-                      onClick={() => setPage((prev) => prev + 1)}
-                      disabled={page === data.totalPages}
-                      className="text-gray-700 hover:text-gray-900"
-                    >
-                      <i className="fa fa-angle-right"></i>
-                    </a>
-                  </motion.li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-        )} */}
-
-        {/* Lightbox */}
+       
         <AnimatePresence>
           {selectedImage && (
             <motion.div

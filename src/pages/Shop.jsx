@@ -245,7 +245,6 @@ const Shop = () => {
                   ))}
                 </div>
 
-                {/* Premium Pagination */}
 
                 {data?.pagination && data.pagination.totalPages > 1 && (
                   <div className="mt-16 flex justify-center">

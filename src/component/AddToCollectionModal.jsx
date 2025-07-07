@@ -92,10 +92,6 @@ const AddToCollectionModal = ({
                         backgroundPosition: 'center',
                       }}
                       className="w-full h-20 py-3 px-4 relative bg-primary/40 rounded text-primary text-left hover:bg-primary/20 transition-colors flex items-center justify-between"
-                      // style={{
-                      //   '--image-url': `url(${collection.images[collection?.images?.length -1]?.watermarkedUrl})`,
-                      // }}
-                      // className="w-full h-20 py-3 px-4 relative bg-primary/40 rounded text-primary text-left hover:bg-primary/20 transition-colors flex items-center justify-between bg-[image:var(--image-url)] bg-fill"
                     >
                       <div className="absolute inset-0 bg-primary/40"></div>
                       <span className="relative text-light font-medium">

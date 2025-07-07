@@ -22,15 +22,15 @@ const ShopContextProvider = (props) => {
   const [addresses, setAddresses] = useState([]);
   const navigate = useNavigate();
 
-  // Order-related state
+
   const [orderProcessing, setOrderProcessing] = useState(false);
   const [currentOrder, setCurrentOrder] = useState(null);
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [selectedOrders, setSelectedOrders] = useState([]); // For bulk selection
+  const [selectedOrders, setSelectedOrders] = useState([]); 
 
-  // Create axios instance with interceptors
+
   const api = axios.create({
     baseURL: backendUrl,
     headers: {
@@ -38,7 +38,7 @@ const ShopContextProvider = (props) => {
     },
   });
 
-  // Add token to requests
+
   api.interceptors.request.use((config) => {
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -46,7 +46,7 @@ const ShopContextProvider = (props) => {
     return config;
   });
 
-  // Handle auth errors
+
   api.interceptors.response.use(
     (response) => response,
     (error) => {
@@ -60,7 +60,7 @@ const ShopContextProvider = (props) => {
     }
   );
 
-  // Authentication functions
+
   const login = async (email, password) => {
     setLoading(true);
     try {
@@ -133,47 +133,7 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  // Enhanced cart functions with variant support
-  // const addToCart = async (
-  //   productId,
-  //   quantity = 1,
-  //   variantId = null,
-  //   selectedAttributes = {}
-  // ) => {
-  //   if (!token) {
-  //     toast.error('Please log in to add items to cart');
-  //     navigate('/login');
-  //     return false;
-  //   }
 
-  //   setLoading(true);
-  //   try {
-  //     const response = await api.post('/user/cart/add', {
-  //       productId,
-  //       quantity,
-  //       variantId,
-  //       selectedAttributes,
-  //     });
-
-  //     if (response.data.success) {
-  //       await getCart();
-  //       toast.success('Item added to cart');
-  //       return true;
-  //     }
-  //   } catch (error) {
-  //     const message = error.response?.data?.message || 'Could not add to cart';
-  //     if (error.response?.data?.availableStock !== undefined) {
-  //       toast.error(
-  //         `Only ${error.response.data.availableStock} items available`
-  //       );
-  //     } else {
-  //       toast.error(message);
-  //     }
-  //     return false;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const addToCart = async (
     productId,
     quantity = 1,
@@ -408,52 +368,7 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  // Enhanced order creation
-  // const createOrder = async (
-  //   addressData,
-  //   shippingMethod = 'standard',
-  //   notes = '',
-  //   isPreorder = false
-  // ) => {
-  //   if (Object.keys(cartItems).length === 0) {
-  //     toast.error('Your cart is empty');
-  //     return null;
-  //   }
 
-  //   setOrderProcessing(true);
-  //   try {
-  //     // Format items for order
-  //     const items = Object.values(cartItems).map((item) => ({
-  //       productId: item.productId,
-  //       variantId: item.variantId,
-  //       quantity: item.quantity,
-  //       selectedAttributes: item.selectedAttributes,
-  //     }));
-
-  //     const orderData = {
-  //       items,
-  //       shippingAddress: addressData,
-  //       billingAddress: addressData,
-  //       paymentMethod: 'paystack',
-  //       shippingMethod,
-  //       customerNotes: notes,
-  //       fulfillmentMethod: isPreorder ? 'preorder' : 'standard',
-  //     };
-
-  //     const response = await api.post('/order/create', orderData);
-
-  //     if (response.data.success) {
-  //       setCurrentOrder(response.data.order);
-  //       return response.data.order;
-  //     }
-  //   } catch (error) {
-  //     console.error('Order creation error:', error);
-  //     toast.error(error.response?.data?.message || 'Failed to create order');
-  //     return null;
-  //   } finally {
-  //     setOrderProcessing(false);
-  //   }
-  // };
   const createOrder = async (
     addressData,
     shippingMethod = 'standard',
@@ -466,16 +381,16 @@ const ShopContextProvider = (props) => {
 
     setOrderProcessing(true);
     try {
-      // Format items for order - include preorder status from cart items
+      
       const items = Object.values(cartItems).map((item) => ({
         productId: item.productId,
         variantId: item.variantId,
         quantity: item.quantity,
         selectedAttributes: item.selectedAttributes,
-        isPreorder: item.isPreorder || false, // Get preorder status from cart item
+        isPreorder: item.isPreorder || false, 
       }));
 
-      // Check if any items are preorders
+   
       const hasPreorderItems = items.some((item) => item.isPreorder);
 
       const orderData = {
@@ -695,20 +610,7 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  // User profile functions
-  // const updateProfile = async (profileData) => {
-  //   try {
-  //     const response = await api.put('/user/profile', profileData);
-  //     if (response.data.success) {
-  //       await getUserData();
-  //       toast.success('Profile updated successfully');
-  //       return true;
-  //     }
-  //   } catch (error) {
-  //     toast.error('Failed to update profile');
-  //     return false;
-  //   }
-  // };
+
   const updateProfile = async (profileData) => {
     try {
       const response = await api.put('/user/profile', profileData);

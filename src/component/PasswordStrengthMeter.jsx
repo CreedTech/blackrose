@@ -61,23 +61,7 @@ const PasswordStrengthMeter = ({ password }) => {
 
   return (
     <div className="mt-2 space-y-2">
-      {/* <div className="flex items-center space-x-2">
-        <div className="flex-1 bg-gray-700 rounded-full h-1 gap-1">
-          <div
-            className={`h-1 rounded-full transition-all duration-300 gap-1 ${getStrengthColor()}`}
-            style={{ width: `${strength}%` }}
-          ></div>
-        </div>
-        <span
-          className={`text-sm font-medium ${getStrengthColor().replace(
-            'bg-',
-            'text-'
-          )}`}
-        >
-          {getStrengthText()}
-        </span>
-      </div> */}
-
+     
       <ul className="text-sm space-y-1 gap-1">
         {feedback.map((item, index) => (
           <li

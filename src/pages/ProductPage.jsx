@@ -53,7 +53,7 @@ const ProductPage = () => {
   const { data: allVariantsData } = useProductVariants(
     productId,
     {},
-    { enabled: product?.hasVariants } // Only fetch if product has variants
+    { enabled: product?.hasVariants } 
   );
 
   const { data: variantData } = useProductVariants(
@@ -64,11 +64,7 @@ const ProductPage = () => {
         product?.hasVariants && Object.keys(selectedAttributes).length > 0,
     }
   );
-  // const { data: allVariantsData } = useProductVariants(productId, {});
-  // const { data: variantData } = useProductVariants(
-  //   productId,
-  //   selectedAttributes
-  // );
+
   useEffect(() => {
     if (allVariantsData?.filteredVariants?.length && allVariants.length === 0) {
       setAllVariants(allVariantsData.filteredVariants);
@@ -111,26 +107,7 @@ const ProductPage = () => {
     }
   }, [selectedVariant, product?.images]);
 
-  // useEffect(() => {
-  //   // 🎯 Smart auto-selection for single variants
-  //   if (
-  //     variantData?.autoSelected &&
-  //     variantData?.exactMatch &&
-  //     !selectedVariant
-  //   ) {
-  //     console.log('🚀 Auto-selecting single variant');
-  //     setSelectedVariant(variantData.exactMatch);
-  //     console.log(variantData.exactMatch);
-  //     setSelectedAttributes({
-  //       color: variantData.exactMatch.color || '',
-  //       size: variantData.exactMatch.size || '',
-  //       material: variantData.exactMatch.material || '',
-  //       finish: variantData.exactMatch.finish || '',
-  //     });
-  //   }
-  // }, [variantData, selectedVariant]);
   useEffect(() => {
-    // Only auto-select if no variant is currently selected and we have exactly one variant
     if (
       !selectedVariant &&
       variantData?.exactMatch &&
@@ -518,22 +495,7 @@ const ProductPage = () => {
     }
   };
 
-  // const handleWishlistToggle = async () => {
-  //   if (!token) {
-  //     toast.error('Please login to add to wishlist');
-  //     return;
-  //   }
 
-  //   if (isInWishlist(product._id, selectedVariant?._id)) {
-  //     await removeFromWishlist(product._id, selectedVariant?._id);
-  //   } else {
-  //     await addToWishlist(
-  //       product._id,
-  //       selectedVariant?._id,
-  //       selectedAttributes
-  //     );
-  //   }
-  // };
 
   const handleWishlistToggle = async () => {
     if (!token) {
@@ -545,14 +507,12 @@ const ProductPage = () => {
     try {
       if (isInWishlist(product._id, selectedVariant?._id)) {
         await removeFromWishlist(product._id, selectedVariant?._id);
-        // toast.success('Removed from wishlist');
       } else {
         await addToWishlist(
           product._id,
           selectedVariant?._id,
           selectedAttributes
         );
-        // toast.success('Added to wishlist');
       }
     } catch (error) {
       toast.error('Failed to update wishlist');
@@ -964,33 +924,6 @@ const ProductPage = () => {
                     {isPreorder ? 'Pre-order Now' : 'Add to Cart'}
                   </span>
                 </button>
-                {/* <button
-                  //  onLike={() => likeMutation.mutate(image._id)}
-                  onClick={handleWishlistToggle}
-                  className={`w-10 h-10 border rounded flex items-center justify-center transition-colors ${
-                    isInWishlist(product._id, selectedVariant?._id)
-                      ? 'bg-red-500 border-red-500 text-white'
-                      : 'border-primary hover:bg-primary/90'
-                  }`}
-                >
-                  <svg
-                    className={`w-5 h-5 ${
-                      isInWishlist(product._id, selectedVariant?._id)
-                        ? 'fill-current'
-                        : ''
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    />
-                  </svg>
-                </button> */}
                 <button
                   onClick={handleWishlistToggle}
                   disabled={wishlistLoading} // Add this state

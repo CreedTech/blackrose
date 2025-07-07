@@ -1,10 +1,8 @@
-
-
 // pages/Orders.jsx
-import { useEffect, useContext, useCallback, useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
-import { FaDownload, FaEye, FaTimes, FaCheck } from 'react-icons/fa';
+import { FaDownload, FaEye } from 'react-icons/fa';
 import OrderCancellationModal from '../component/OrderCancellationModal';
 import StatusFilters from './StatusFilters';
 
@@ -63,25 +61,7 @@ const Orders = () => {
     }
     return '3-5 days';
   };
-  function OrdersList({ statusFilter }) {
-    // const allOrders = [
-    //   /* … */
-    // ];
-    const filtered = orders?.filter((o) =>
-      statusFilter === 'all' ? true : o.status === statusFilter
-    );
-    console.log(filtered);
 
-    return (
-      <ul>
-        {filtered.map((o) => (
-          <li key={o.id}>
-            {o.id} – {o.status}
-          </li>
-        ))}
-      </ul>
-    );
-  }
 
   return (
     <div className="min-h-screen  text-primary relative font-medium">
@@ -115,34 +95,11 @@ const Orders = () => {
           )}
         </div>
 
-        {/* Filter Tabs */}
-        {/* <div className="flex gap-2 mb-6 overflow-x-auto">
-          {[
-            'all',
-            'Pending',
-            'Processing',
-            'Shipped',
-            'Delivered',
-            'Cancelled',
-          ].map((status) => (
-            <button
-              key={status}
-              onClick={() => setFilterStatus(status)}
-              className={`px-4 py-2 rounded-lg capitalize transition whitespace-nowrap ${
-                filterStatus === status
-                  ? 'bg-primary text-light'
-                  : 'bg-light hover:bg-gray-800'
-              }`}
-            >
-              {status}
-            </button>
-          ))}
-        </div> */}
+    
         <StatusFilters
           filterStatus={filterStatus}
           setFilterStatus={setFilterStatus}
         />
-        {/* <OrdersList statusFilter={filterStatus} /> */}
 
         {orders.length === 0 && !ordersLoading ? (
           <div className="text-center py-12 bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-4 lg:p-6 mb-8 border border-gray-200  shadow-sm">
@@ -307,25 +264,7 @@ const Orders = () => {
                         </span>
                         <span>{getEstimatedDelivery(selectedOrder)}</span>
                       </div>
-                      {/* {selectedOrder.tracking?.trackingNumber && (
-                        <>
-                          <div>
-                            <span className="text-primary font-bold">Carrier: </span>
-                            <span>{selectedOrder.tracking.carrier}</span>
-                          </div>
-                          <div>
-                            <span className="text-primary font-bold">Tracking: </span>
-                            <a
-                              href={selectedOrder.tracking.trackingUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-400 hover:underline"
-                            >
-                              {selectedOrder.tracking.trackingNumber}
-                            </a>
-                          </div>
-                        </>
-                      )} */}
+                 
                     </div>
 
                     {/* Status Timeline */}
@@ -603,21 +542,6 @@ const Orders = () => {
           </div>
         )}
 
-        {/* Cancel Order Modal */}
-        {/* {showCancelModal && (
-          <OrderCancellationModal
-            order={orderToCancel}
-            onClose={() => {
-              setShowCancelModal(false);
-              setOrderToCancel(null);
-            }}
-            onSuccess={() => {
-              setShowCancelModal(false);
-              setOrderToCancel(null);
-              loadOrders();
-            }}
-          />
-        )} */}
         {showCancelModal && (
           <OrderCancellationModal
             order={orderToCancel}

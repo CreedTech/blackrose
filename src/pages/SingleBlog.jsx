@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useContext } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
-import { HeartIcon, ShareIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { ShareIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { assets } from '../assets/images/assets';
 import { motion } from 'framer-motion';
 import { ShopContext } from '../context/ShopContext';
@@ -41,27 +42,7 @@ const SingleBlog = () => {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  const handleLikePost = () => {
-    // Toggle like status
-    const newLikedState = !liked;
-    setLiked(newLikedState);
 
-    // Update local storage
-    const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '[]');
-    if (newLikedState) {
-      if (!likedPosts.includes(post._id)) {
-        likedPosts.push(post._id);
-      }
-    } else {
-      const index = likedPosts.indexOf(post._id);
-      if (index > -1) {
-        likedPosts.splice(index, 1);
-      }
-    }
-    localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
-
-    // You could also update the like count on the server here
-  };
   const scaleIn = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: {

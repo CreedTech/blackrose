@@ -26,7 +26,6 @@ const Signup = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       validateForm(formData, currentState);
-      //   setFormErrors(errors);
     }, 500);
 
     return () => clearTimeout(timer);

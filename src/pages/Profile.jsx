@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-// pages/Profile.jsx
+
 import { useState, useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import {
@@ -33,7 +33,6 @@ const Profile = () => {
       icon: FaMapMarkerAlt,
       color: 'green',
     },
-    // { id: 'preferences', label: 'Preferences', icon: FaCog, color: 'purple' },
   ];
 
   const quickStats = [
@@ -191,7 +190,6 @@ const Profile = () => {
             const Icon = stat.icon;
             const colorClasses = getColorClasses(stat.color);
 
-            // bg-gradient-to-r from-white via-gray-50 to-white rounded-xl p-6 lg:p-8 mb-8 border border-gray-200 shadow-sm
             return (
               <motion.div
                 key={index}

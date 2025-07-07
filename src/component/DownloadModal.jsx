@@ -4,7 +4,7 @@ import { assets } from '../assets/images/assets';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const DownloadModal = ({ isOpen, onClose }) => {
-  const [billingType, setBillingType] = useState('yearly'); // 'yearly' or 'monthly'
+  const [billingType, setBillingType] = useState('yearly'); 
 
   const modalRef = useRef();
 

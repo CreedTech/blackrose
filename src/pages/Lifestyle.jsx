@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../api/axios';
-import { PlusIcon } from '@heroicons/react/24/outline';
 
 const LifeStyle = () => {
   const [posts, setPosts] = useState([]);

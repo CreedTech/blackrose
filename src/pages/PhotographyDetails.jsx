@@ -1,4 +1,4 @@
-// components/PhotographyDetails.jsx
+
 import { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { assets } from '../assets/images/assets';
@@ -15,24 +15,16 @@ import {
 } from 'framer-motion';
 
 const PhotographyDetails = () => {
-  // const { id } = useParams();
   const { imageId } = useParams();
-  // const [downloading, setDownloading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [isLiked, setIsLiked] = useState(false);
-  // const [likeCount, setLikeCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAddToCollection, setShowAddToCollection] = useState(false);
   const [showCreateCollection, setShowCreateCollection] = useState(false);
 
-  //   const [loading, setLoading] = useState(false);
-  //   const [page, setPage] = useState(1);
-  //   const [hasMore, setHasMore] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { navigate, token } = useContext(ShopContext);
 
-  //   const [isLoading, setIsLoading] = useState(false);
 
   const {
     useGetSingleImage,
@@ -49,22 +41,15 @@ const PhotographyDetails = () => {
   const addToCollectionMutation = useAddToCollection();
   const likeMutation = useLikeImage();
   const downloadMutation = useDownloadImage();
-  // const [selectedThumbnail, setSelectedThumbnail] = useState();
 
-  // const handleLike = () => {
-  //   setIsLiked(!isLiked);
-  //   setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
-  //   console.log(likeCount);
-  // };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const handleLike = async () => {
     if (!token) {
-      // Show login modal or redirect to login
       navigate('/login', {
-        state: { from: `/gallery/${imageId}` }, // Save current location
+        state: { from: `/gallery/${imageId}` }, 
       });
       return;
     }
@@ -127,16 +112,10 @@ const PhotographyDetails = () => {
         toast.error('Failed to add to collection');
       }
     }
-    // Handle collection logic
   };
 
-  //   const toggleDropdown = () => {
-  //     setIsDropdownOpen(!isDropdownOpen);
-  //   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
-    // setSelectedThumbnail(image.category._id);
     const handleClickOutside = (event) => {
       if (!event.target.closest('.download-dropdown')) {
         setIsDropdownOpen(false);
@@ -663,19 +642,3 @@ const PhotographyDetails = () => {
 
 export default PhotographyDetails;
 
-// Optional: Add a download progress component
-// const DownloadProgress = ({ isLoading, progress }) => {
-//   if (!isLoading) return null;
-
-//   return (
-//     <div className="fixed bottom-4 right-4 bg-white text-black p-4 rounded-lg shadow-lg">
-//       <div className="flex items-center">
-//         <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-//           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-//           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-//         </svg>
-//         <span>Downloading... {progress}%</span>
-//       </div>
-//     </div>
-//   );
-// };

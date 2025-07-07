@@ -60,25 +60,6 @@ const Navigation = () => {
     { to: '/contact', label: 'Contacts' },
   ];
 
-  // const NavLinkComponent = ({ to, label, mobile = false, onClick }) => (
-  //   <NavLink
-  //     to={to}
-  //     onClick={onClick}
-  //     className={({ isActive }) =>
-  //       mobile
-  //         ? `block px-4 py-3 text-lg font-medium transition-all duration-200 rounded-lg ${
-  //             isActive
-  //               ? 'text-primary bg-gray-800 border-l-4 border-white font-bold'
-  //               : 'text-gray-300 hover:text-white hover:bg-gray-800'
-  //           }`
-  //         : `relative transition-colors duration-200 hover:text-white ${
-  //             isActive ? 'text-secondary font-bold' : 'text-primary'
-  //           }`
-  //     }
-  //   >
-  //     {label}
-  //   </NavLink>
-  // );
   const NavLinkComponent = ({ to, label, mobile = false, onClick }) => (
     <NavLink
       to={to}
@@ -120,16 +101,7 @@ const Navigation = () => {
               >
                 <Bars3Icon className="w-6 h-6" />
               </button>
-              {/* <button
-                className="p-2 text-gray-300 hover:text-white transition-colors"
-                onClick={() => {
-                  setShowSearch(true);
-                  navigate('/collection');
-                }}
-                aria-label="Search"
-              >
-                <MagnifyingGlassIcon className="w-5 h-5" />
-              </button> */}
+           
             </div>
 
             {/* Center: Logo */}

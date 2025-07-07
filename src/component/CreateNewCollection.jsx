@@ -4,19 +4,14 @@ import PropTypes from 'prop-types';
 import { useGallery } from '../hooks/useGallery';
 
 const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
-  // const [collectionName, setCollectionName] = useState('');
-  // const [isCreating, setIsCreating] = useState(false);
   const [newCollectionName, setNewCollectionName] = useState('');
   const {  useCreateCollection, useAddToCollection } =
     useGallery();
 
-  // Get collections
-  
 
-  // Create collection mutation
   const createCollectionMutation = useCreateCollection();
 
-  // Add to collection mutation
+
   const addToCollectionMutation = useAddToCollection();
 
   if (!isOpen) return null;
@@ -44,19 +39,7 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
     }
   };
 
-  // const handleAddToCollection = async (collectionId) => {
-  //   try {
-  //     await addToCollectionMutation.mutateAsync({
-  //       collectionId,
-  //       imageId,
-  //     });
-  //     toast.success('Added to collection');
-  //     onClose();
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error('Failed to add to collection');
-  //   }
-  // };
+
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
@@ -117,40 +100,13 @@ const CreateCollectionModal = ({ isOpen, onClose, imageId }) => {
           </span>
         </button>
       </div>
-      {/* Existing Collections */}
-      {/* <div className="space-y-2 max-h-60 overflow-y-auto">
-        {collectionsLoading ? (
-          <div className="text-center py-4">
-            <div className="animate-spin rounded-full h-8 w-8 border-2 border-white/20 border-t-white mx-auto"></div>
-          </div>
-        ) : collections?.length > 0 ? (
-          collections.map((collection) => (
-            <button
-              key={collection._id}
-              onClick={() => handleAddToCollection(collection._id)}
-              disabled={addToCollectionMutation.isLoading}
-              className="w-full p-4 bg-gray-800 rounded text-left hover:bg-gray-700 transition-colors"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-white">{collection.name}</span>
-                <span className="text-white/60">
-                  {collection.imageCount} images
-                </span>
-              </div>
-            </button>
-          ))
-        ) : (
-          <p className="text-center text-white/60">No collections yet</p>
-        )}
-      </div> */}
-      {/* </div> */}
+    
     </div>
   );
 };
 CreateCollectionModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  // onCreate: PropTypes.func.isRequired,
   imageId: PropTypes.string.isRequired,
 };
 

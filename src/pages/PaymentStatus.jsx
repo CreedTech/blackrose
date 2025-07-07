@@ -10,21 +10,21 @@ const PaymentStatus = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Extract reference from URL query params
+
   const searchParams = new URLSearchParams(location.search);
   const reference = searchParams.get('reference');
   const errorParam = searchParams.get('error');
-  // Add this at the top of your PaymentStatus component
+
   useEffect(() => {
-    // Refresh token when component mounts
+
     if (!token && localStorage.getItem('token')) {
-      // This ensures context has the token after redirect from Paystack
+ 
       setToken(localStorage.getItem('token'));
     }
   }, []);
 
   useEffect(() => {
-    // Skip if error or no reference
+
     if (errorParam || !reference) {
       setStatus('error');
       return;
@@ -32,7 +32,7 @@ const PaymentStatus = () => {
 
     const checkPayment = async () => {
       try {
-        // Force a small delay to ensure token is set
+
         if (!token && localStorage.getItem('token')) {
           setTimeout(checkPayment, 500);
           return;

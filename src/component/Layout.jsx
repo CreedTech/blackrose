@@ -3,7 +3,6 @@ import Navigation from './Navigation';
 import { useGallery } from '../hooks/useGallery';
 
 const Layout = () => {
-  // const [loading, setLoading] = useState(false);
 
   const { useImages } = useGallery();
   const { isLoading } = useImages();
